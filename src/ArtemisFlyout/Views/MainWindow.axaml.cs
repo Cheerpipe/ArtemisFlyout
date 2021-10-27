@@ -21,8 +21,10 @@ namespace ArtemisFlyout.Views
             var primaryScreen = Screens.Primary.WorkingArea;
 
             WindowStartupLocation = Avalonia.Controls.WindowStartupLocation.Manual;
-            Position = new PixelPoint(primaryScreen.Width - 310, primaryScreen.Height - 420);
+            Position = new PixelPoint(primaryScreen.Width - 400, primaryScreen.Height - 420);
             Deactivated += MainWindow_Deactivated;
+
+            /*
             Width = 280;
             Height = 415;
             //Height = 0;
@@ -35,6 +37,7 @@ namespace ArtemisFlyout.Views
             };
 
             //t.Apply(this, Avalonia.Animation.Clock.GlobalClock, 0d, 1090d);
+            */
         }
 
         private void MainWindow_Deactivated(object? sender, System.EventArgs e)

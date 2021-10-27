@@ -15,7 +15,7 @@ namespace ArtemisFlyout.Views
 {
     public partial class MainWindow : Window
     {
-        private const int AnimationDelay = 200;
+        private const int AnimationDelay = 300;
         private const int FlyoutWidth = 290;
         private const int FlyoutHeight = 430;
 

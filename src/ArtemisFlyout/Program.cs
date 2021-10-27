@@ -23,22 +23,10 @@ namespace ArtemisFlyout
         // This method is needed for IDE previewer infrastructure
         public static AppBuilder BuildAvaloniaApp()
         {
-            var builder = AppBuilder.Configure<App>().UsePlatformDetect().UseReactiveUI();
-
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            var builder = AppBuilder.Configure<App>().UsePlatformDetect().UseReactiveUI().With(new Win32PlatformOptions()
             {
-                bool dwmEnabled;
-                if (DwmIsCompositionEnabled(out dwmEnabled) == 0 && dwmEnabled)
-                {
-                    var wp = builder.WindowingSubsystemInitializer;
-                    return builder.UseWindowingSubsystem(() =>
-                    {
-                        wp();
-                        AvaloniaLocator.CurrentMutable.Bind<IRenderTimer>().ToConstant(new WindowsDWMRenderTimer());
-                    });
-                }
-            }
-
+                UseWindowsUIComposition = true
+            }); ;
             return builder;
         }
 
@@ -61,30 +49,6 @@ namespace ArtemisFlyout
 
             // Start the main loop
             app.Run(runCancellationToken);
-        }
-
-        // Animation Smoothness workaround from https://github.com/AvaloniaUI/Avalonia/issues/2945#issuecomment-534892298
-        class WindowsDWMRenderTimer : IRenderTimer
-        {
-            public event Action<TimeSpan> Tick;
-            private Thread _renderTick;
-            public WindowsDWMRenderTimer()
-            {
-                _renderTick = new Thread(() =>
-                {
-                    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-                    sw.Start();
-                    while (true)
-                    {
-                        DwmFlush();
-                        Tick?.Invoke(sw.Elapsed);
-                    }
-                });
-                _renderTick.IsBackground = true;
-                _renderTick.Start();
-            }
-            [DllImport("Dwmapi.dll")]
-            private static extern int DwmFlush();
         }
     }
 }

@@ -64,9 +64,6 @@ namespace ArtemisFlyout.Views
             _animating = true;
 
             var filler = this.Find<Separator>("SepAnimationFiller");
-            //Width = 280;
-            //Height = 415;
-            //Height = 0;
             var t = new DoubleTransition()
             {
 

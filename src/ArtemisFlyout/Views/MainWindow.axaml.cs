@@ -1,4 +1,4 @@
-    #nullable enable
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using ArtemisFlyout.Util;
@@ -34,7 +34,7 @@ namespace ArtemisFlyout.Views
         }
 
         private bool _animating;
-        public void ShowAnimated()
+        public async void ShowAnimated()
         {
             if (_animating)
                 return;
@@ -50,10 +50,11 @@ namespace ArtemisFlyout.Views
 
                 Property = Separator.WidthProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new QuadraticEaseOut()
+                Easing = new CircularEaseOut()
             };
 
             t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, (double)FlyoutWidth, 0d);
+
             _animating = false;
         }
 
@@ -69,11 +70,13 @@ namespace ArtemisFlyout.Views
 
                 Property = Separator.WidthProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new QuadraticEaseIn()
+                Easing = new CircularEaseIn()
             };
 
             t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, 0d, (double)FlyoutWidth);
-            await Task.Delay(AnimationDelay);
+            
+            // -10 is enough to avoid windows flashing
+            await Task.Delay(AnimationDelay - 20);
             Close();
             Program.MainWindowInstance = null;
 

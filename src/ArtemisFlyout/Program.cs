@@ -45,7 +45,7 @@ namespace ArtemisFlyout
 
             // Do you startup code here
 
-            TrayIconViewModel trayIconViewModel = new TrayIconViewModel();
+            ViewModels.TrayIcon trayIconViewModel = new ViewModels.TrayIcon();
 
             // Start the main loop
             app.Run(runCancellationToken);

@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Diagnostics;
 using ArtemisFlyout.Views;
 using Avalonia;
-using Avalonia.Animation;
-using Avalonia.Animation.Easings;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Diagnostics;
 using Avalonia.Platform;
+using AvaloniaTrayIcon = Avalonia.Controls.TrayIcon;
 
 namespace ArtemisFlyout.ViewModels
 {
-    public class TrayIconViewModel : ViewModelBase
+    public class TrayIcon
     {
-        public readonly TrayIcon trayIcon = new TrayIcon();
+        public readonly AvaloniaTrayIcon trayIcon = new AvaloniaTrayIcon();
 
-        public TrayIconViewModel()
+        public TrayIcon()
         {
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
             var icon = new WindowIcon(assets.Open(new Uri(@"resm:ArtemisFlyout.Assets.bow.ico")));
-
             trayIcon.Icon = icon;
             trayIcon.Clicked += TrayIcon_Clicked;
             trayIcon.Menu = new NativeMenu();

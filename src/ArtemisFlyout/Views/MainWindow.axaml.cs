@@ -50,7 +50,7 @@ namespace ArtemisFlyout.Views
 
                 Property = Separator.WidthProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new CircularEaseOut()
+                Easing = new ExponentialEaseOut()
             };
 
             t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, (double)FlyoutWidth, 0d);
@@ -70,13 +70,13 @@ namespace ArtemisFlyout.Views
 
                 Property = Separator.WidthProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new CircularEaseIn()
+                Easing = new ExponentialEaseIn()
             };
 
             t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, 0d, (double)FlyoutWidth);
             
             // -10 is enough to avoid windows flashing
-            await Task.Delay(AnimationDelay - 20);
+            await Task.Delay(AnimationDelay - 10);
             Close();
             Program.MainWindowInstance = null;
 

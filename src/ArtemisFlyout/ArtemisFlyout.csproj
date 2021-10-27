@@ -9,7 +9,6 @@
     <AvaloniaXaml Remove="Win\**" />
     <Compile Remove="Win\**" />
     <EmbeddedResource Remove="Win\**" />
-    <Folder Include="Services\" />
     <None Remove="Win\**" />
     <AvaloniaResource Remove="Assets\bow-black.ico" />
     <AvaloniaResource Remove="Assets\bow-white.ico" />

@@ -49,9 +49,9 @@
               ClipToBounds="False"
               Background="Transparent"
               BoxShadow="3 4 0 0 #64000000">
-        <StackPanel>
+        <StackPanel >
           <Separator Height="5"/>
-          <Panel Width="300" Height="360">
+          <Panel Width="300" Height="360" >
             <!-- Flyout content start -->
             <uc:ArtemisControl IsVisible="{Binding IsArtemisRunning}" />
             <uc:ArtemisLauncher IsVisible="{Binding !IsArtemisRunning}"/>
@@ -69,7 +69,6 @@
                   Height="48"
                   Width="144"
                   Background="Transparent"
-                  HorizontalAlignment="Right"
                   Margin="0 0 5 0">
                 <Button HorizontalAlignment="Right"
                         Name="BtnHome"

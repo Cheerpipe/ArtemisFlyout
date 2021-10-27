@@ -25,7 +25,7 @@
           Ambient profile
         </TextBlock>
         <ComboBox
-          Width="240"
+          Width="242"
           Items="{Binding AmbientProfiles}"
           SelectedItem="{Binding SelectedAmbientProfile}">
           <ComboBox.ItemTemplate>

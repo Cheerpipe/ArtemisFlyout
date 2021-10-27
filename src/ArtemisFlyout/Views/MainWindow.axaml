@@ -64,71 +64,114 @@
                   Background="Transparent">
             <StackPanel
                 Background="#232323"
+                HorizontalAlignment="Right"
+                Height="48"
+                Width="280">
+              <StackPanel
+                Background="#232323"
+                HorizontalAlignment="Right"
                 Height="48">
-              <DockPanel
-                  Height="48"
-                  Width="144"
-                  Background="Transparent"
-                  Margin="0 0 5 0">
-                <Button HorizontalAlignment="Right"
-                        Name="BtnHome"
-                        Height="36"
-                        Width="36"
-                        Margin="0 0 0 0"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        Click="BtnHome_OnClick"
-                        IsVisible="{Binding IsArtemisRunning}" >
-                  <avalonia:MaterialIcon
-                      Kind="Home"
-                      Width="18"
-                      Height="18"
-                      Foreground="LightGray"/>
-                </Button>
-                <Button HorizontalAlignment="Right"
-                        Name="BtnWorkshop"
-                        Height="36"
-                        Width="36"
-                        Margin="0 0 0 0"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        IsVisible="{Binding IsArtemisRunning}"
-                        Click="BtnWorkshop_OnClick">
-                  <avalonia:MaterialIcon
-                      Kind="TestTube"
-                      Width="18"
-                      Height="18"
-                      Foreground="LightGray"/>
-                </Button>
-                <Button HorizontalAlignment="Right"
-                        Name="BtnRestart"
-                        Height="36"
-                        Width="36"
-                        Margin="0 0 0 0"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        Click="BtnRestart_OnClick">
-                  <avalonia:MaterialIcon
-                      Kind="Restart"
-                      Width="18"
-                      Height="18"
-                      Foreground="LightGray"/>
-                </Button>
-                <Button HorizontalAlignment="Right"
-                        Height="36"
-                        Width="36"
-                        Margin="0 0 0 0"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        IsVisible="{Binding IsArtemisRunning}" >
-                  <avalonia:MaterialIcon
+                <DockPanel
+                    Height="48"
+                    Background="Transparent"
+                    Margin="0 0 5 0">
+                  <Button HorizontalAlignment="Right"
+                          Name="BtnHome"
+                          Height="36"
+                          Width="36"
+                          Margin="0 0 0 0"
+                          Background="Transparent"
+                          BorderBrush="Transparent"
+                          Click="BtnHome_OnClick"
+                          IsVisible="{Binding IsArtemisRunning}" >
+                    <avalonia:MaterialIcon
+                        Kind="Home"
+                        Width="16"
+                        Height="16"
+                        Foreground="LightGray"/>
+                  </Button>
+                  <Button HorizontalAlignment="Right"
+                          Name="BtnWorkshop"
+                          Height="36"
+                          Width="36"
+                          Margin="0 0 0 0"
+                          Background="Transparent"
+                          BorderBrush="Transparent"
+                          IsVisible="{Binding IsArtemisRunning}"
+                          Click="BtnWorkshop_OnClick">
+                    <avalonia:MaterialIcon
+                        Kind="TestTube"
+                        Width="16"
+                        Height="16"
+                        Foreground="LightGray"/>
+                  </Button>
+                  <Button
+                      Name="BtnShowSurfaceEditor"
+                      HorizontalAlignment="Right"
+                      Height="36"
+                      Width="36"
+                      Margin="0 0 0 0"
                       Background="Transparent"
-                      Kind="Bug"
-                      Width="18"
-                      Height="18"
-                      Foreground="LightGray"/>
-                </Button>
-              </DockPanel>
+                      BorderBrush="Transparent"
+                      IsVisible="{Binding IsArtemisRunning}"
+                      Click="BtnShowSurfaceEditor_OnClick">
+                    <avalonia:MaterialIcon
+                        Background="Transparent"
+                        Kind="Edit"
+                        Width="16"
+                        Height="16"
+                        Foreground="LightGray"/>
+                  </Button>
+                  <Button
+                      Name="BtnShowSettings"
+                      HorizontalAlignment="Right"
+                      Height="36"
+                      Width="36"
+                      Margin="0 0 0 0"
+                      Background="Transparent"
+                      BorderBrush="Transparent"
+                      IsVisible="{Binding IsArtemisRunning}"
+                      Click="BtnShowSettings_OnClick">
+                    <avalonia:MaterialIcon
+                        Background="Transparent"
+                        Kind="Settings"
+                        Width="16"
+                        Height="16"
+                        Foreground="LightGray"/>
+                  </Button>
+                  <Button
+                      Name="BtnShowDebugger"
+                      HorizontalAlignment="Right"
+                      Height="36"
+                      Width="36"
+                      Margin="50 0 0 0"
+                      Background="Transparent"
+                      BorderBrush="Transparent"
+                      IsVisible="{Binding IsArtemisRunning}"
+                      Click="BtnShowDebugger_OnClick">
+                    <avalonia:MaterialIcon
+                        Background="Transparent"
+                        Kind="Bug"
+                        Width="16"
+                        Height="16"
+                        Foreground="LightGray"/>
+                  </Button>
+                  <Button HorizontalAlignment="Right"
+                          Name="BtnRestart"
+                          Height="36"
+                          Width="36"
+                          Margin="0 0 0 0"
+                          Background="Transparent"
+                          BorderBrush="Transparent"
+                          Click="BtnRestart_OnClick">
+                    <avalonia:MaterialIcon
+                        Kind="Restart"
+                        Width="16"
+                        Height="16"
+                        Foreground="LightGray"/>
+                  </Button>
+                </DockPanel>
+              </StackPanel>
             </StackPanel>
           </Border>
         </StackPanel>

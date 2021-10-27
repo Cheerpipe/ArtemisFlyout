@@ -21,8 +21,8 @@ namespace ArtemisFlyout.ViewModels
         ReadBoolCommand readTeamsStatus = new ReadBoolCommand("DesktopVariables", "TeamsLight");
         WriteBoolCommand writeTeamsStatus = new WriteBoolCommand("DesktopVariables", "TeamsLight");
 
-        ReadBoolCommand readDemoStatus = new ReadBoolCommand("DesktopVariables", "DemoLight");
-        WriteBoolCommand writeDemoStatus = new WriteBoolCommand("DesktopVariables", "DemoLight");
+        ReadBoolCommand readAmbiLightStatus = new ReadBoolCommand("DesktopVariables", "AmbiLight");
+        WriteBoolCommand writeAmbiLightStatus = new WriteBoolCommand("DesktopVariables", "AmbiLight");
 
         WriteStringCommand writeAmbientProfileName = new WriteStringCommand("DesktopVariables", "Profile");
         ReadCommand readAmbientProfileName = new ReadCommand("DesktopVariables", "Profile");
@@ -114,15 +114,15 @@ namespace ArtemisFlyout.ViewModels
             }
         }
 
-        public bool Demo
+        public bool AmbiLight
         {
             get
             {
-                return readDemoStatus.Execute();
+                return readAmbiLightStatus.Execute();
             }
             set
             {
-                writeDemoStatus.Execute(value);
+                writeAmbiLightStatus.Execute(value);
             }
         }
 

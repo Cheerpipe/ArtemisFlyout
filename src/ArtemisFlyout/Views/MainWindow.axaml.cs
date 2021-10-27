@@ -1,4 +1,4 @@
-#nullable enable
+    #nullable enable
 using System;
 using System.Threading.Tasks;
 using ArtemisFlyout.Util;
@@ -33,8 +33,12 @@ namespace ArtemisFlyout.Views
             Deactivated += MainWindow_Deactivated;
         }
 
+        private bool _animating;
         public void ShowAnimated()
         {
+            if (_animating)
+                return;
+            _animating = true;
 
             Show();
             var filler = this.Find<Separator>("SepAnimationFiller");
@@ -50,10 +54,14 @@ namespace ArtemisFlyout.Views
             };
 
             t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, (double)FlyoutWidth, 0d);
+            _animating = false;
         }
 
         public async void CloseAnimated()
         {
+            if (_animating)
+                return;
+            _animating = true;
 
             var filler = this.Find<Separator>("SepAnimationFiller");
             //Width = 280;
@@ -71,6 +79,8 @@ namespace ArtemisFlyout.Views
             await Task.Delay(AnimationDelay);
             Close();
             Program.MainWindowInstance = null;
+
+            _animating = false;
         }
 
         private void MainWindow_Deactivated(object sender, EventArgs e)
@@ -83,10 +93,6 @@ namespace ArtemisFlyout.Views
             AvaloniaXamlLoader.Load(this);
         }
 
-        private void BtnHome_OnClick(object? sender, RoutedEventArgs e)
-        {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/bring-to-foreground");
-        }
 
         private async void BtnRestart_OnClick(object? sender, RoutedEventArgs e)
         {
@@ -97,13 +103,38 @@ namespace ArtemisFlyout.Views
             if (result != ButtonResult.Yes)
                 return;
             RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/restart");
-            Program.MainWindowInstance.CloseAnimated();
+            CloseAnimated();
         }
 
-        private void BtnWorkshop_OnClick(object? sender, RoutedEventArgs e)
+        private async void BtnHome_OnClick(object? sender, RoutedEventArgs e)
         {
-
-
+            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/bring-to-foreground");
         }
+
+        private async void BtnWorkshop_OnClick(object? sender, RoutedEventArgs e)
+        {
+            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-workshop");
+            CloseAnimated();
+        }
+
+        private async void BtnShowSurfaceEditor_OnClick(object? sender, RoutedEventArgs e)
+        {
+            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-surface-editor");
+            CloseAnimated();
+        }
+
+        private async void BtnShowDebugger_OnClick(object? sender, RoutedEventArgs e)
+        {
+            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-debugger");
+            CloseAnimated();
+        }
+
+        private async void BtnShowSettings_OnClick(object? sender, RoutedEventArgs e)
+        {
+            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-settings");
+            CloseAnimated();
+        }
+
+
     }
 }

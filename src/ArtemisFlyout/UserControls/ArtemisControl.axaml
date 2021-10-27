@@ -27,7 +27,8 @@
         <ComboBox
           Width="242"
           Items="{Binding AmbientProfiles}"
-          SelectedItem="{Binding SelectedAmbientProfile}">
+          SelectedItem="{Binding SelectedAmbientProfile}"
+          IsEnabled="{Binding ArtemisEnabled}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding Name}"/>
@@ -82,16 +83,16 @@
           Moonlight
         </TextBlock>
         <ToggleButton
-            Name="BtnDemo"
+            Name="BtnAmbiLight"
             Grid.Row="2"
             Grid.Column="0"
             Width="110"
             Height="48"
             HorizontalAlignment="Center"
-            IsChecked="{Binding Demo}"
+            IsChecked="{Binding AmbiLight}"
             IsEnabled="{Binding ArtemisEnabled}">
           <avalonia:MaterialIcon
-              Kind="Looks"
+              Kind="MonitorMultiple"
               Width="24"
               Height="24"/>
         </ToggleButton>
@@ -125,7 +126,7 @@
             Grid.Column="0"
             HorizontalAlignment="Center"
             FontSize="12">
-          Demo
+          Ambilight
         </TextBlock>
         <TextBlock
             Grid.Row="3"

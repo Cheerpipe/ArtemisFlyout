@@ -1,8 +1,11 @@
+#nullable enable
 using System;
+using System.Threading.Tasks;
 using ArtemisFlyout.Util;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using MessageBox.Avalonia.Enums;
 using RoutedEventArgs = Avalonia.Interactivity.RoutedEventArgs;
@@ -12,6 +15,10 @@ namespace ArtemisFlyout.Views
 {
     public partial class MainWindow : Window
     {
+        private const int AnimationDelay = 200;
+        private const int FlyoutWidth = 290;
+        private const int FlyoutHeight = 430;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -21,28 +28,54 @@ namespace ArtemisFlyout.Views
             var primaryScreen = Screens.Primary.WorkingArea;
 
             WindowStartupLocation = Avalonia.Controls.WindowStartupLocation.Manual;
-            Position = new PixelPoint(primaryScreen.Width - 400, primaryScreen.Height - 420);
+            //TODO: Use taskbar height and binded Width and Height
+            Position = new PixelPoint(primaryScreen.Width - FlyoutWidth, primaryScreen.Height - FlyoutHeight);
             Deactivated += MainWindow_Deactivated;
+        }
 
-            /*
-            Width = 280;
-            Height = 415;
+        public void ShowAnimated()
+        {
+
+            Show();
+            var filler = this.Find<Separator>("SepAnimationFiller");
+            Width = FlyoutWidth;
+            Height = FlyoutHeight;
+
+            var t = new DoubleTransition()
+            {
+
+                Property = Separator.WidthProperty,
+                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Easing = new QuadraticEaseOut()
+            };
+
+            t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, (double)FlyoutWidth, 0d);
+        }
+
+        public async void CloseAnimated()
+        {
+
+            var filler = this.Find<Separator>("SepAnimationFiller");
+            //Width = 280;
+            //Height = 415;
             //Height = 0;
             var t = new DoubleTransition()
             {
 
-                Property = Window.HeightProperty,
-                Duration = TimeSpan.FromMilliseconds(1000),
-                Easing = new QuadraticEaseOut()
+                Property = Separator.WidthProperty,
+                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Easing = new QuadraticEaseIn()
             };
 
-            //t.Apply(this, Avalonia.Animation.Clock.GlobalClock, 0d, 1090d);
-            */
+            t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, 0d, (double)FlyoutWidth);
+            await Task.Delay(AnimationDelay);
+            Close();
+            Program.MainWindowInstance = null;
         }
 
-        private void MainWindow_Deactivated(object? sender, System.EventArgs e)
+        private void MainWindow_Deactivated(object sender, EventArgs e)
         {
-            Close();
+            CloseAnimated();
         }
 
         private void InitializeComponent()
@@ -64,12 +97,12 @@ namespace ArtemisFlyout.Views
             if (result != ButtonResult.Yes)
                 return;
             RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/restart");
-            Program.MainWindowInstance.Close();
+            Program.MainWindowInstance.CloseAnimated();
         }
 
         private void BtnWorkshop_OnClick(object? sender, RoutedEventArgs e)
         {
-      
+
 
         }
     }

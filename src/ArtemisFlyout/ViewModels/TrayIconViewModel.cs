@@ -36,12 +36,13 @@ namespace ArtemisFlyout.ViewModels
 
         private void TrayIcon_Clicked(object? sender, System.EventArgs e)
         {
-      
-
-            Program.MainWindowInstance = new MainWindow();
-            MainWindow flyout = Program.MainWindowInstance;
-            flyout.DataContext = new ArtemisViewModel();
-            flyout.Show();
+            if (Program.MainWindowInstance == null)
+            {
+                Program.MainWindowInstance = new MainWindow();
+                MainWindow flyout = Program.MainWindowInstance;
+                flyout.DataContext = new ArtemisViewModel();
+                flyout.ShowAnimated();
+            }
         }
     }
 }

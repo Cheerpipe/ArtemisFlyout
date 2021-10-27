@@ -1,0 +1,156 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ArtemisFlyout.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="350"
+             x:Class="ArtemisFlyout.UserControls.ArtemisControl"
+             Width="300"
+             Height="350"
+            Background="Transparent">
+  <Design.DataContext>
+    <vm:ArtemisControlViewModel/>
+  </Design.DataContext>
+
+  <!-- Flyout content start-->
+  <Panel >
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+      <!-- Ambiente profile selector -->
+      <StackPanel>
+        <TextBlock
+           HorizontalAlignment="Left"
+           Padding=" 0 0 0 5"
+           FontSize="12">
+          Ambient profile
+        </TextBlock>
+        <ComboBox
+          Width="240"
+          Items="{Binding AmbientProfiles}"
+          SelectedItem="{Binding SelectedAmbientProfile}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Name}"/>
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Separator Height="40"/>
+      </StackPanel>
+      <!-- Ambiente profile selector -->
+
+      <!-- Action buttons -->
+      <Grid ColumnDefinitions="120,120" RowDefinitions="Auto,40,Auto,Auto"  Margin="0">
+        <ToggleButton
+          Name="BtnBlackOutToggle"
+          Grid.Row="0"
+          Grid.Column="0"
+          Width="110"
+          Height="48"
+          HorizontalAlignment="Center"
+          IsChecked="{Binding Blackout}">
+          <avalonia:MaterialIcon
+            Kind="LightbulbOff"
+            Width="24"
+            Height="24"/>
+        </ToggleButton>
+        <ToggleButton
+          Name="BtnMoonLightToggle"
+          Grid.Row="0"
+          Grid.Column="1"
+          Width="110"
+          Height="48"
+          HorizontalAlignment="Center"
+          IsChecked="{Binding MoonLight}"
+          IsEnabled="{Binding ArtemisEnabled}">
+          <avalonia:MaterialIcon
+            Kind="WallSconceRoundVariant"
+            Width="24"
+            Height="24"/>
+        </ToggleButton>
+        <TextBlock
+          Grid.Row="1"
+          Grid.Column="0"
+          HorizontalAlignment="Center"
+          FontSize="12">
+          Blackout
+        </TextBlock>
+        <TextBlock
+          Grid.Row="1"
+          Grid.Column="1"
+          HorizontalAlignment="Center"
+          FontSize="12">
+          Moonlight
+        </TextBlock>
+        <ToggleButton
+            Name="BtnDemo"
+            Grid.Row="2"
+            Grid.Column="0"
+            Width="110"
+            Height="48"
+            HorizontalAlignment="Center"
+            IsChecked="{Binding Demo}"
+            IsEnabled="{Binding ArtemisEnabled}">
+          <avalonia:MaterialIcon
+              Kind="Looks"
+              Width="24"
+              Height="24"/>
+        </ToggleButton>
+        <ToggleButton
+            Name="BtnTeams"
+            Grid.Row="2"
+            Grid.Column="1"
+            Width="110"
+            Height="48"
+            HorizontalAlignment="Center"
+            IsChecked="{Binding Teams}"
+            IsEnabled="{Binding ArtemisEnabled}">
+          <avalonia:MaterialIcon
+              Kind="MicrosoftTeams"
+              Width="24"
+              Height="24"/>
+          <ToggleButton.Styles>
+            <Style Selector="ToggleButton:checked /template/ ContentPresenter">
+              <Setter Property="Background" Value="#505AC9"/>
+            </Style>
+            <Style Selector="ToggleButton:pressed  /template/ ContentPresenter">
+              <Setter Property="Background" Value="#505AC9"/>
+            </Style>
+            <Style Selector="ToggleButton:pointerover /template/ ContentPresenter">
+              <Setter Property="Background" Value="#464EB8"/>
+            </Style>
+          </ToggleButton.Styles>
+        </ToggleButton>
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            FontSize="12">
+          Demo
+        </TextBlock>
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            FontSize="12">
+          Teams
+        </TextBlock>
+      </Grid>
+      <!-- Action buttons -->
+      <Separator Height="30"/>
+      <!-- Bright Slider -->
+      <Grid ColumnDefinitions="*,210,*" RowDefinitions="Auto,Auto,Auto"  Margin="0">
+        <avalonia:MaterialIcon Kind="Brightness5" Grid.Row="0" Grid.Column="0"></avalonia:MaterialIcon>
+        <Slider
+            Name="SldBright"
+            Width="200"
+            Grid.Row="0"
+            Grid.Column="1"
+            Value="{Binding Bright}"></Slider>
+        <avalonia:MaterialIcon Kind="Brightness7" Grid.Row="0" Grid.Column="2"></avalonia:MaterialIcon>
+      </Grid>
+      <!-- Bright Slider -->
+  
+    </StackPanel>
+  </Panel>
+  <!-- Flyout content End-->
+</UserControl>

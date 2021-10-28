@@ -72,6 +72,7 @@
           Grid.Row="1"
           Grid.Column="0"
           HorizontalAlignment="Center"
+          Padding="0 5 0 0"
           FontSize="12">
           Blackout
         </TextBlock>
@@ -79,6 +80,7 @@
           Grid.Row="1"
           Grid.Column="1"
           HorizontalAlignment="Center"
+          Padding="0 5 0 0"
           FontSize="12">
           Moonlight
         </TextBlock>
@@ -125,6 +127,7 @@
             Grid.Row="3"
             Grid.Column="0"
             HorizontalAlignment="Center"
+            Padding="0 5 0 0"
             FontSize="12">
           Ambilight
         </TextBlock>
@@ -132,6 +135,7 @@
             Grid.Row="3"
             Grid.Column="1"
             HorizontalAlignment="Center"
+            Padding="0 5 0 0"
             FontSize="12">
           Teams
         </TextBlock>

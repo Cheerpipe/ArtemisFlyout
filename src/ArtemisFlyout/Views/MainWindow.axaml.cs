@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using ArtemisFlyout.Util;
+using ArtemisFlyout.ViewModels;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
@@ -15,9 +16,11 @@ namespace ArtemisFlyout.Views
 {
     public partial class MainWindow : Window
     {
-        private const int AnimationDelay = 300;
-        private const int FlyoutWidth = 290;
-        private const int FlyoutHeight = 430;
+        private const int FlyoutHorizontalSpacing = 12;
+        private const int FlyoutVerticalSpacing = 25;
+        private const int AnimationDelay = 200;
+        private const int FlyoutWidth = 280 + FlyoutHorizontalSpacing;
+        private const int FlyoutHeight = 415 + FlyoutVerticalSpacing;
 
         public MainWindow()
         {
@@ -74,7 +77,7 @@ namespace ArtemisFlyout.Views
             };
 
             t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, 0d, (double)FlyoutWidth);
-            
+
             // -10 is enough to avoid windows flashing
             await Task.Delay(AnimationDelay - 10);
             Close();
@@ -92,7 +95,6 @@ namespace ArtemisFlyout.Views
         {
             AvaloniaXamlLoader.Load(this);
         }
-
 
         private async void BtnRestart_OnClick(object? sender, RoutedEventArgs e)
         {
@@ -135,6 +137,25 @@ namespace ArtemisFlyout.Views
             CloseAnimated();
         }
 
+        public static void CreateAndShow()
+        {
+            if (Program.MainWindowInstance == null)
+            {
+                Program.MainWindowInstance = new MainWindow();
+                MainWindow flyout = Program.MainWindowInstance;
+                flyout.DataContext = new ArtemisViewModel();
+            }
+            Program.MainWindowInstance.ShowAnimated();
+        }
 
+        public static async void Preload()
+        {
+            var prelodWindow = new MainWindow();
+            prelodWindow.DataContext = new ArtemisControlViewModel();
+            prelodWindow.Opacity = 0;
+            prelodWindow.ShowAnimated();
+            await Task.Delay(2000);
+            prelodWindow.Close();
+        }
     }
 }

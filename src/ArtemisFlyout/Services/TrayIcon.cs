@@ -22,6 +22,8 @@ namespace ArtemisFlyout.ViewModels
             NativeMenuItem exitMenu = new NativeMenuItem("Exit Artemis Flyout");
             exitMenu.Click += ExitMenu_Click;
             trayIcon.Menu.Items.Add(exitMenu);
+
+            MainWindow.Preload();
         }
 
         private void ExitMenu_Click(object? sender, EventArgs e)
@@ -31,13 +33,7 @@ namespace ArtemisFlyout.ViewModels
 
         private void TrayIcon_Clicked(object? sender, System.EventArgs e)
         {
-            if (Program.MainWindowInstance == null)
-            {
-                Program.MainWindowInstance = new MainWindow();
-                MainWindow flyout = Program.MainWindowInstance;
-                flyout.DataContext = new ArtemisViewModel();
-                flyout.ShowAnimated();
-            }
+            MainWindow.CreateAndShow();
         }
     }
 }

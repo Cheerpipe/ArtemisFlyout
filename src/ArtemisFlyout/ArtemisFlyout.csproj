@@ -20,7 +20,9 @@
     <EmbeddedResource Include="Assets\bow-white.ico" />
     <EmbeddedResource Include="Assets\bow.ico" />
   </ItemGroup>
-
+  <PropertyGroup>
+    <PublishReadyToRun>true</PublishReadyToRun>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.8" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.8" />

@@ -50,7 +50,7 @@ namespace ArtemisFlyout.Views
 
                 Property = Separator.WidthProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new ExponentialEaseOut()
+                Easing = new CircularEaseOut()
             };
 
             t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, (double)FlyoutWidth, 0d);
@@ -70,7 +70,7 @@ namespace ArtemisFlyout.Views
 
                 Property = Separator.WidthProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new ExponentialEaseIn()
+                Easing = new CircularEaseIn()
             };
 
             t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, 0d, (double)FlyoutWidth);

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using ArtemisFlyout.Artemis.Commands;
 using ArtemisFlyout.Util;
+
 using ReactiveUI;
 
 namespace ArtemisFlyout.ViewModels
@@ -20,6 +21,9 @@ namespace ArtemisFlyout.ViewModels
 
         ReadBoolCommand readTeamsStatus = new ReadBoolCommand("DesktopVariables", "TeamsLight");
         WriteBoolCommand writeTeamsStatus = new WriteBoolCommand("DesktopVariables", "TeamsLight");
+
+        ReadBoolCommand readAudioReactiveStatus = new ReadBoolCommand("DesktopVariables", "AudioReactive");
+        WriteBoolCommand writeAudioReactiveStatus = new WriteBoolCommand("DesktopVariables", "AudioReactive");
 
         ReadBoolCommand readAmbiLightStatus = new ReadBoolCommand("DesktopVariables", "AmbiLight");
         WriteBoolCommand writeAmbiLightStatus = new WriteBoolCommand("DesktopVariables", "AmbiLight");
@@ -123,6 +127,18 @@ namespace ArtemisFlyout.ViewModels
             set
             {
                 writeAmbiLightStatus.Execute(value);
+            }
+        }
+
+        public bool AudioReactive
+        {
+            get
+            {
+                return readAudioReactiveStatus.Execute();
+            }
+            set
+            {
+                writeAudioReactiveStatus.Execute(value);
             }
         }
 

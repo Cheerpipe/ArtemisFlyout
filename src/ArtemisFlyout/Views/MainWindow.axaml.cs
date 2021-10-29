@@ -20,8 +20,9 @@ namespace ArtemisFlyout.Views
         private const int FlyoutHorizontalSpacing = 12;
         private const int FlyoutVerticalSpacing = 25;
         private const int AnimationDelay = 200;
-        private const int FlyoutWidth = 280 + FlyoutHorizontalSpacing;
-        private const int FlyoutHeight = 425 + FlyoutVerticalSpacing;
+
+        private int _flyoutWidth;
+        private int _flyoutHeight;
 
         public MainWindow()
         {
@@ -32,8 +33,11 @@ namespace ArtemisFlyout.Views
             var primaryScreen = Screens.Primary.WorkingArea;
 
             WindowStartupLocation = Avalonia.Controls.WindowStartupLocation.Manual;
-            //TODO: Use taskbar height and binded Width and Height
-            Position = new PixelPoint(primaryScreen.Width - FlyoutWidth, primaryScreen.Height - FlyoutHeight);
+
+            _flyoutWidth = (int)this.Find<Panel>("FlyoutPanelContainer").Width +FlyoutHorizontalSpacing;
+            _flyoutHeight = (int)this.Find<Panel>("FlyoutPanelContainer").Height + FlyoutVerticalSpacing;
+
+            Position = new PixelPoint(primaryScreen.Width - _flyoutWidth, primaryScreen.Height - _flyoutHeight);
             Deactivated += MainWindow_Deactivated;
         }
 
@@ -46,8 +50,8 @@ namespace ArtemisFlyout.Views
 
             Show();
             var filler = this.Find<Separator>("SepAnimationFiller");
-            Width = FlyoutWidth;
-            Height = FlyoutHeight;
+            Width = _flyoutWidth;
+            Height = _flyoutHeight;
 
             var t = new DoubleTransition()
             {
@@ -57,7 +61,7 @@ namespace ArtemisFlyout.Views
                 Easing = new CircularEaseOut()
             };
 
-            t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, (double)FlyoutWidth, 0d);
+            t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, (double)_flyoutWidth, 0d);
 
             _animating = false;
         }
@@ -77,7 +81,7 @@ namespace ArtemisFlyout.Views
                 Easing = new CircularEaseIn()
             };
 
-            t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, 0d, (double)FlyoutWidth);
+            t.Apply(filler, Avalonia.Animation.Clock.GlobalClock, 0d, (double)_flyoutWidth);
 
             // -10 is enough to avoid windows flashing
             await Task.Delay(AnimationDelay - 10);

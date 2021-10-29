@@ -142,15 +142,6 @@ namespace ArtemisFlyout.ViewModels
             }
         }
 
-        //TODO: Move to a Service
-        public bool ArtemisRunning
-        {
-            get
-            {
-                return RestUtil.CheckIfPortOsOpen("127.0.0.1", 9696, 300, 3);
-            }
-        }
-
         public static bool IsRunning()
         {
             var processName = Process.GetProcessesByName("Artemis.UI");

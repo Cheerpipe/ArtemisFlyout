@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         xmlns:uc="clr-namespace:ArtemisFlyout.UserControls"
+        xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
         x:Class="ArtemisFlyout.Views.MainWindow"
         Title="Artemis Flyout"
@@ -19,12 +20,12 @@
         Background="Transparent"
         UseLayoutRounding="False">
   <Design.DataContext>
-    <vm:ArtemisViewModel/>
+    <vm:MainWindowViewModel/>
   </Design.DataContext>
   <DockPanel Width="600" HorizontalAlignment="Left">
     <Separator Width="0" Name="SepAnimationFiller"/>
     <!-- Set dimensions here to see the actual result -->
-    <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer" Height="445" Width="290">
+    <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer" Height="490" Width="310">
       <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
         <ExperimentalAcrylicBorder.Material>
           <ExperimentalAcrylicMaterial
@@ -40,12 +41,19 @@
                 Background="Transparent"
                 BoxShadow="3 4 0 0 #64000000">
           <DockPanel>
+            <!-- Flyout content start -->
             <Panel DockPanel.Dock="Top" Margin="10 0 10 0">
-              <!-- Flyout content start -->
-              <uc:ArtemisControl IsVisible="{Binding IsArtemisRunning}"/>
-              <uc:ArtemisLauncher IsVisible="{Binding !IsArtemisRunning}"/>
-              <!-- Flyout content End-->
+              <Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ContentPageIndex}">
+                <Carousel.PageTransition>
+                  <PageSlide Duration="0.25" Orientation="Horizontal" />
+                </Carousel.PageTransition>
+                <uc:ArtemisControl />
+                <uc:ArtemisLauncher />
+                <uc:DeviceToggles />
+              </Carousel>
             </Panel>
+            <!-- Flyout content End-->
+
             <Border CornerRadius="0 0 10 10"
                     BorderBrush="#414141"
                     BorderThickness="0"
@@ -69,11 +77,7 @@
                       BorderBrush="Transparent"
                       Click="BtnHome_OnClick"
                       IsVisible="{Binding IsArtemisRunning}" >
-                    <avalonia:MaterialIcon
-                        Kind="Home"
-                        Width="16"
-                        Height="16"
-                        Foreground="LightGray"/>
+                      <controls:SymbolIcon Symbol="Home" Width="16" Height="16"/>
                   </Button>
                   <Button HorizontalAlignment="Left"
                           Name="BtnWorkshop"
@@ -84,11 +88,7 @@
                           BorderBrush="Transparent"
                           IsVisible="{Binding IsArtemisRunning}"
                           Click="BtnWorkshop_OnClick">
-                    <avalonia:MaterialIcon
-                        Kind="TestTube"
-                        Width="16"
-                        Height="16"
-                        Foreground="LightGray"/>
+                      <controls:SymbolIcon Symbol="Share" Width="16" Height="16"/>
                   </Button>
                   <Button
                       Name="BtnShowSurfaceEditor"
@@ -99,12 +99,7 @@
                       BorderBrush="Transparent"
                       IsVisible="{Binding IsArtemisRunning}"
                       Click="BtnShowSurfaceEditor_OnClick">
-                    <avalonia:MaterialIcon
-                        Background="Transparent"
-                        Kind="Edit"
-                        Width="16"
-                        Height="16"
-                        Foreground="LightGray"/>
+                      <controls:SymbolIcon Symbol="Edit" Width="16" Height="16"/>
                   </Button>
                   <Button
                       Name="BtnShowSettings"
@@ -115,14 +110,8 @@
                       BorderBrush="Transparent"
                       IsVisible="{Binding IsArtemisRunning}"
                       Click="BtnShowSettings_OnClick">
-                    <avalonia:MaterialIcon
-                        Background="Transparent"
-                        Kind="Settings"
-                        Width="16"
-                        Height="16"
-                        Foreground="LightGray"/>
+                      <controls:SymbolIcon Symbol="Settings" Width="16" Height="16"/>
                   </Button>
-
                 </StackPanel>
                 <StackPanel
                             Margin="0 0 10 0"
@@ -138,12 +127,7 @@
                       BorderBrush="Transparent"
                       IsVisible="{Binding IsArtemisRunning}"
                       Click="BtnShowDebugger_OnClick">
-                    <avalonia:MaterialIcon
-                        Background="Transparent"
-                        Kind="Bug"
-                        Width="16"
-                        Height="16"
-                        Foreground="LightGray"/>
+                      <controls:SymbolIcon Symbol="View" Width="16" Height="16"/>
                   </Button>
                   <Button HorizontalAlignment="Right"
                           Name="BtnRestart"
@@ -152,11 +136,7 @@
                           Background="Transparent"
                           BorderBrush="Transparent"
                           Click="BtnRestart_OnClick">
-                    <avalonia:MaterialIcon
-                        Kind="Restart"
-                        Width="16"
-                        Height="16"
-                        Foreground="LightGray"/>
+                      <controls:SymbolIcon Symbol="RotateCounterClockwise" Width="16" Height="16"/>
                   </Button>
                 </StackPanel >
               </DockPanel>

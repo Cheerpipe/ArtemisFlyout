@@ -12,7 +12,7 @@ using Avalonia.Markup.Xaml;
 using MessageBox.Avalonia.Enums;
 using RoutedEventArgs = Avalonia.Interactivity.RoutedEventArgs;
 using Window = Avalonia.Controls.Window;
-
+ 
 namespace ArtemisFlyout.Views
 {
     public partial class MainWindow : Window
@@ -34,7 +34,7 @@ namespace ArtemisFlyout.Views
 
             WindowStartupLocation = Avalonia.Controls.WindowStartupLocation.Manual;
 
-            _flyoutWidth = (int)this.Find<Panel>("FlyoutPanelContainer").Width +FlyoutHorizontalSpacing;
+            _flyoutWidth = (int)this.Find<Panel>("FlyoutPanelContainer").Width + FlyoutHorizontalSpacing;
             _flyoutHeight = (int)this.Find<Panel>("FlyoutPanelContainer").Height + FlyoutVerticalSpacing;
 
             Position = new PixelPoint(primaryScreen.Width - _flyoutWidth, primaryScreen.Height - _flyoutHeight);
@@ -148,7 +148,7 @@ namespace ArtemisFlyout.Views
             {
                 Program.MainWindowInstance = new MainWindow();
                 MainWindow flyout = Program.MainWindowInstance;
-                flyout.DataContext = new ArtemisViewModel();
+                flyout.DataContext = new MainWindowViewModel();
             }
             Program.MainWindowInstance.ShowAnimated();
         }
@@ -156,12 +156,17 @@ namespace ArtemisFlyout.Views
         public static async void Preload()
         {
             var prelodWindow = new MainWindow();
-            prelodWindow.DataContext = new ArtemisControlViewModel();
             prelodWindow.Opacity = 0;
             prelodWindow.ShowAnimated();
             Thread.Sleep(500);
             prelodWindow.Close();
             Thread.Sleep(500);
         }
+
+        public void SetContentPageIndex(int index)
+        {
+            this.Find<Carousel>("CarouselContentContainer").SelectedIndex = index;
+        }
+
     }
 }

@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
              xmlns:converters="clr-namespace:ArtemisFlyout.Converters;assembly=ArtemisFlyout"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
              mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="390"
              x:Class="ArtemisFlyout.UserControls.ArtemisControl"
             Background="Transparent">
@@ -19,20 +20,28 @@
     <!-- Global toggle Start -->
 
     <!-- Workaround for toggle switch width -->
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+    <DockPanel Margin="0 0 0 10">
+      <controls:HyperlinkButton 
+        VerticalAlignment="Center" 
+        FontSize="12" 
+        Foreground="LightGray" 
+        Margin="0 0 0 0"
+        Click="Button_OnClick">
+          Devices settings
+      </controls:HyperlinkButton>
       <ToggleSwitch
-          IsChecked="{Binding !Blackout}"
-          Content=""
-          OffContent=""
-          OnContent=""
-          HorizontalAlignment="Right"
-          MinWidth ="0"
-          MinHeight="0"/>
-    </StackPanel>
+        IsChecked="{Binding !Blackout}"
+        Content=""
+        OffContent=""
+        OnContent=""
+        HorizontalAlignment="Right"
+        MinWidth ="0"
+        MinHeight="0"/>
+    </DockPanel>
     <!-- Global toggle End -->
 
     <!-- Ambiente profile selector Start -->
-    <StackPanel Margin="10 0 10 30">
+    <StackPanel Margin="10 0 10 40">
       <TextBlock
          HorizontalAlignment="Left"
          Padding=" 0 0 0 5"
@@ -55,7 +64,7 @@
 
     <!-- Action buttons Start-->
     <StackPanel Margin="10 10 10 10">
-      <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,40,Auto,Auto"  Margin="0">
+      <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,45,Auto,Auto"  Margin="0">
         <ToggleButton
           Name="BtnMusicReactiveToggle"
           Grid.Row="0"

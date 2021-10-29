@@ -22,8 +22,6 @@ namespace ArtemisFlyout.ViewModels
             NativeMenuItem exitMenu = new NativeMenuItem("Exit Artemis Flyout");
             exitMenu.Click += ExitMenu_Click;
             trayIcon.Menu.Items.Add(exitMenu);
-
-            MainWindow.Preload();
         }
 
         private void ExitMenu_Click(object? sender, EventArgs e)

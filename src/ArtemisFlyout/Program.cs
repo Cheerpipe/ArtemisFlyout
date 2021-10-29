@@ -45,6 +45,8 @@ namespace ArtemisFlyout
 
             // Do you startup code here
 
+            MainWindow.Preload();
+
             ViewModels.TrayIcon trayIconViewModel = new ViewModels.TrayIcon();
 
             // Start the main loop

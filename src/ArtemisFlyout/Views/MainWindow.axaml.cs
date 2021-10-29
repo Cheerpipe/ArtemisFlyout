@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ArtemisFlyout.Util;
 using ArtemisFlyout.ViewModels;
@@ -20,7 +21,7 @@ namespace ArtemisFlyout.Views
         private const int FlyoutVerticalSpacing = 25;
         private const int AnimationDelay = 200;
         private const int FlyoutWidth = 280 + FlyoutHorizontalSpacing;
-        private const int FlyoutHeight = 415 + FlyoutVerticalSpacing;
+        private const int FlyoutHeight = 425 + FlyoutVerticalSpacing;
 
         public MainWindow()
         {
@@ -154,8 +155,9 @@ namespace ArtemisFlyout.Views
             prelodWindow.DataContext = new ArtemisControlViewModel();
             prelodWindow.Opacity = 0;
             prelodWindow.ShowAnimated();
-            await Task.Delay(2000);
+            Thread.Sleep(500);
             prelodWindow.Close();
+            Thread.Sleep(500);
         }
     }
 }

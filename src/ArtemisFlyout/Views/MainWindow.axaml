@@ -21,9 +21,9 @@
   <Design.DataContext>
     <vm:ArtemisViewModel/>
   </Design.DataContext>
-  <DockPanel Background="Transparent" Width="380" Height="415" HorizontalAlignment="Left"  >
-    <Separator Width="0" Background="Transparent" Height="300" Name="SepAnimationFiller"/>
-    <Panel Background="Transparent" Width="280" HorizontalAlignment="Left">
+  <DockPanel Width="380" Height="425" HorizontalAlignment="Left"  >
+    <Separator Width="0" Name="SepAnimationFiller"/>
+    <Panel HorizontalAlignment="Left">
       <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
         <ExperimentalAcrylicBorder.Material>
           <ExperimentalAcrylicMaterial
@@ -38,9 +38,8 @@
                 ClipToBounds="False"
                 Background="Transparent"
                 BoxShadow="3 4 0 0 #64000000">
-          <StackPanel >
-            <Separator Height="5"/>
-            <Panel Width="300" Height="360" >
+          <DockPanel>
+            <Panel DockPanel.Dock="Top" Margin="10 20 10 0">
               <!-- Flyout content start -->
               <uc:ArtemisControl IsVisible="{Binding IsArtemisRunning}" />
               <uc:ArtemisLauncher IsVisible="{Binding !IsArtemisRunning}"/>
@@ -50,7 +49,9 @@
                     BorderBrush="#414141"
                     BorderThickness="0"
                     ClipToBounds="True"
-                    Background="Transparent">
+                    Background="Transparent"
+                    VerticalAlignment="Bottom"
+                    DockPanel.Dock="Bottom">
               <StackPanel
                   Background="#44000000"
                   HorizontalAlignment="Right"
@@ -163,7 +164,7 @@
                 </StackPanel>
               </StackPanel>
             </Border>
-          </StackPanel>
+          </DockPanel>
         </Border>
       </ExperimentalAcrylicBorder>
     </Panel>

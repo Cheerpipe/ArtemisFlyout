@@ -25,7 +25,7 @@
   <DockPanel Width="600" HorizontalAlignment="Left">
     <Separator Width="0" Name="SepAnimationFiller"/>
     <!-- Set dimensions here to see the actual result -->
-    <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer" Height="500" Width="310">
+    <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer" Height="510" Width="310">
       <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
         <ExperimentalAcrylicBorder.Material>
           <ExperimentalAcrylicMaterial

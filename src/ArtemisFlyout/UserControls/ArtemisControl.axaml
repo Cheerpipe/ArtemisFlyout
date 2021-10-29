@@ -20,7 +20,7 @@
     <!-- Global toggle Start -->
 
     <!-- Workaround for toggle switch width -->
-    <DockPanel Margin="0 0 0 10">
+    <DockPanel Margin="0 0 0 15">
       <controls:HyperlinkButton 
         VerticalAlignment="Center" 
         FontSize="12" 

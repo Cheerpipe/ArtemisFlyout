@@ -19,6 +19,9 @@ namespace ArtemisFlyout.ViewModels
         ReadIntegerCommand readBrightStatus = new ReadIntegerCommand("DesktopVariables", "GlobalBrightness");
         WriteIntCommand writeBrightStatus = new WriteIntCommand("DesktopVariables", "GlobalBrightness");
 
+        ReadIntegerCommand readSpeedStatus = new ReadIntegerCommand("DesktopVariables", "GlobalSpeed");
+        WriteIntCommand writeSpeedStatus = new WriteIntCommand("DesktopVariables", "GlobalSpeed");
+
         ReadBoolCommand readTeamsStatus = new ReadBoolCommand("DesktopVariables", "TeamsLight");
         WriteBoolCommand writeTeamsStatus = new WriteBoolCommand("DesktopVariables", "TeamsLight");
 
@@ -140,6 +143,12 @@ namespace ArtemisFlyout.ViewModels
             {
                 writeAudioReactiveStatus.Execute(value);
             }
+        }
+
+        public int Speed
+        {
+            get => readSpeedStatus.Execute();
+            set => writeSpeedStatus.Execute(value);
         }
 
         public static bool IsRunning()

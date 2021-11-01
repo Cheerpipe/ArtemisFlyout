@@ -1,12 +1,12 @@
-using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Avalonia;
 using System.Threading;
-using ArtemisFlyout.ViewModels;
+using ArtemisFlyout.Services;
 using ArtemisFlyout.Views;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using Avalonia.Rendering;
+using Ninject;
 
 namespace ArtemisFlyout
 {
@@ -40,14 +40,16 @@ namespace ArtemisFlyout
         // Application entry point. Avalonia is completely initialized.
         static void AppMain(Application app, string[] args)
         {
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            var trayIconService = kernel.Get<ITrayIconService>();
+
+            trayIconService.Show();
+
             // A cancellation token source that will be used to stop the main loop
             var cts = new CancellationTokenSource();
 
             // Do you startup code here
-
-            MainWindow.Preload();
-
-            ViewModels.TrayIcon trayIconViewModel = new ViewModels.TrayIcon();
 
             // Start the main loop
             app.Run(runCancellationToken);

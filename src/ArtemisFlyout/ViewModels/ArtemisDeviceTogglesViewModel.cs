@@ -1,25 +1,34 @@
-﻿using ArtemisFlyout.Artemis.Commands;
+﻿using System;
+using System.Reactive.Disposables;
+using ArtemisFlyout.Artemis.Commands;
+using ArtemisFlyout.Services;
+using ReactiveUI;
 
 namespace ArtemisFlyout.ViewModels
 {
-    public class DeviceTogglesViewModel : ViewModelBase
+    public class ArtemisDeviceTogglesViewModel : ViewModelBase
     {
-        public DeviceTogglesViewModel()
+        private readonly IDeviceService _deviceServices;
+
+        public ArtemisDeviceTogglesViewModel(IDeviceService deviceServices)
         {
 
+            _deviceServices = deviceServices;
+
+            this.WhenActivated(disposables =>
+            {
+                Disposable
+                    .Create(() =>
+                    {
+                    })
+                    .DisposeWith(disposables);
+            });
         }
-        ReadBoolCommand readCeilingState = new ReadBoolCommand("Blackouts", "MoonBlackout");
-        WriteBoolCommand writeCeilingState = new WriteBoolCommand("Blackouts", "MoonBlackout");
+
         public bool Ceiling
         {
-            get
-            {
-                return readCeilingState.Execute();
-            }
-            set
-            {
-                writeCeilingState.Execute(value);
-            }
+            get => _deviceServices.GetState("MoonBlackout");
+            set => _deviceServices.SetState("MoonBlackout", value);
         }
 
 

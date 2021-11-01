@@ -1,45 +1,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Disposables;
 using ArtemisFlyout.Artemis.Commands;
-using ArtemisFlyout.Util;
-
 using ReactiveUI;
 
 namespace ArtemisFlyout.ViewModels
 {
-    public class ArtemisControlViewModel : ViewModelBase
+    public class ArtemisMainControlViewModel : ViewModelBase
     {
-        ReadBoolCommand readBlackoutStatus = new ReadBoolCommand("Blackouts", "FullBlackout");
-        WriteBoolCommand writeBlackoutStatus = new WriteBoolCommand("Blackouts", "FullBlackout");
-
-        ReadBoolCommand readMoonLightStatus = new ReadBoolCommand("Blackouts", "MoonBlackout");
-        WriteBoolCommand writeMoonLightStatus = new WriteBoolCommand("Blackouts", "MoonBlackout");
-
-        ReadIntegerCommand readBrightStatus = new ReadIntegerCommand("DesktopVariables", "GlobalBrightness");
-        WriteIntCommand writeBrightStatus = new WriteIntCommand("DesktopVariables", "GlobalBrightness");
-
-        ReadIntegerCommand readSpeedStatus = new ReadIntegerCommand("DesktopVariables", "GlobalSpeed");
-        WriteIntCommand writeSpeedStatus = new WriteIntCommand("DesktopVariables", "GlobalSpeed");
-
-        ReadBoolCommand readTeamsStatus = new ReadBoolCommand("DesktopVariables", "TeamsLight");
-        WriteBoolCommand writeTeamsStatus = new WriteBoolCommand("DesktopVariables", "TeamsLight");
-
-        ReadBoolCommand readAudioReactiveStatus = new ReadBoolCommand("DesktopVariables", "AudioReactive");
-        WriteBoolCommand writeAudioReactiveStatus = new WriteBoolCommand("DesktopVariables", "AudioReactive");
-
-        ReadBoolCommand readAmbiLightStatus = new ReadBoolCommand("DesktopVariables", "AmbiLight");
-        WriteBoolCommand writeAmbiLightStatus = new WriteBoolCommand("DesktopVariables", "AmbiLight");
-
-        WriteStringCommand writeAmbientProfileName = new WriteStringCommand("DesktopVariables", "Profile");
-        ReadCommand readAmbientProfileName = new ReadCommand("DesktopVariables", "Profile");
-
-        private List<AmbientProfile> _ambientProfiles;
-        private AmbientProfile? _selectedAmbientProfile;
-
-        private bool _artemisEnabled;
-
-        public ArtemisControlViewModel()
+        public ArtemisMainControlViewModel()
         {
             _ambientProfiles = new List<AmbientProfile>();
             _ambientProfiles.Add(new AmbientProfile { Name = "Cold", Condition = "Cold" });
@@ -53,32 +23,31 @@ namespace ArtemisFlyout.ViewModels
             _ambientProfiles.Add(new AmbientProfile { Name = "Cyberpunk", Condition = "Cyberpunk" });
             _ambientProfiles.Add(new AmbientProfile { Name = "Mario", Condition = "mario" });
             _ambientProfiles.Add(new AmbientProfile { Name = "NES", Condition = "nes" });
-            _artemisEnabled = !readBlackoutStatus.Execute();
-        }
+           // _artemisEnabled = !readBlackoutStatus.Execute();
 
-        public bool Blackout
-        {
-            get => readBlackoutStatus.Execute();
-            set
+            this.WhenActivated(disposables =>
             {
-                writeBlackoutStatus.Execute(value);
-                ArtemisEnabled = !value;
-            }
+                Disposable
+                    .Create(() =>
+                    {
+                    })
+                    .DisposeWith(disposables);
+            });
         }
 
-        public bool MoonLight
-        {
-            get => !readMoonLightStatus.Execute();
-            set => writeMoonLightStatus.Execute(!value);
-        }
 
+        private List<AmbientProfile> _ambientProfiles;
+        private AmbientProfile? _selectedAmbientProfile;
+
+        private bool _artemisEnabled;
+
+        ReadIntegerCommand readBrightStatus = new ReadIntegerCommand("DesktopVariables", "GlobalBrightness");
+        WriteIntCommand writeBrightStatus = new WriteIntCommand("DesktopVariables", "GlobalBrightness");
         public int Bright
         {
             get => readBrightStatus.Execute();
             set => writeBrightStatus.Execute(value);
         }
-
-        public object ComboBoxItems => new List<string>();
 
         public bool ArtemisEnabled
         {
@@ -92,6 +61,9 @@ namespace ArtemisFlyout.ViewModels
             set => this.RaiseAndSetIfChanged(ref _ambientProfiles, value);
         }
 
+
+        WriteStringCommand writeAmbientProfileName = new WriteStringCommand("DesktopVariables", "Profile");
+        ReadCommand readAmbientProfileName = new ReadCommand("DesktopVariables", "Profile");
         public AmbientProfile? SelectedAmbientProfile
         {
             get
@@ -105,10 +77,11 @@ namespace ArtemisFlyout.ViewModels
                 _selectedAmbientProfile = value;
                 this.RaiseAndSetIfChanged(ref _selectedAmbientProfile, value);
                 writeAmbientProfileName.Execute(value?.Condition);
-
             }
         }
 
+        ReadBoolCommand readTeamsStatus = new ReadBoolCommand("DesktopVariables", "TeamsLight");
+        WriteBoolCommand writeTeamsStatus = new WriteBoolCommand("DesktopVariables", "TeamsLight");
         public bool Teams
         {
             get
@@ -121,6 +94,8 @@ namespace ArtemisFlyout.ViewModels
             }
         }
 
+        ReadBoolCommand readAmbiLightStatus = new ReadBoolCommand("DesktopVariables", "AmbiLight");
+        WriteBoolCommand writeAmbiLightStatus = new WriteBoolCommand("DesktopVariables", "AmbiLight");
         public bool AmbiLight
         {
             get
@@ -133,6 +108,9 @@ namespace ArtemisFlyout.ViewModels
             }
         }
 
+
+        ReadBoolCommand readAudioReactiveStatus = new ReadBoolCommand("DesktopVariables", "AudioReactive");
+        WriteBoolCommand writeAudioReactiveStatus = new WriteBoolCommand("DesktopVariables", "AudioReactive");
         public bool AudioReactive
         {
             get
@@ -145,6 +123,8 @@ namespace ArtemisFlyout.ViewModels
             }
         }
 
+        ReadIntegerCommand readSpeedStatus = new ReadIntegerCommand("DesktopVariables", "GlobalSpeed");
+        WriteIntCommand writeSpeedStatus = new WriteIntCommand("DesktopVariables", "GlobalSpeed");
         public int Speed
         {
             get => readSpeedStatus.Execute();

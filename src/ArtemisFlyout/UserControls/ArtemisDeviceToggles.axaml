@@ -1,13 +1,14 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:ArtemisFlyout.ViewModels"
-             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ArtemisFlyout.UserControls.DeviceToggles">
+<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:MainWindowViewModel" xmlns="https://github.com/avaloniaui"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:viewModels="clr-namespace:ArtemisFlyout.ViewModels"
+                                xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+                                xmlns:reactiveUi="http://reactiveui.net"
+                                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                                x:Class="ArtemisFlyout.UserControls.DeviceToggles">
   <Design.DataContext>
-    <viewModels:DeviceTogglesViewModel/>
+    <viewModels:MainWindowViewModel  />
   </Design.DataContext>
   <!-- Flyout content start-->
   <StackPanel>
@@ -18,7 +19,8 @@
           Height="36"
           Background="Transparent"
           BorderBrush="Transparent"
-          Click="BtnBack_OnClick">
+          Command="{Binding GoBack}"
+          CommandParameter="0">
           <controls:SymbolIcon Symbol="Back" Width="16" Height="16"/>
       </Button>
       <Grid ColumnDefinitions="*" RowDefinitions="*,*,*,*,*,*,*,*,*,*" Margin="10 0 10 0">
@@ -33,7 +35,7 @@
           Ceiling
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !Ceiling}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Ceiling}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -48,7 +50,7 @@
           Television
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !Television}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Television}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -63,7 +65,7 @@
           Displays
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !Display}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Display}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -78,7 +80,7 @@
           Speakers
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !Speakers}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Speakers}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -93,7 +95,7 @@
           Desktop backside
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !DesktopBackside}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.DesktopBackside}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -108,7 +110,7 @@
           Peripherals
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !Peripherals}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Peripherals}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -123,7 +125,7 @@
           Desktop surface
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !DesktopSurface}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.DesktopSurface}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -138,7 +140,7 @@
           Desktop underside
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !DesktopUnderside}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.DesktopUnderside}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -153,7 +155,7 @@
           Night table
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !NightTable}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.NightTable}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -168,7 +170,7 @@
           Computer case
         </TextBlock>
         <ToggleSwitch
-            IsChecked="{Binding !ComputerCase}"
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.ComputerCase}"
             HorizontalAlignment="Right"
             MinWidth="0"/>
       </DockPanel>
@@ -176,6 +178,4 @@
 
   </StackPanel>
   <!-- Flyout content End-->
-
-
-</UserControl>
+</reactiveUi:ReactiveUserControl>

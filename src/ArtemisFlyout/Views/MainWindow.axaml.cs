@@ -1,21 +1,18 @@
-#nullable enable
 using System;
-using System.Threading;
+using System.Reflection;
 using System.Threading.Tasks;
-using ArtemisFlyout.Util;
 using ArtemisFlyout.ViewModels;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using MessageBox.Avalonia.Enums;
-using RoutedEventArgs = Avalonia.Interactivity.RoutedEventArgs;
-using Window = Avalonia.Controls.Window;
- 
+using Avalonia.ReactiveUI;
+using ReactiveUI;
+
 namespace ArtemisFlyout.Views
 {
-    public partial class MainWindow : Window
+    public class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         private const int FlyoutHorizontalSpacing = 12;
         private const int FlyoutVerticalSpacing = 25;
@@ -24,29 +21,37 @@ namespace ArtemisFlyout.Views
         private int _flyoutWidth;
         private int _flyoutHeight;
 
-        public MainWindow()
+        public MainWindow(MainWindowViewModel viewModel)
         {
-            InitializeComponent();
+            // If you put a WhenActivated block here, your activatable view model 
+            // will also support activation, otherwise it won't.
+            ViewModel = viewModel;
+            this.WhenActivated(disposables => { /* Handle interactions etc. */ });
+            AvaloniaXamlLoader.Load(this);
+
 #if DEBUG
             this.AttachDevTools();
 #endif
+
+        }
+
+        private bool _animating;
+        public void ShowAnimated()
+        {
+            if (_animating)
+                return;
+            _animating = true;
+
             var primaryScreen = Screens.Primary.WorkingArea;
 
-            WindowStartupLocation = Avalonia.Controls.WindowStartupLocation.Manual;
+            WindowStartupLocation = WindowStartupLocation.Manual;
 
             _flyoutWidth = (int)this.Find<Panel>("FlyoutPanelContainer").Width + FlyoutHorizontalSpacing;
             _flyoutHeight = (int)this.Find<Panel>("FlyoutPanelContainer").Height + FlyoutVerticalSpacing;
 
             Position = new PixelPoint(primaryScreen.Width - _flyoutWidth, primaryScreen.Height - _flyoutHeight);
             Deactivated += MainWindow_Deactivated;
-        }
 
-        private bool _animating;
-        public async void ShowAnimated()
-        {
-            if (_animating)
-                return;
-            _animating = true;
 
             Show();
             var filler = this.Find<Separator>("SepAnimationFiller");
@@ -72,6 +77,8 @@ namespace ArtemisFlyout.Views
                 return;
             _animating = true;
 
+            Deactivated -= MainWindow_Deactivated;
+
             var filler = this.Find<Separator>("SepAnimationFiller");
             var t = new DoubleTransition()
             {
@@ -94,78 +101,6 @@ namespace ArtemisFlyout.Views
         private void MainWindow_Deactivated(object sender, EventArgs e)
         {
             CloseAnimated();
-        }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
-
-        private async void BtnRestart_OnClick(object? sender, RoutedEventArgs e)
-        {
-            var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow("Artemis", "Are you sure you want restart Artemis?", ButtonEnum.YesNo, MessageBox.Avalonia.Enums.Icon.Warning);
-            var result = await messageBoxStandardWindow.Show();
-
-            if (result != ButtonResult.Yes)
-                return;
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/restart");
-            CloseAnimated();
-        }
-
-        private async void BtnHome_OnClick(object? sender, RoutedEventArgs e)
-        {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/bring-to-foreground");
-        }
-
-        private async void BtnWorkshop_OnClick(object? sender, RoutedEventArgs e)
-        {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-workshop");
-            CloseAnimated();
-        }
-
-        private async void BtnShowSurfaceEditor_OnClick(object? sender, RoutedEventArgs e)
-        {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-surface-editor");
-            CloseAnimated();
-        }
-
-        private async void BtnShowDebugger_OnClick(object? sender, RoutedEventArgs e)
-        {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-debugger");
-            CloseAnimated();
-        }
-
-        private async void BtnShowSettings_OnClick(object? sender, RoutedEventArgs e)
-        {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-settings");
-            CloseAnimated();
-        }
-
-        public static void CreateAndShow()
-        {
-            if (Program.MainWindowInstance == null)
-            {
-                Program.MainWindowInstance = new MainWindow();
-                MainWindow flyout = Program.MainWindowInstance;
-                flyout.DataContext = new MainWindowViewModel();
-            }
-            Program.MainWindowInstance.ShowAnimated();
-        }
-
-        public static async void Preload()
-        {
-            var prelodWindow = new MainWindow();
-            prelodWindow.Opacity = 0;
-            prelodWindow.ShowAnimated();
-            Thread.Sleep(500);
-            prelodWindow.Close();
-            Thread.Sleep(500);
-        }
-
-        public void SetContentPageIndex(int index)
-        {
-            this.Find<Carousel>("CarouselContentContainer").SelectedIndex = index;
         }
 
     }

@@ -1,0 +1,179 @@
+<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:viewModels="clr-namespace:ArtemisFlyout.ViewModels"
+                                xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+                                xmlns:reactiveUi="http://reactiveui.net"
+                                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                                x:Class="ArtemisFlyout.UserControls.DeviceToggles">
+
+  <!-- Flyout content start-->
+  <StackPanel>
+      <Button 
+          Name="BtnBack"
+          Margin="0 10 0 0"
+          Width="36" 
+          Height="36"
+          Background="Transparent"
+          BorderBrush="Transparent"
+          Command="{Binding GoBack}"
+          CommandParameter="0">
+          <controls:SymbolIcon Symbol="Back" Width="16" Height="16"/>
+      </Button>
+      <Grid ColumnDefinitions="*" RowDefinitions="*,*,*,*,*,*,*,*,*,*" Margin="10 0 10 0">
+      <DockPanel
+          Grid.Row="0"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Ceiling
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Ceiling}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="1"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Television
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Television}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="2"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Displays
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Display}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="3"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Speakers
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Speakers}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="4"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Desktop backside
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.DesktopBackside}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="5"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Peripherals
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Peripherals}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="6"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Desktop surface
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.DesktopSurface}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="7"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Desktop underside
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.DesktopUnderside}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="8"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Night table
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.NightTable}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+      <DockPanel
+          Grid.Row="9"
+          Grid.Column="0"
+          Margin="0 0 0 0">
+        <TextBlock
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Margin="0 0 10 0">
+          Computer case
+        </TextBlock>
+        <ToggleSwitch
+            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.ComputerCase}"
+            HorizontalAlignment="Right"
+            MinWidth="0"/>
+      </DockPanel>
+    </Grid>
+
+  </StackPanel>
+  <!-- Flyout content End-->
+</reactiveUi:ReactiveUserControl>

@@ -1,22 +1,16 @@
-using System;
-using System.Runtime.InteropServices;
+using System.Reflection;
 using Avalonia;
 using System.Threading;
-using ArtemisFlyout.ViewModels;
-using ArtemisFlyout.Views;
+using ArtemisFlyout.Services.TrayIcon;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using Avalonia.Rendering;
+using Ninject;
 
 namespace ArtemisFlyout
 {
     public class Program
     {
-        [DllImport("Dwmapi.dll")]
-        private static extern int DwmIsCompositionEnabled(out bool enabled);
-
         public static CancellationTokenSource runCancellationTokenSource = new CancellationTokenSource();
-        public static MainWindow MainWindowInstance;
 
         static CancellationToken runCancellationToken = runCancellationTokenSource.Token;
 
@@ -26,7 +20,7 @@ namespace ArtemisFlyout
             var builder = AppBuilder.Configure<App>().UsePlatformDetect().UseReactiveUI().With(new Win32PlatformOptions()
             {
                 UseWindowsUIComposition = true
-            }); ;
+            });
             return builder;
         }
 
@@ -35,19 +29,21 @@ namespace ArtemisFlyout
         // you shouldn't use any Avalonia types or anything that expects
         // a SynchronizationContext to be ready
         public static void Main(string[] args)
-            => BuildAvaloniaApp().Start(AppMain, args);
+        {
+            BuildAvaloniaApp().Start(AppMain, args);
+        }
+
 
         // Application entry point. Avalonia is completely initialized.
         static void AppMain(Application app, string[] args)
         {
-            // A cancellation token source that will be used to stop the main loop
-            var cts = new CancellationTokenSource();
-
             // Do you startup code here
 
-            MainWindow.Preload();
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            var trayIconService = kernel.Get<ITrayIconService>();
 
-            ViewModels.TrayIcon trayIconViewModel = new ViewModels.TrayIcon();
+            trayIconService.Show();
 
             // Start the main loop
             app.Run(runCancellationToken);

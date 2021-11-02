@@ -1,16 +1,17 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="using:ArtemisFlyout.ViewModels"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="310"
-             x:Class="ArtemisFlyout.UserControls.ArtemisLauncher"
-             Width="300"
-             Height="310"
-            Background="Transparent">
+<reactiveUi:ReactiveUserControl x:TypeArguments="vm:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:vm="using:ArtemisFlyout.ViewModels"
+                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+                                xmlns:reactiveUi="http://reactiveui.net"
+                                mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="310"
+                                x:Class="ArtemisFlyout.UserControls.ArtemisLauncher"
+                                Width="300"
+                                Height="310"
+                                Background="Transparent">
   <Design.DataContext>
-    <vm:ArtemisViewModel/>
+    <vm:FlyoutContainerViewModel/>
   </Design.DataContext>
 
   <!-- Flyout content start-->
@@ -23,7 +24,7 @@
                 Margin="0 0 0 0"
                 Background="Transparent"
                 BorderBrush="Transparent"
-                Click="BtnLaunch_OnClick">
+                Command="{Binding ArtemisLauncherViewModel.LaunchArtemis}">
             <avalonia:MaterialIcon
                 Kind="Power"
                 Width="64"
@@ -38,4 +39,4 @@
     </StackPanel>
   </Panel>
   <!-- Flyout content End-->
-</UserControl>
+</reactiveUi:ReactiveUserControl>

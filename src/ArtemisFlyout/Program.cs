@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.InteropServices;
 using Avalonia;
 using System.Threading;
 using ArtemisFlyout.Services.TrayIcon;
@@ -11,9 +10,6 @@ namespace ArtemisFlyout
 {
     public class Program
     {
-        [DllImport("Dwmapi.dll")]
-        private static extern int DwmIsCompositionEnabled(out bool enabled);
-
         public static CancellationTokenSource runCancellationTokenSource = new CancellationTokenSource();
 
         static CancellationToken runCancellationToken = runCancellationTokenSource.Token;
@@ -24,7 +20,7 @@ namespace ArtemisFlyout
             var builder = AppBuilder.Configure<App>().UsePlatformDetect().UseReactiveUI().With(new Win32PlatformOptions()
             {
                 UseWindowsUIComposition = true
-            }); ;
+            });
             return builder;
         }
 
@@ -41,16 +37,13 @@ namespace ArtemisFlyout
         // Application entry point. Avalonia is completely initialized.
         static void AppMain(Application app, string[] args)
         {
+            // Do you startup code here
+
             var kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
             var trayIconService = kernel.Get<ITrayIconService>();
 
             trayIconService.Show();
-
-            // A cancellation token source that will be used to stop the main loop
-            var cts = new CancellationTokenSource();
-
-            // Do you startup code here
 
             // Start the main loop
             app.Run(runCancellationToken);

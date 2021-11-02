@@ -1,7 +1,7 @@
 ﻿using System;
 using RestSharp;
 
-namespace ArtemisFlyout.Artemis.Commands
+namespace ArtemisFlyout.JsonDatamodel
 {
     public class WriteCommand : Command
     {
@@ -25,10 +25,10 @@ namespace ArtemisFlyout.Artemis.Commands
                     request = $"{{{_jsonPath}: {value.ToString()?.ToLower()} }}";
                     break;
                 case TypeCode.String:
-                    request = $"{{{_jsonPath}: '{value.ToString()}' }}";
+                    request = $"{{{_jsonPath}: '{value}' }}";
                     break;
                 default:
-                    request = $"{{{_jsonPath}: {value.ToString()} }}";
+                    request = $"{{{_jsonPath}: {value} }}";
                     break;
             }
 

@@ -1,6 +1,5 @@
 ﻿
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace ArtemisFlyout.Services.ArtemisServices
 {
@@ -20,10 +19,11 @@ namespace ArtemisFlyout.Services.ArtemisServices
 
         bool SetSpeed(int value);
         int GetSpeed();
-        public bool SetJsonDataModelValue<T>(string dataModel, string jsonPath, object value);
-        public T GetJsonDataModelValue<T>(string dataModel, string jsonPath, object defaultValue);
+        public bool SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value);
+        public T GetJsonDataModelValue<T>(string dataModel, string jsonPath, T defaultValue);
         public List<Profile> GetProfiles(string categoryName = "");
         public bool SetActiveProfile(string profileName);
         public string GetActiveProfile();
+        public void GoToWindow(string windowName);
     }
 }

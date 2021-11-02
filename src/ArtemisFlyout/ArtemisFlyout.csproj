@@ -23,6 +23,7 @@
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Any-Config" Version="1.0.161" />
     <PackageReference Include="Avalonia" Version="0.10.10" />
     <PackageReference Include="Avalonia.Desktop" Version="0.10.10" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
@@ -34,6 +35,7 @@
     <PackageReference Include="MessageBox.Avalonia" Version="1.5.5" />
     <PackageReference Include="Ninject" Version="3.3.4" />
     <PackageReference Include="RestSharp" Version="106.13.0" />
+    <PackageReference Include="TypeSupport" Version="1.1.12" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="UserControls\ArtemisMainControl.axaml.cs">
@@ -51,5 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

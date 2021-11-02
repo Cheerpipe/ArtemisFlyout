@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
-using ArtemisFlyout.Artemis.Commands;
 using ArtemisFlyout.Services.ArtemisServices;
 using ReactiveUI;
 
@@ -18,16 +16,11 @@ namespace ArtemisFlyout.ViewModels
         {
             _artemisService = artemisService;
             _profiles = _artemisService.GetProfiles("Ambient");
-            _fullBlackout = _artemisService.GetJsonDataModelValue<bool>("Blackouts", "FullBlackout", false);
-            // _artemisEnabled = !readBlackoutStatus.Execute();
+            _fullBlackout = _artemisService.GetJsonDataModelValue("Blackouts", "FullBlackout", false);
 
             this.WhenActivated(disposables =>
             {
-                Disposable
-                    .Create(() =>
-                    {
-                    })
-                    .DisposeWith(disposables);
+                Disposable.Create(() => { }).DisposeWith(disposables);
             });
         }
 
@@ -37,95 +30,56 @@ namespace ArtemisFlyout.ViewModels
             set => _artemisService.SetBright(value);
         }
 
-        public List<Profile> Profiles
-        {
-            get => _profiles;
-        }
+        public List<Profile> Profiles => _profiles;
 
         public Profile SelectedProfile
         {
             get
             {
-                var currentProfileName = _artemisService.GetJsonDataModelValue<string>("DesktopVariables", "Profile", "");
+                var currentProfileName = _artemisService.GetJsonDataModelValue("DesktopVariables", "Profile", "");
                 return _selectedProfile = _profiles.FirstOrDefault(p => p.Name == currentProfileName);
             }
             set
             {
                 this.RaiseAndSetIfChanged(ref _selectedProfile, value);
-                _artemisService.SetJsonDataModelValue<string>("DesktopVariables", "Profile", value.Name);
+                _artemisService.SetJsonDataModelValue("DesktopVariables", "Profile", value.Name);
             }
         }
 
         private bool _fullBlackout;
         public bool FullBlackout
         {
-            get
-            {
-                return _artemisService.GetJsonDataModelValue<bool>("Blackouts", "FullBlackout", _fullBlackout);
-            }
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "FullBlackout", false);
             set
             {
-                _artemisService.SetJsonDataModelValue<bool>("Blackouts", "FullBlackout", value);
+                _artemisService.SetJsonDataModelValue("Blackouts", "FullBlackout", value);
                 this.RaiseAndSetIfChanged(ref _fullBlackout, value);
             }
         }
 
-
-        ReadBoolCommand readTeamsStatus = new ReadBoolCommand("DesktopVariables", "TeamsLight");
-        WriteBoolCommand writeTeamsStatus = new WriteBoolCommand("DesktopVariables", "TeamsLight");
         public bool Teams
         {
-            get
-            {
-                return readTeamsStatus.Execute();
-            }
-            set
-            {
-                writeTeamsStatus.Execute(value);
-            }
+            get => _artemisService.GetJsonDataModelValue("DesktopVariables", "TeamsLight", false);
+            set => _artemisService.SetJsonDataModelValue("DesktopVariables", "TeamsLight", value);
         }
 
-        ReadBoolCommand readAmbiLightStatus = new ReadBoolCommand("DesktopVariables", "AmbiLight");
-        WriteBoolCommand writeAmbiLightStatus = new WriteBoolCommand("DesktopVariables", "AmbiLight");
         public bool AmbiLight
         {
-            get
-            {
-                return readAmbiLightStatus.Execute();
-            }
-            set
-            {
-                writeAmbiLightStatus.Execute(value);
-            }
+            get => _artemisService.GetJsonDataModelValue("DesktopVariables", "AmbiLight", false);
+            set => _artemisService.SetJsonDataModelValue("DesktopVariables", "AmbiLight", value);
         }
 
-
-        ReadBoolCommand readAudioReactiveStatus = new ReadBoolCommand("DesktopVariables", "AudioReactive");
-        WriteBoolCommand writeAudioReactiveStatus = new WriteBoolCommand("DesktopVariables", "AudioReactive");
         public bool AudioReactive
         {
-            get
-            {
-                return readAudioReactiveStatus.Execute();
-            }
-            set
-            {
-                writeAudioReactiveStatus.Execute(value);
-            }
+            get => _artemisService.GetJsonDataModelValue("DesktopVariables", "AudioReactive", false);
+            set => _artemisService.SetJsonDataModelValue("DesktopVariables", "AudioReactive", value);
         }
 
-        ReadIntegerCommand readSpeedStatus = new ReadIntegerCommand("DesktopVariables", "GlobalSpeed");
-        WriteIntCommand writeSpeedStatus = new WriteIntCommand("DesktopVariables", "GlobalSpeed");
+
         public int Speed
         {
-            get => readSpeedStatus.Execute();
-            set => writeSpeedStatus.Execute(value);
-        }
-
-        public static bool IsRunning()
-        {
-            var processName = Process.GetProcessesByName("Artemis.UI");
-            return processName.Length != 0;
+            get => _artemisService.GetJsonDataModelValue("DesktopVariables", "GlobalSpeed", 0);
+            set => _artemisService.SetJsonDataModelValue("DesktopVariables", "GlobalSpeed", value);
         }
     }
 }

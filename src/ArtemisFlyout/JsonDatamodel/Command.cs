@@ -1,17 +1,17 @@
 ﻿using System;
 using RestSharp;
 
-namespace ArtemisFlyout.Artemis.Commands
+namespace ArtemisFlyout.JsonDatamodel
 {
     public class Command
     {
-        private const string ENDPOINT_BASE = "/json-datamodel/";
+        private const string EndpointBase = "/json-datamodel/";
         private RestClient _client = new RestClient("http://127.0.0.1:9696");
 
-        public RestClient Client => _client;
+
         protected RestRequest CreateRequest(string api, string content, Method method)
         {
-            RestRequest restRequest = new RestRequest(ENDPOINT_BASE + api, method);
+            RestRequest restRequest = new RestRequest(EndpointBase + api, method);
             if (restRequest.Method != Method.GET)
                 restRequest.AddParameter("application/json", content, ParameterType.RequestBody);
             return restRequest;
@@ -21,13 +21,13 @@ namespace ArtemisFlyout.Artemis.Commands
         {
             try
             {
-                //return Util.RemoveBom(_client.Execute(restRequest, restRequest.Method).Content.Trim());
                 return _client.Execute(restRequest, restRequest.Method).Content.Trim();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //MessageBox.Show($"Error executing request {restRequest.Parameters[0]}.\r\nError: {ex}");
+                // ignored
             }
+
             return string.Empty;
         }
     }

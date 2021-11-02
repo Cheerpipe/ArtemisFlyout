@@ -12,7 +12,7 @@ namespace ArtemisFlyout.ViewModels
         public ArtemisDeviceTogglesViewModel(IArtemisService artemisService)
         {
             _artemisService = artemisService;
-            _ceiling= _artemisService.GetJsonDataModelValue<bool>("Blackouts", "MoonBlackout", false);
+            _ceiling= _artemisService.GetJsonDataModelValue("Blackouts", "MoonBlackout", false);
 
             this.WhenActivated(disposables =>
             {
@@ -27,67 +27,67 @@ namespace ArtemisFlyout.ViewModels
         private bool _ceiling;
         public bool Ceiling
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "MoonBlackout", false);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "MoonBlackout", false);
             set
             {
                 this.
-                _artemisService.SetJsonDataModelValue<bool>("Blackouts", "MoonBlackout", value);
+                _artemisService.SetJsonDataModelValue("Blackouts", "MoonBlackout", value);
                 this.RaiseAndSetIfChanged(ref _ceiling, value);
             }
         }
 
         public bool Television
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "TvBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "TvBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "TvBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "TvBlackout", value);
         }
 
         public bool Display
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "DisplayBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "DisplayBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "DisplayBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "DisplayBlackout", value);
         }
 
         public bool Speakers
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "SpeakerBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "SpeakerBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "SpeakerBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "SpeakerBlackout", value);
         }
 
         public bool DesktopBackside
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "TableBackBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "TableBackBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "TableBackBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "TableBackBlackout", value);
         }
 
         public bool Peripherals
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "PeripheralsBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "PeripheralsBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "PeripheralsBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "PeripheralsBlackout", value);
         }
 
         public bool DesktopSurface
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "TableOverBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "TableOverBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "TableOverBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "TableOverBlackout", value);
         }
 
         public bool DesktopUnderside
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "TableUnderBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "TableUnderBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "TableUnderBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "TableUnderBlackout", value);
         }
 
         public bool NightTable
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "NightTableBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "NightTableBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "NightTableBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "NightTableBlackout", value);
         }
 
         public bool ComputerCase
         {
-            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "ComputerCaseBlackout", false);
-            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "ComputerCaseBlackout", value);
+            get => _artemisService.GetJsonDataModelValue("Blackouts", "ComputerCaseBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue("Blackouts", "ComputerCaseBlackout", value);
         }
     }
 }

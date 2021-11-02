@@ -1,6 +1,5 @@
 ﻿using System.Reactive.Disposables;
 using ArtemisFlyout.Services.ArtemisServices;
-using ArtemisFlyout.Services.FlyoutServices;
 using ReactiveUI;
 
 namespace ArtemisFlyout.ViewModels
@@ -10,19 +9,16 @@ namespace ArtemisFlyout.ViewModels
         private readonly IArtemisService _artemisService;
         private readonly ArtemisDeviceTogglesViewModel _artemisDeviceTogglesViewModel;
         private readonly ArtemisMainControlViewModel _artemisMainControlViewModel;
-        private readonly IFlyoutService _flyoutService;
         private int _activePageIndex;
 
         public FlyoutContainerViewModel(
             IArtemisService artemisService,
             ArtemisDeviceTogglesViewModel artemisDeviceTogglesViewModel,
-            ArtemisMainControlViewModel artemisMainControlViewModel,
-            IFlyoutService flyoutService)
+            ArtemisMainControlViewModel artemisMainControlViewModel)
         {
             _artemisService = artemisService;
             _artemisMainControlViewModel = artemisMainControlViewModel;
             _artemisDeviceTogglesViewModel = artemisDeviceTogglesViewModel;
-            _flyoutService = flyoutService;
 
 
             this.WhenActivated(disposables =>
@@ -50,42 +46,42 @@ namespace ArtemisFlyout.ViewModels
         }
 
 
-        public async void SetActivePageIndex(int newPageIndex)
+        public void SetActivePageIndex(int newPageIndex)
         {
             ActivePageindex = newPageIndex;
         }
 
-        public async void GoBack()
+        public void GoBack()
         {
             ActivePageindex = 0;
         }
 
-        private async void Restart()
+        public void Restart()
         {
             _artemisService.RestartArtemis();
         }
 
-        public async void GoHome()
+        public void GoHome()
         {
             _artemisService.GoHome();
         }
 
-        public async void GoWorkshop()
+        public void GoWorkshop()
         {
             _artemisService.GoWorkshop();
         }
 
-        public async void GoSurfaceEditor()
+        public void GoSurfaceEditor()
         {
             _artemisService.GoSurfaceEditor();
         }
 
-        public async void ShowDebugger()
+        public void ShowDebugger()
         {
             _artemisService.ShowDebugger();
         }
 
-        public async void GoSettings()
+        public void GoSettings()
         {
             _artemisService.GoSettings();
         }

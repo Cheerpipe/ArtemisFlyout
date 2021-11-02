@@ -2,57 +2,66 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using ArtemisFlyout.Artemis.Commands;
+using System.Threading.Tasks;
+using ArtemisFlyout.JsonDatamodel;
+using ArtemisFlyout.Services.Configuration;
 using ArtemisFlyout.Services.FlyoutServices;
-using ArtemisFlyout.Util;
+using ArtemisFlyout.Services.RestServices;
 using MessageBox.Avalonia.Enums;
 using Newtonsoft.Json;
-using RestSharp;
 
 namespace ArtemisFlyout.Services.ArtemisServices
 {
     public class ArtemisService : IArtemisService
     {
 
-        private IFlyoutService _flyoutService;
-        public ArtemisService(IFlyoutService flyoutService)
+        private readonly IFlyoutService _flyoutService;
+        private readonly IConfigurationService _configurationService;
+        private readonly IRestService _restService;
+
+        public ArtemisService(IFlyoutService flyoutService, IConfigurationService configurationService, IRestService restService)
         {
             _flyoutService = flyoutService;
+            _configurationService = configurationService;
+            _restService = restService;
         }
 
-        private const string ArtemisPath = @"D:\Repos\Artemis\src\Artemis.UI\bin\net5.0-windows\Artemis.UI.exe";
-        private const string ArtemisParams = "--minimized --pcmr --ignore-plugin-lock";
-
-        public async void GoHome() => RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/bring-to-foreground");
-
-        public async void GoWorkshop()
+        public void GoHome()
         {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-workshop");
+            _ = _restService.Get("/remote/bring-to-foreground");
+            _flyoutService.Close();
+
+        }
+
+        public void GoWorkshop()
+        {
+            _ = _restService.Get("/windows/show-workshop");
             _flyoutService.Close();
         }
 
-        public async void GoSurfaceEditor()
+        public void GoSurfaceEditor()
         {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-surface-editor");
+            _ = _restService.Get("/windows/show-surface-editor");
             _flyoutService.Close();
         }
 
-        public async void ShowDebugger()
+        public void ShowDebugger()
         {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-debugger");
+            _ = _restService.Get("/windows/show-debugger");
             _flyoutService.Close();
         }
 
-        public async void GoSettings()
+        public void GoSettings()
         {
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-settings");
+            _ = _restService.Get("/windows/show-settings");
             _flyoutService.Close();
         }
 
-        public async void RunArtemis()
+        public void RunArtemis()
         {
-            Process.Start(ArtemisPath, ArtemisParams);
+            Process.Start(
+                _configurationService.GetConfiguration().LaunchSettings.ArtemisPath,
+                _configurationService.GetConfiguration().LaunchSettings.ArtemisLaunchArgs);
             _flyoutService.Close();
         }
 
@@ -64,37 +73,37 @@ namespace ArtemisFlyout.Services.ArtemisServices
 
             if (result != ButtonResult.Yes)
                 return;
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/restart");
+            _ = _restService.Get("/remote/restart");
             _flyoutService.Close();
         }
 
         bool IArtemisService.IsArtemisRunning() => Process.GetProcessesByName("Artemis.UI").Length > 0;
         public bool SetBright(int value)
         {
-            return SetJsonDataModelValue<int>("DesktopVariables", "GlobalBrightness", value);
+            return SetJsonDataModelValue("DesktopVariables", "GlobalBrightness", value);
         }
 
         public int GetBright()
         {
-            return GetJsonDataModelValue<int>("DesktopVariables", "GlobalBrightness", 0);
+            return GetJsonDataModelValue("DesktopVariables", "GlobalBrightness", 0);
         }
 
         public bool SetSpeed(int value)
         {
-            return SetJsonDataModelValue<int>("DesktopVariables", "GlobalSpeed", value);
+            return SetJsonDataModelValue("DesktopVariables", "GlobalSpeed", value);
         }
 
         public int GetSpeed()
         {
-            return GetJsonDataModelValue<int>("DesktopVariables", "GlobalSpeed", 0);
+            return GetJsonDataModelValue("DesktopVariables", "GlobalSpeed", 0);
         }
 
-        public bool SetJsonDataModelValue<T>(string dataModel, string jsonPath, object value)
+        public bool SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value)
         {
             WriteCommand writeCommand = new WriteCommand(dataModel, jsonPath);
             try
             {
-                if (value is T)
+                if (value != null)
                     writeCommand.Execute<T>(value);
                 return true;
             }
@@ -104,14 +113,14 @@ namespace ArtemisFlyout.Services.ArtemisServices
             }
         }
 
-        public T GetJsonDataModelValue<T>(string dataModel, string jsonPath, object defaultValue)
+        public T GetJsonDataModelValue<T>(string dataModel, string jsonPath, T defaultValue)
         {
             try
             {
                 ReadCommand readCommand = new ReadCommand(dataModel, jsonPath);
-                return (T)readCommand.Execute<T>();
+                return readCommand.Execute<T>();
             }
-            catch (Exception e)
+            catch (InvalidCastException)
             {
                 return default(T);
             }
@@ -119,24 +128,29 @@ namespace ArtemisFlyout.Services.ArtemisServices
 
         public List<Profile> GetProfiles(string categoryName = "")
         {
-            RestClient restClient = new RestClient("http://127.0.0.1:9696");
-            restClient.Encoding = Encoding.BigEndianUnicode;
-            RestRequest restRequest = new RestRequest("/profiles");
-            string restResponse = restClient.Execute(restRequest, restRequest.Method).Content.Trim(new char[] { '\uFEFF' }); ;
-
-            return string.IsNullOrEmpty(categoryName) ? 
-                JsonConvert.DeserializeObject<IEnumerable<Profile>>(restResponse).ToList() : 
+            string restResponse = _restService.Get("/profiles").Trim(new[] { '\uFEFF' });
+            return string.IsNullOrEmpty(categoryName) ?
+                JsonConvert.DeserializeObject<IEnumerable<Profile>>(restResponse).ToList() :
                 JsonConvert.DeserializeObject<IEnumerable<Profile>>(restResponse).Where(p => p.Category.Name == categoryName).ToList();
         }
 
         public bool SetActiveProfile(string profileName)
         {
-            return SetJsonDataModelValue<string>("DesktopVariables", "Profile", profileName);
+            return SetJsonDataModelValue("DesktopVariables", "Profile", profileName);
         }
 
         public string GetActiveProfile()
         {
-            return GetJsonDataModelValue<string>("DesktopVariables", "Profile", "");
+            return GetJsonDataModelValue("DesktopVariables", "Profile", "");
+        }
+
+        public async void GoToWindow(string windowName)
+        {
+            await Task.Run(() =>
+            {
+                _ = _restService.Get($"/windows/{windowName}");
+                _flyoutService.Close();
+            });
         }
     }
 }

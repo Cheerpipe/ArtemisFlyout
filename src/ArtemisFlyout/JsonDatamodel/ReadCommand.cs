@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
-namespace ArtemisFlyout.Artemis.Commands
+namespace ArtemisFlyout.JsonDatamodel
 {
     public class ReadCommand : Command
     {
@@ -27,7 +27,7 @@ namespace ArtemisFlyout.Artemis.Commands
             }
 
             JObject responseObject = JObject.Parse(propertyJson);
-            JToken? token = responseObject.SelectToken(_jsonPath);
+            JToken token = responseObject.SelectToken(_jsonPath);
             if (token == null)
             {
                 throw new Exception("Value don't exists");

@@ -1,6 +1,7 @@
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
+// ReSharper disable UnusedParameter.Local
 
 namespace ArtemisFlyout.UserControls
 {

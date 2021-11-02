@@ -1,5 +1,4 @@
 ﻿using System;
-using ArtemisAmbientCli.Commands;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 

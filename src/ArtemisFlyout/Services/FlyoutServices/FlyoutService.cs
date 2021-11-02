@@ -6,7 +6,7 @@ namespace ArtemisFlyout.Services.FlyoutServices
 {
     public class FlyoutService : IFlyoutService
     {
-        public MainWindow MainWindowInstance { get; set; }
+        public FlyoutContainer FlyoutContainerInstance { get; set; }
         private readonly IKernel _kernel;
 
         public FlyoutService(IKernel kernel)
@@ -18,11 +18,11 @@ namespace ArtemisFlyout.Services.FlyoutServices
         {
             lock (this)
             {
-                if (MainWindowInstance is {IsVisible: true}) return;
+                if (FlyoutContainerInstance is {IsVisible: true}) return;
 
-                MainWindowInstance = new MainWindow();
-                MainWindowInstance.ViewModel = _kernel.Get<MainWindowViewModel>();
-                MainWindowInstance.ShowAnimated();
+                FlyoutContainerInstance = new FlyoutContainer();
+                FlyoutContainerInstance.ViewModel = _kernel.Get<FlyoutContainerViewModel>();
+                FlyoutContainerInstance.ShowAnimated();
             }
         }
 
@@ -30,9 +30,10 @@ namespace ArtemisFlyout.Services.FlyoutServices
         {
             lock (this)
             {
-                MainWindowInstance.CloseAnimated();
-                MainWindowInstance = null;
+                FlyoutContainerInstance.CloseAnimated();
+                FlyoutContainerInstance = null;
             }
         }
+
     }
 }

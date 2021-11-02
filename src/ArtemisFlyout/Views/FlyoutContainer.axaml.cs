@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using ArtemisFlyout.ViewModels;
 using Avalonia;
@@ -12,7 +11,7 @@ using ReactiveUI;
 
 namespace ArtemisFlyout.Views
 {
-    public class MainWindow : ReactiveWindow<MainWindowViewModel>
+    public class FlyoutContainer : ReactiveWindow<FlyoutContainerViewModel>
     {
         private const int FlyoutHorizontalSpacing = 12;
         private const int FlyoutVerticalSpacing = 25;
@@ -21,7 +20,7 @@ namespace ArtemisFlyout.Views
         private int _flyoutWidth;
         private int _flyoutHeight;
 
-        public MainWindow()
+        public FlyoutContainer()
         {
             // If you put a WhenActivated block here, your activatable view model 
             // will also support activation, otherwise it won't.

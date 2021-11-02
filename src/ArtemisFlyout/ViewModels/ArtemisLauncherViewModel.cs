@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reactive.Disposables;
-using ArtemisFlyout.Services;
+﻿using System.Reactive.Disposables;
 using ReactiveUI;
 
 namespace ArtemisFlyout.ViewModels

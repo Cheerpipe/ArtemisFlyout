@@ -3,27 +3,23 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using ArtemisFlyout.Artemis.Commands;
+using ArtemisFlyout.Services.ArtemisServices;
 using ReactiveUI;
 
 namespace ArtemisFlyout.ViewModels
 {
     public class ArtemisMainControlViewModel : ViewModelBase
     {
-        public ArtemisMainControlViewModel()
+        private readonly IArtemisService _artemisService;
+        private readonly List<Profile> _profiles;
+        private Profile _selectedProfile;
+
+        public ArtemisMainControlViewModel(IArtemisService artemisService)
         {
-            _ambientProfiles = new List<AmbientProfile>();
-            _ambientProfiles.Add(new AmbientProfile { Name = "Cold", Condition = "Cold" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Retrodark", Condition = "Retrodark" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Warm", Condition = "Warm" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Calmwatter", Condition = "Calmwatter" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Retrowave", Condition = "Retrowave" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Comfortable", Condition = "Comfortable" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Relax", Condition = "Relax" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Demo", Condition = "Demo" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Cyberpunk", Condition = "Cyberpunk" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "Mario", Condition = "mario" });
-            _ambientProfiles.Add(new AmbientProfile { Name = "NES", Condition = "nes" });
-           // _artemisEnabled = !readBlackoutStatus.Execute();
+            _artemisService = artemisService;
+            _profiles = _artemisService.GetProfiles("Ambient");
+            _fullBlackout = _artemisService.GetJsonDataModelValue<bool>("Blackouts", "FullBlackout", false);
+            // _artemisEnabled = !readBlackoutStatus.Execute();
 
             this.WhenActivated(disposables =>
             {
@@ -35,50 +31,45 @@ namespace ArtemisFlyout.ViewModels
             });
         }
 
-
-        private List<AmbientProfile> _ambientProfiles;
-        private AmbientProfile? _selectedAmbientProfile;
-
-        private bool _artemisEnabled;
-
-        ReadIntegerCommand readBrightStatus = new ReadIntegerCommand("DesktopVariables", "GlobalBrightness");
-        WriteIntCommand writeBrightStatus = new WriteIntCommand("DesktopVariables", "GlobalBrightness");
         public int Bright
         {
-            get => readBrightStatus.Execute();
-            set => writeBrightStatus.Execute(value);
+            get => _artemisService.GetBright();
+            set => _artemisService.SetBright(value);
         }
 
-        public bool ArtemisEnabled
+        public List<Profile> Profiles
         {
-            get => _artemisEnabled;
-            set => this.RaiseAndSetIfChanged(ref _artemisEnabled, value);
+            get => _profiles;
         }
 
-        public List<AmbientProfile> AmbientProfiles
-        {
-            get => _ambientProfiles;
-            set => this.RaiseAndSetIfChanged(ref _ambientProfiles, value);
-        }
-
-
-        WriteStringCommand writeAmbientProfileName = new WriteStringCommand("DesktopVariables", "Profile");
-        ReadCommand readAmbientProfileName = new ReadCommand("DesktopVariables", "Profile");
-        public AmbientProfile? SelectedAmbientProfile
+        public Profile SelectedProfile
         {
             get
             {
-                var currentAmbientProfile = readAmbientProfileName.Execute<string>();
-                _selectedAmbientProfile = _ambientProfiles.FirstOrDefault(p => p.Condition == currentAmbientProfile);
-                return _selectedAmbientProfile;
+                var currentProfileName = _artemisService.GetJsonDataModelValue<string>("DesktopVariables", "Profile", "");
+                return _selectedProfile = _profiles.FirstOrDefault(p => p.Name == currentProfileName);
             }
             set
             {
-                _selectedAmbientProfile = value;
-                this.RaiseAndSetIfChanged(ref _selectedAmbientProfile, value);
-                writeAmbientProfileName.Execute(value?.Condition);
+                this.RaiseAndSetIfChanged(ref _selectedProfile, value);
+                _artemisService.SetJsonDataModelValue<string>("DesktopVariables", "Profile", value.Name);
             }
         }
+
+        private bool _fullBlackout;
+        public bool FullBlackout
+        {
+            get
+            {
+                return _artemisService.GetJsonDataModelValue<bool>("Blackouts", "FullBlackout", _fullBlackout);
+            }
+            set
+            {
+                _artemisService.SetJsonDataModelValue<bool>("Blackouts", "FullBlackout", value);
+                this.RaiseAndSetIfChanged(ref _fullBlackout, value);
+            }
+        }
+
 
         ReadBoolCommand readTeamsStatus = new ReadBoolCommand("DesktopVariables", "TeamsLight");
         WriteBoolCommand writeTeamsStatus = new WriteBoolCommand("DesktopVariables", "TeamsLight");

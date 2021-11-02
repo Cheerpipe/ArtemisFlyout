@@ -1,4 +1,4 @@
-<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:MainWindowViewModel" xmlns="https://github.com/avaloniaui"
+<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,9 +7,7 @@
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
                                 x:Class="ArtemisFlyout.UserControls.DeviceToggles">
-  <Design.DataContext>
-    <viewModels:MainWindowViewModel  />
-  </Design.DataContext>
+
   <!-- Flyout content start-->
   <StackPanel>
       <Button 

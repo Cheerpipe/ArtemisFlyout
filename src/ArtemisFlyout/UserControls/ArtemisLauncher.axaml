@@ -1,4 +1,4 @@
-<reactiveUi:ReactiveUserControl x:TypeArguments="vm:MainWindowViewModel" xmlns="https://github.com/avaloniaui"
+<reactiveUi:ReactiveUserControl x:TypeArguments="vm:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                 xmlns:vm="using:ArtemisFlyout.ViewModels"
                                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,7 +11,7 @@
                                 Height="310"
                                 Background="Transparent">
   <Design.DataContext>
-    <vm:MainWindowViewModel/>
+    <vm:FlyoutContainerViewModel/>
   </Design.DataContext>
 
   <!-- Flyout content start-->

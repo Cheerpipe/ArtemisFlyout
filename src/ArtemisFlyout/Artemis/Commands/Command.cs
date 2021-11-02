@@ -1,7 +1,7 @@
-﻿using RestSharp;
-using System;
+﻿using System;
+using RestSharp;
 
-namespace ArtemisAmbientCli.Commands
+namespace ArtemisFlyout.Artemis.Commands
 {
     public class Command
     {

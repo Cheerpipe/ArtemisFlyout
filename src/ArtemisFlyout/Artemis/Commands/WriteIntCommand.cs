@@ -1,5 +1,4 @@
-﻿using ArtemisAmbientCli.Commands;
-using RestSharp;
+﻿using RestSharp;
 
 namespace ArtemisFlyout.Artemis.Commands
 {

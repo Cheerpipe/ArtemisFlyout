@@ -2,9 +2,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Avalonia;
 using System.Threading;
-using ArtemisFlyout.Services;
 using ArtemisFlyout.Services.TrayIcon;
-using ArtemisFlyout.Views;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 using Ninject;
@@ -35,7 +33,10 @@ namespace ArtemisFlyout
         // you shouldn't use any Avalonia types or anything that expects
         // a SynchronizationContext to be ready
         public static void Main(string[] args)
-            => BuildAvaloniaApp().Start(AppMain, args);
+        {
+            BuildAvaloniaApp().Start(AppMain, args);
+        }
+
 
         // Application entry point. Avalonia is completely initialized.
         static void AppMain(Application app, string[] args)

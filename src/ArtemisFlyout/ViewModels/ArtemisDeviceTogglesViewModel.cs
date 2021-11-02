@@ -1,19 +1,18 @@
-﻿using System;
-using System.Reactive.Disposables;
-using ArtemisFlyout.Artemis.Commands;
-using ArtemisFlyout.Services;
+﻿using System.Reactive.Disposables;
+using ArtemisFlyout.Services.ArtemisServices;
 using ReactiveUI;
 
 namespace ArtemisFlyout.ViewModels
 {
     public class ArtemisDeviceTogglesViewModel : ViewModelBase
     {
-        private readonly IDeviceService _deviceServices;
+        private readonly IArtemisService _artemisService;
 
-        public ArtemisDeviceTogglesViewModel(IDeviceService deviceServices)
+        
+        public ArtemisDeviceTogglesViewModel(IArtemisService artemisService)
         {
-
-            _deviceServices = deviceServices;
+            _artemisService = artemisService;
+            _ceiling= _artemisService.GetJsonDataModelValue<bool>("Blackouts", "MoonBlackout", false);
 
             this.WhenActivated(disposables =>
             {
@@ -25,83 +24,70 @@ namespace ArtemisFlyout.ViewModels
             });
         }
 
+        private bool _ceiling;
         public bool Ceiling
         {
-            get => _deviceServices.GetState("MoonBlackout");
-            set => _deviceServices.SetState("MoonBlackout", value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "MoonBlackout", false);
+            set
+            {
+                this.
+                _artemisService.SetJsonDataModelValue<bool>("Blackouts", "MoonBlackout", value);
+                this.RaiseAndSetIfChanged(ref _ceiling, value);
+            }
         }
 
-
-        ReadBoolCommand readTelevisionState = new ReadBoolCommand("Blackouts", "TvBlackout");
-        WriteBoolCommand writeTelevisionState = new WriteBoolCommand("Blackouts", "TvBlackout");
         public bool Television
         {
-            get => readTelevisionState.Execute();
-            set => writeTelevisionState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "TvBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "TvBlackout", value);
         }
 
-        ReadBoolCommand readDisplayState = new ReadBoolCommand("Blackouts", "DisplayBlackout");
-        WriteBoolCommand writeDisplayState = new WriteBoolCommand("Blackouts", "DisplayBlackout");
         public bool Display
         {
-            get => readDisplayState.Execute();
-            set => writeDisplayState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "DisplayBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "DisplayBlackout", value);
         }
 
-        ReadBoolCommand readSpeakerState = new ReadBoolCommand("Blackouts", "SpeakerBlackout");
-        WriteBoolCommand writeSpeakerState = new WriteBoolCommand("Blackouts", "SpeakerBlackout");
         public bool Speakers
         {
-            get => readSpeakerState.Execute();
-            set => writeSpeakerState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "SpeakerBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "SpeakerBlackout", value);
         }
 
-        ReadBoolCommand readTableBackState = new ReadBoolCommand("Blackouts", "TableBackBlackout");
-        WriteBoolCommand writeTableBackState = new WriteBoolCommand("Blackouts", "TableBackBlackout");
         public bool DesktopBackside
         {
-            get => readTableBackState.Execute();
-            set => writeTableBackState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "TableBackBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "TableBackBlackout", value);
         }
 
-        ReadBoolCommand readPeripheralsState = new ReadBoolCommand("Blackouts", "PeripheralsBlackout");
-        WriteBoolCommand writePeripheralsState = new WriteBoolCommand("Blackouts", "PeripheralsBlackout");
         public bool Peripherals
         {
-            get => readPeripheralsState.Execute();
-            set => writePeripheralsState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "PeripheralsBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "PeripheralsBlackout", value);
         }
 
-        ReadBoolCommand readDesktopSurfaceState = new ReadBoolCommand("Blackouts", "TableOverBlackout");
-        WriteBoolCommand writeDesktopSurfaceState = new WriteBoolCommand("Blackouts", "TableOverBlackout");
         public bool DesktopSurface
         {
-            get => readDesktopSurfaceState.Execute();
-            set => writeDesktopSurfaceState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "TableOverBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "TableOverBlackout", value);
         }
 
-        ReadBoolCommand readDesktopUndersideState = new ReadBoolCommand("Blackouts", "TableUnderBlackout");
-        WriteBoolCommand writeDesktopUndersideState = new WriteBoolCommand("Blackouts", "TableUnderBlackout");
         public bool DesktopUnderside
         {
-            get => readDesktopUndersideState.Execute();
-            set => writeDesktopUndersideState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "TableUnderBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "TableUnderBlackout", value);
         }
 
-        ReadBoolCommand readNightTableState = new ReadBoolCommand("Blackouts", "NightTableBlackout");
-        WriteBoolCommand writeNightTableState = new WriteBoolCommand("Blackouts", "NightTableBlackout");
         public bool NightTable
         {
-            get => readNightTableState.Execute();
-            set => writeNightTableState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "NightTableBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "NightTableBlackout", value);
         }
 
-        ReadBoolCommand readComputerCaseState = new ReadBoolCommand("Blackouts", "ComputerCaseBlackout");
-        WriteBoolCommand writeComputerCaseState = new WriteBoolCommand("Blackouts", "ComputerCaseBlackout");
         public bool ComputerCase
         {
-            get => readComputerCaseState.Execute();
-            set => writeComputerCaseState.Execute(value);
+            get => _artemisService.GetJsonDataModelValue<bool>("Blackouts", "ComputerCaseBlackout", false);
+            set => this._artemisService.SetJsonDataModelValue<bool>("Blackouts", "ComputerCaseBlackout", value);
         }
     }
 }

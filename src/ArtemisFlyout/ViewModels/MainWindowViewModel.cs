@@ -11,16 +11,14 @@ namespace ArtemisFlyout.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private readonly IArtemisService _artemisService;
         public ArtemisDeviceTogglesViewModel ArtemisDeviceTogglesViewModel { get; private set; }
         public ArtemisMainControlViewModel ArtemisMainControlViewModel { get; } = new();
         private int _activePageIndex;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IArtemisService artemisService)
         {
-            var kernel = new StandardKernel();
-            kernel.Load(Assembly.GetExecutingAssembly());
-            var trayIconService = kernel.Get<ArtemisDeviceTogglesViewModel>();
-
+            _artemisService = artemisService;
 
             this.WhenActivated(disposables =>
             {
@@ -57,39 +55,33 @@ namespace ArtemisFlyout.ViewModels
 
         private async void Restart()
         {
-            var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow("Artemis", "Are you sure you want restart Artemis?", ButtonEnum.YesNo, MessageBox.Avalonia.Enums.Icon.Warning);
-            var result = await messageBoxStandardWindow.Show();
-
-            if (result != ButtonResult.Yes)
-                return;
-            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/restart");
-            Program.MainWindowInstance.CloseAnimated();
+            _artemisService.Restart();
         }
 
         public void GoHome()
         {
-            ArtemisService.GoHome();
+            _artemisService.GoHome();
         }
 
         public void GoWorkshop()
         {
-            ArtemisService.GoWorkshop();
+            _artemisService.GoWorkshop();
         }
+
 
         public void GoSurfaceEditor()
         {
-            ArtemisService.GoSurfaceEditor();
+            _artemisService.GoSurfaceEditor();
         }
 
         public void ShowDebugger()
         {
-            ArtemisService.ShowDebugger();
+            _artemisService.ShowDebugger();
         }
 
         public void GoSettings()
         {
-            ArtemisService.GoSettings();
+            _artemisService.GoSettings();
         }
     }
 }

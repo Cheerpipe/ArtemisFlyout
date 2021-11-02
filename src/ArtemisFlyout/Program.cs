@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using Avalonia;
 using System.Threading;
 using ArtemisFlyout.Services;
+using ArtemisFlyout.Services.TrayIcon;
 using ArtemisFlyout.Views;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
@@ -16,7 +17,6 @@ namespace ArtemisFlyout
         private static extern int DwmIsCompositionEnabled(out bool enabled);
 
         public static CancellationTokenSource runCancellationTokenSource = new CancellationTokenSource();
-        public static MainWindow MainWindowInstance;
 
         static CancellationToken runCancellationToken = runCancellationTokenSource.Token;
 

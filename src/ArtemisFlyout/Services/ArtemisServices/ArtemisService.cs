@@ -1,51 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using ArtemisFlyout.Services.FlyoutServices;
 using ArtemisFlyout.Util;
+using MessageBox.Avalonia.Enums;
 
-namespace ArtemisFlyout.Services
+namespace ArtemisFlyout.Services.ArtemisServices
 {
-   public class ArtemisService
+    public class ArtemisService : IArtemisService
     {
+        private IFlyoutService _flyoutService;
+        public ArtemisService(IFlyoutService flyoutService)
+        {
+            _flyoutService = flyoutService;
+        }
+
         private const string ArtemisPath = @"D:\Repos\Artemis\src\Artemis.UI\bin\net5.0-windows\Artemis.UI.exe";
         private const string ArtemisParams = "--minimized --pcmr --ignore-plugin-lock";
 
-        public static void GoHome()
+        public void GoHome()
         {
             RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/bring-to-foreground");
         }
 
-        public static void GoWorkshop()
+        public void GoWorkshop()
         {
             RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-workshop");
-            Program.MainWindowInstance.CloseAnimated();
+            _flyoutService.Close();
         }
 
-        public static void GoSurfaceEditor()
+        public void GoSurfaceEditor()
         {
             RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-surface-editor");
-            Program.MainWindowInstance.CloseAnimated();
+            _flyoutService.Close();
         }
 
-        public static void ShowDebugger()
+        public void ShowDebugger()
         {
             RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-debugger");
-            Program.MainWindowInstance.CloseAnimated();
+            _flyoutService.Close();
         }
 
-        public static void GoSettings()
+        public void GoSettings()
         {
             RestUtil.RestGetBool("http://127.0.0.1", 9696, "/windows/show-settings");
-            Program.MainWindowInstance.CloseAnimated();
+            _flyoutService.Close();
         }
 
-        public static void LaunchArtemis()
+        public void Run()
         {
             Process.Start(ArtemisPath, ArtemisParams);
-            Program.MainWindowInstance.Close();
+            _flyoutService.Close();
+        }
+
+        public async void Restart()
+        {
+            var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
+                .GetMessageBoxStandardWindow("Artemis", "Are you sure you want restart Artemis?", ButtonEnum.YesNo, Icon.Warning);
+            var result = await messageBoxStandardWindow.Show();
+
+            if (result != ButtonResult.Yes)
+                return;
+            RestUtil.RestGetBool("http://127.0.0.1", 9696, "/remote/restart");
+            _flyoutService.Close();
         }
     }
 }

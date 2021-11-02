@@ -21,11 +21,11 @@ namespace ArtemisFlyout.Views
         private int _flyoutWidth;
         private int _flyoutHeight;
 
-        public MainWindow(MainWindowViewModel viewModel)
+        public MainWindow()
         {
             // If you put a WhenActivated block here, your activatable view model 
             // will also support activation, otherwise it won't.
-            ViewModel = viewModel;
+           // ViewModel = viewModel;
             this.WhenActivated(disposables => { /* Handle interactions etc. */ });
             AvaloniaXamlLoader.Load(this);
 
@@ -93,8 +93,6 @@ namespace ArtemisFlyout.Views
             // -10 is enough to avoid windows flashing
             await Task.Delay(AnimationDelay - 10);
             Close();
-            Program.MainWindowInstance = null;
-
             _animating = false;
         }
 

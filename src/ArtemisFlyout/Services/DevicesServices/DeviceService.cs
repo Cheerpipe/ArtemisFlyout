@@ -1,6 +1,6 @@
 ﻿using ArtemisFlyout.Artemis.Commands;
 
-namespace ArtemisFlyout.Services
+namespace ArtemisFlyout.Services.DevicesServices
 {
     public class DeviceService : IDeviceService
     {

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Reflection;
-using ArtemisFlyout.Views;
+using ArtemisFlyout.Services.FlyoutServices;
+using ArtemisFlyout.Services.TrayIcon;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Platform;
@@ -11,12 +11,12 @@ namespace ArtemisFlyout.Services
 {
     public class TrayIconService : ITrayIconService
     {
-        private IKernel _kernel;
+        private readonly IFlyoutService _flyoutService;
         private readonly AvaloniaTrayIcon trayIcon = new AvaloniaTrayIcon();
 
-        public TrayIconService(IKernel kernel)
+        public TrayIconService(IFlyoutService flyoutService)
         {
-            _kernel = kernel;
+            _flyoutService = flyoutService;
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
             var icon = new WindowIcon(assets.Open(new Uri(@"resm:ArtemisFlyout.Assets.bow.ico")));
             trayIcon.Icon = icon;
@@ -44,11 +44,7 @@ namespace ArtemisFlyout.Services
 
         private void TrayIcon_Clicked(object? sender, System.EventArgs e)
         {
-
-            var kernel = new StandardKernel();
-            kernel.Load(Assembly.GetExecutingAssembly());
-            var mainWindow = kernel.Get<MainWindow>();
-
+            _flyoutService.Show();
         }
     }
 }

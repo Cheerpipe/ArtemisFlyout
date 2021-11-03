@@ -1,5 +1,6 @@
 ﻿using ArtemisFlyout.ViewModels;
 using ArtemisFlyout.Views;
+using Avalonia.Media;
 using Ninject;
 
 namespace ArtemisFlyout.Services.FlyoutServices

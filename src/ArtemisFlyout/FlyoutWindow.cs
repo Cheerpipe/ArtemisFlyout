@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using ArtemisFlyout.Views;
 using Avalonia;
@@ -31,26 +32,58 @@ namespace ArtemisFlyout
             if (_animating)
                 return;
             _animating = true;
-            WindowStartupLocation = WindowStartupLocation.Manual;
 
-            Position = new PixelPoint(_screenWidth + (-(int)base.Width), _screenHeight + (-VerticalSpacing) + (-(int)Height));
+            this.PropertyChanged += FlyoutWindow_PropertyChanged;
+
+            WindowStartupLocation = WindowStartupLocation.Manual;
 
             this.Find<Panel>("FlyoutPanelContainer").Width = Width;
 
-
             Show();
+
             Clock = Avalonia.Animation.Clock.GlobalClock;
 
-            var t = new IntegerTransition()
+            var showTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.HorizontalPositionProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
                 Easing = new CircularEaseOut()
             };
 
-            t.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)base.Width, 0);
-
+            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)base.Width, 0);
             _animating = false;
+        }
+
+        public void SetHeight(double newHeight)
+        {
+            var heightTransition = new DoubleTransition()
+            {
+                Property = FlyoutContainer.HeightProperty,
+                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Easing = new CircularEaseOut()
+            };
+
+            heightTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, base.Height, newHeight);
+        }
+
+        public void SetWidth(double newWidth)
+        {
+            var widthTransition = new DoubleTransition()
+            {
+                Property = FlyoutContainer.HeightProperty,
+                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Easing = new CircularEaseOut()
+            };
+
+            widthTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, base.Width, newWidth);
+        }
+
+        private void FlyoutWindow_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.Property.Name == "Height" || e.Property.Name == "Width" || e.Property.Name == "HorizontalPosition")
+            {
+                Position = new PixelPoint(_screenWidth + (-(int)base.Width), _screenHeight + (-VerticalSpacing) + (-(int)Height));
+            }
         }
 
         public async void CloseAnimated()
@@ -59,17 +92,18 @@ namespace ArtemisFlyout
                 return;
             _animating = true;
 
-            var t = new IntegerTransition()
+            var closeTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.HorizontalPositionProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
                 Easing = new CircularEaseIn()
             };
 
-            t.Apply(this, Avalonia.Animation.Clock.GlobalClock, 0, (int)base.Width);
-            // -10 is enough to avoid windows flashing
-            await Task.Delay(AnimationDelay - 10);
+            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, 0, (int)base.Width);
+            await Task.Delay(AnimationDelay);
+
             Close();
+
             _animating = false;
         }
 
@@ -99,8 +133,10 @@ namespace ArtemisFlyout
             }
             set
             {
+
                 _maskedWidth = value;
                 base.Width = value + HorizontalSpacing;
+
             }
         }
     }

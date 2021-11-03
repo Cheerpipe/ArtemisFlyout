@@ -1,6 +1,5 @@
 using ArtemisFlyout.ViewModels;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 // ReSharper disable UnusedParameter.Local
@@ -24,7 +23,10 @@ namespace ArtemisFlyout.Views
             AnimationDelay = 250;
             Width = 320;
             Height = 510;
-            Deactivated += (_, _) => CloseAnimated();
+            Deactivated += (_, _) =>
+            {
+                CloseAnimated();
+            };
         }
     }
 }

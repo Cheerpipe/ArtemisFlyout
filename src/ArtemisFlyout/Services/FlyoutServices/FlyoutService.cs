@@ -34,6 +34,5 @@ namespace ArtemisFlyout.Services.FlyoutServices
                 FlyoutContainerInstance = null;
             }
         }
-
     }
 }

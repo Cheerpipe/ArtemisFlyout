@@ -1,7 +1,3 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using ArtemisFlyout.Services.FlyoutServices;
 using ArtemisFlyout.ViewModels;
 using Avalonia;
@@ -14,9 +10,12 @@ namespace ArtemisFlyout.Views
 {
     public class FlyoutContainer : FlyoutWindow<FlyoutContainerViewModel>
     {
+        [Inject]
+        public IFlyoutService FlyoutService { get; set; }
 
         public FlyoutContainer()
         {
+            
             this.WhenActivated(disposables =>
             {
                 /* Handle interactions etc. */
@@ -26,13 +25,16 @@ namespace ArtemisFlyout.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
+
             AnimationDelay = 250;
             Width = 320;
             Height = 510;
             HorizontalSpacing = 12;
             Deactivated += (_, _) =>
             {
-                CloseAnimated();
+                var x = FlyoutService;
+                FlyoutService?.Close();
+
             };
         }
     }

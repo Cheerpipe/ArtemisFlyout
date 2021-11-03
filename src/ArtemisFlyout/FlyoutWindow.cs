@@ -25,13 +25,8 @@ namespace ArtemisFlyout
             _screenHeight = Screens.Primary.WorkingArea.Height;
         }
 
-        private bool _animating;
-
         public void ShowAnimated()
         {
-            if (_animating)
-                return;
-            _animating = true;
 
             this.PropertyChanged += FlyoutWindow_PropertyChanged;
 
@@ -51,7 +46,7 @@ namespace ArtemisFlyout
             };
 
             showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)base.Width, 0);
-            _animating = false;
+  
         }
 
         public void SetHeight(double newHeight)
@@ -86,12 +81,8 @@ namespace ArtemisFlyout
             }
         }
 
-        public async void CloseAnimated()
+        public async Task CloseAnimated()
         {
-            if (_animating)
-                return;
-            _animating = true;
-
             var closeTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.HorizontalPositionProperty,
@@ -101,10 +92,7 @@ namespace ArtemisFlyout
 
             closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, 0, (int)base.Width);
             await Task.Delay(AnimationDelay);
-
             Close();
-
-            _animating = false;
         }
 
         public static readonly DirectProperty<FlyoutContainer, int> HorizontalPositionProperty =

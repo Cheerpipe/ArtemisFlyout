@@ -9,6 +9,7 @@ namespace ArtemisFlyout.Services.FlyoutServices
     {
         public static FlyoutContainer FlyoutContainerInstance { get; private set; }
         private readonly IKernel _kernel;
+        private bool _animating;
 
         public FlyoutService(IKernel kernel)
         {
@@ -17,20 +18,11 @@ namespace ArtemisFlyout.Services.FlyoutServices
 
         public void Show()
         {
-            lock (this)
-            {
-                if (FlyoutContainerInstance is { IsVisible: true }) return;
-                FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
-                FlyoutContainerInstance.ViewModel = _kernel.Get<FlyoutContainerViewModel>();
-                FlyoutContainerInstance.Closed += (_, _) =>
-                {
-                    FlyoutContainerInstance = null;
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                };
-                FlyoutContainerInstance.ShowAnimated();
-            }
+            if (FlyoutContainerInstance != null) return;
+
+            FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
+            FlyoutContainerInstance.ViewModel = _kernel.Get<FlyoutContainerViewModel>();
+            FlyoutContainerInstance.ShowAnimated();
         }
 
         public void SetHeight(double newHeight)
@@ -45,33 +37,20 @@ namespace ArtemisFlyout.Services.FlyoutServices
 
         public void Preload()
         {
-            lock (this)
-            {
-                FlyoutContainer container = new FlyoutContainer();
-                container.ViewModel = _kernel.Get<FlyoutContainerViewModel>();
-                container.Closed += (_, _) =>
-                {
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                };
-
-                container.Opacity = 0;
-                container.ShowAnimated();
-                container.CloseAnimated();
-            }
+            Show();
+            FlyoutContainerInstance.Opacity = 0;
+            Close();
         }
 
-        public void Close()
+        public async void Close()
         {
-            lock (this)
-            {
-                FlyoutContainerInstance?.Close();
-                FlyoutContainerInstance = null;
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
-            }
+   
+            await FlyoutContainerInstance.CloseAnimated();
+            FlyoutContainerInstance = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
         }
     }
 }

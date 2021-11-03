@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -19,9 +20,6 @@
     <EmbeddedResource Include="Assets\bow-white.ico" />
     <EmbeddedResource Include="Assets\bow.ico" />
   </ItemGroup>
-  <PropertyGroup>
-    <PublishReadyToRun>true</PublishReadyToRun>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Any-Config" Version="1.0.161" />
     <PackageReference Include="Avalonia" Version="0.10.10" />

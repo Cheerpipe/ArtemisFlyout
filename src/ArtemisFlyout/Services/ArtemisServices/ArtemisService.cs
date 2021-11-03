@@ -28,32 +28,32 @@ namespace ArtemisFlyout.Services.ArtemisServices
 
         public void GoHome()
         {
-            _ = _restService.Get("/remote/bring-to-foreground");
+            _ = _restService.Post("/remote/bring-to-foreground");
             _flyoutService.Close();
 
         }
 
         public void GoWorkshop()
         {
-            _ = _restService.Get("/windows/show-workshop");
+            _ = _restService.Post("/windows/show-workshop");
             _flyoutService.Close();
         }
 
         public void GoSurfaceEditor()
         {
-            _ = _restService.Get("/windows/show-surface-editor");
+            _ = _restService.Post("/windows/show-surface-editor");
             _flyoutService.Close();
         }
 
         public void ShowDebugger()
         {
-            _ = _restService.Get("/windows/show-debugger");
+            _ = _restService.Post("/windows/show-debugger");
             _flyoutService.Close();
         }
 
         public void GoSettings()
         {
-            _ = _restService.Get("/windows/show-settings");
+            _ = _restService.Post("/windows/show-settings");
             _flyoutService.Close();
         }
 
@@ -73,7 +73,7 @@ namespace ArtemisFlyout.Services.ArtemisServices
 
             if (result != ButtonResult.Yes)
                 return;
-            _ = _restService.Get("/remote/restart");
+            _ = _restService.Post("/remote/restart");
             _flyoutService.Close();
         }
 
@@ -142,15 +142,6 @@ namespace ArtemisFlyout.Services.ArtemisServices
         public string GetActiveProfile()
         {
             return GetJsonDataModelValue("DesktopVariables", "Profile", "");
-        }
-
-        public async void GoToWindow(string windowName)
-        {
-            await Task.Run(() =>
-            {
-                _ = _restService.Get($"/windows/{windowName}");
-                _flyoutService.Close();
-            });
         }
     }
 }

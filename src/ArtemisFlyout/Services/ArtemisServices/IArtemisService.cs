@@ -24,6 +24,5 @@ namespace ArtemisFlyout.Services.ArtemisServices
         public List<Profile> GetProfiles(string categoryName = "");
         public bool SetActiveProfile(string profileName);
         public string GetActiveProfile();
-        public void GoToWindow(string windowName);
     }
 }

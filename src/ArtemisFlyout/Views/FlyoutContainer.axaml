@@ -6,33 +6,30 @@
                                 xmlns:uc="clr-namespace:ArtemisFlyout.UserControls"
                                 xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                                 xmlns:reactiveUi="http://reactiveui.net"
-                                mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="600"
+                                mc:Ignorable="d" d:DesignWidth="320" d:DesignHeight="510"
                                 x:Class="ArtemisFlyout.Views.FlyoutContainer"
                                 Title="Artemis Flyout"
                                 ShowInTaskbar="false"
                                 CanResize="False"
                                 Topmost="True"
-                                SystemDecorations="BorderOnly"
+                                SystemDecorations="None"
                                 TransparencyLevelHint="Transparent"
                                 ExtendClientAreaToDecorationsHint="True"
                                 ExtendClientAreaChromeHints="NoChrome"
                                 ExtendClientAreaTitleBarHeightHint="-1"
                                 Background="Transparent"
                                 UseLayoutRounding="False">
-  <Design.DataContext>
-    <vm:FlyoutContainerViewModel/>
-  </Design.DataContext>
-  <DockPanel Width="600" HorizontalAlignment="Left">
-    <Separator Width="0" Name="SepAnimationFiller"/>
+
+  <DockPanel Width="320" HorizontalAlignment="Left">
     <!-- Set dimensions here to see the actual result -->
-    <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer" Height="510" Width="310">
+    <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer" Height="510" Width="320">
       <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
         <ExperimentalAcrylicBorder.Material>
           <ExperimentalAcrylicMaterial
-              BackgroundSource="None"
+              BackgroundSource="Digger"
               TintColor="Black"
-              TintOpacity="0.75"
-              MaterialOpacity="0.85"/>
+              TintOpacity="0.8"
+              MaterialOpacity="0.8"/>
         </ExperimentalAcrylicBorder.Material>
         <Border CornerRadius="10 10 10 10"
                 BorderBrush="#414141"

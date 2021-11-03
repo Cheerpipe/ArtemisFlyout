@@ -17,7 +17,7 @@ namespace ArtemisFlyout
         // This method is needed for IDE previewer infrastructure
         public static AppBuilder BuildAvaloniaApp()
         {
-            var builder = AppBuilder.Configure<App>().UsePlatformDetect().UseReactiveUI().With(new Win32PlatformOptions()
+            var builder = AppBuilder.Configure<App>().UsePlatformDetect().UseReactiveUI().UseSkia().With(new Win32PlatformOptions()
             {
                 UseWindowsUIComposition = true
             });

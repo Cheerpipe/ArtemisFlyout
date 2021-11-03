@@ -1,13 +1,14 @@
-﻿using ArtemisFlyout.ViewModels;
+﻿using System;
+using System.Diagnostics;
+using ArtemisFlyout.ViewModels;
 using ArtemisFlyout.Views;
-using Avalonia.Media;
 using Ninject;
 
 namespace ArtemisFlyout.Services.FlyoutServices
 {
     public class FlyoutService : IFlyoutService
     {
-        public FlyoutContainer FlyoutContainerInstance { get; set; }
+        public static FlyoutContainer FlyoutContainerInstance { get; private set; }
         private readonly IKernel _kernel;
 
         public FlyoutService(IKernel kernel)
@@ -19,10 +20,16 @@ namespace ArtemisFlyout.Services.FlyoutServices
         {
             lock (this)
             {
-                if (FlyoutContainerInstance is {IsVisible: true}) return;
-
-                FlyoutContainerInstance = new FlyoutContainer();
+                if (FlyoutContainerInstance is { IsVisible: true }) return;
+                FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
                 FlyoutContainerInstance.ViewModel = _kernel.Get<FlyoutContainerViewModel>();
+                FlyoutContainerInstance.Closed += (_, _) =>
+                {
+                    FlyoutContainerInstance = null;
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                };
                 FlyoutContainerInstance.ShowAnimated();
             }
         }
@@ -37,12 +44,35 @@ namespace ArtemisFlyout.Services.FlyoutServices
             FlyoutContainerInstance.SetWidth(newWidth);
         }
 
+        public void Preload()
+        {
+            lock (this)
+            {
+                if (FlyoutContainerInstance is { IsVisible: true }) return;
+                FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
+                FlyoutContainerInstance.ViewModel = _kernel.Get<FlyoutContainerViewModel>();
+                FlyoutContainerInstance.Closed += (_, _) =>
+                {
+                    FlyoutContainerInstance = null;
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                };
+                FlyoutContainerInstance.Opacity = 0;
+                FlyoutContainerInstance.ShowAnimated();
+                FlyoutContainerInstance.Close();
+            }
+        }
+
         public void Close()
         {
             lock (this)
             {
-                FlyoutContainerInstance.CloseAnimated();
+                FlyoutContainerInstance.Close();
                 FlyoutContainerInstance = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
             }
         }
     }

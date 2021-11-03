@@ -1,6 +1,12 @@
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using ArtemisFlyout.Services.FlyoutServices;
 using ArtemisFlyout.ViewModels;
 using Avalonia;
 using Avalonia.Markup.Xaml;
+using Ninject;
 using ReactiveUI;
 // ReSharper disable UnusedParameter.Local
 
@@ -8,6 +14,7 @@ namespace ArtemisFlyout.Views
 {
     public class FlyoutContainer : FlyoutWindow<FlyoutContainerViewModel>
     {
+
         public FlyoutContainer()
         {
             this.WhenActivated(disposables =>
@@ -19,6 +26,8 @@ namespace ArtemisFlyout.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
+            //_flyoutService = flyoutService;
+
             HorizontalSpacing = 12;
             AnimationDelay = 250;
             Width = 320;

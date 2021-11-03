@@ -1,5 +1,4 @@
-﻿using ArtemisFlyout.Services;
-using ArtemisFlyout.Services.ArtemisServices;
+﻿using ArtemisFlyout.Services.ArtemisServices;
 using ArtemisFlyout.Services.Configuration;
 using ArtemisFlyout.Services.FlyoutServices;
 using ArtemisFlyout.Services.RestServices;

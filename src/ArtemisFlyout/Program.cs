@@ -42,7 +42,6 @@ namespace ArtemisFlyout
             var kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
             var trayIconService = kernel.Get<ITrayIconService>();
-
             trayIconService.Show();
 
             // Start the main loop

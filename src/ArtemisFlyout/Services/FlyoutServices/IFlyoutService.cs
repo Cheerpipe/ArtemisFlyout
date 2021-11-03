@@ -1,4 +1,6 @@
-﻿namespace ArtemisFlyout.Services.FlyoutServices
+﻿using ArtemisFlyout.Views;
+
+namespace ArtemisFlyout.Services.FlyoutServices
 {
     public interface IFlyoutService
     {
@@ -6,6 +8,6 @@
         void Close();
         void SetHeight(double newHeight);
         void SetWidth(double newWidth);
-
+        void Preload();
     }
 }

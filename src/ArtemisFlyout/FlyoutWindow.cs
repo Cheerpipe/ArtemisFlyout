@@ -16,7 +16,7 @@ namespace ArtemisFlyout
         private readonly int _screenWidth;
 
         public int AnimationDelay { get; set; } = 200;
-        public int HorizontalSpacing { get; set; } = 12;
+
         public int VerticalSpacing { get; set; } = 12;
 
         public FlyoutWindow()
@@ -135,8 +135,23 @@ namespace ArtemisFlyout
             {
 
                 _maskedWidth = value;
-                base.Width = value + HorizontalSpacing;
+                base.Width = _maskedWidth + HorizontalSpacing;
 
+            }
+        }
+
+        private int _horizontalSpacing = 12;
+        public int HorizontalSpacing
+        {
+            get
+            {
+                return _horizontalSpacing;
+            }
+            set
+            {
+
+                _horizontalSpacing = value;
+                base.Width = _maskedWidth + _horizontalSpacing;
             }
         }
     }

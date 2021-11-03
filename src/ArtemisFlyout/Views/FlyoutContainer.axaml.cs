@@ -26,12 +26,10 @@ namespace ArtemisFlyout.Views
 #if DEBUG
             this.AttachDevTools();
 #endif
-            //_flyoutService = flyoutService;
-
-            HorizontalSpacing = 12;
             AnimationDelay = 250;
             Width = 320;
             Height = 510;
+            HorizontalSpacing = 12;
             Deactivated += (_, _) =>
             {
                 CloseAnimated();

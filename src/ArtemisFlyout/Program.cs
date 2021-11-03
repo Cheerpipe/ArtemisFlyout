@@ -1,6 +1,7 @@
 using System.Reflection;
 using Avalonia;
 using System.Threading;
+using ArtemisFlyout.DI;
 using ArtemisFlyout.Services.TrayIcon;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
@@ -39,9 +40,7 @@ namespace ArtemisFlyout
         {
             // Do you startup code here
 
-            var kernel = new StandardKernel();
-            kernel.Load(Assembly.GetExecutingAssembly());
-            var trayIconService = kernel.Get<ITrayIconService>();
+            var trayIconService = ApplicationKernel.GetKernel().Get<ITrayIconService>();
             trayIconService.Show();
 
             // Start the main loop

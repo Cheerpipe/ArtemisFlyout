@@ -70,7 +70,7 @@ namespace ArtemisFlyout
         {
             var widthTransition = new DoubleTransition()
             {
-                Property = FlyoutContainer.HeightProperty,
+                Property = FlyoutContainer.WidthProperty,
                 Duration = TimeSpan.FromMilliseconds(AnimationDelay),
                 Easing = new CircularEaseOut()
             };

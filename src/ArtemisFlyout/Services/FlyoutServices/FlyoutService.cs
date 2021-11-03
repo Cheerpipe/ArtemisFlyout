@@ -26,6 +26,16 @@ namespace ArtemisFlyout.Services.FlyoutServices
             }
         }
 
+        public void SetHeight(double newHeight)
+        {
+            FlyoutContainerInstance.SetHeight(newHeight);
+        }
+
+        public void SetWidth(double newWidth)
+        {
+            FlyoutContainerInstance.SetWidth(newWidth);
+        }
+
         public void Close()
         {
             lock (this)

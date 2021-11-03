@@ -6,7 +6,7 @@
                                 xmlns:uc="clr-namespace:ArtemisFlyout.UserControls"
                                 xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                                 xmlns:reactiveUi="http://reactiveui.net"
-                                mc:Ignorable="d" d:DesignWidth="320" d:DesignHeight="510"
+                                mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="810"
                                 x:Class="ArtemisFlyout.Views.FlyoutContainer"
                                 Title="Artemis Flyout"
                                 ShowInTaskbar="false"
@@ -19,8 +19,6 @@
                                 ExtendClientAreaTitleBarHeightHint="-1"
                                 Background="Transparent"
                                 UseLayoutRounding="False">
-
-
     <!-- Set dimensions here to see the actual result -->
     <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer">
       <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
@@ -43,7 +41,7 @@
             <Panel DockPanel.Dock="Top" Margin="10 0 10 0">
               <Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
                 <Carousel.PageTransition>
-                  <PageSlide Duration="0.25" Orientation="Horizontal" />
+                  <PageSlide Duration="0.25" Orientation="Horizontal" SlideInEasing="CircularEaseOut" SlideOutEasing="CircularEaseOut"/>
                 </Carousel.PageTransition>
                 <uc:ArtemisControl />
                 <uc:DeviceToggles />

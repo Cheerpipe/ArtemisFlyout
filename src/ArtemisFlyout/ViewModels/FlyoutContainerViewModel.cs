@@ -1,5 +1,6 @@
 ﻿using System.Reactive.Disposables;
 using ArtemisFlyout.Services.ArtemisServices;
+using ArtemisFlyout.Services.FlyoutServices;
 using ReactiveUI;
 
 namespace ArtemisFlyout.ViewModels
@@ -9,17 +10,19 @@ namespace ArtemisFlyout.ViewModels
         private readonly IArtemisService _artemisService;
         private readonly ArtemisDeviceTogglesViewModel _artemisDeviceTogglesViewModel;
         private readonly ArtemisMainControlViewModel _artemisMainControlViewModel;
+        private readonly IFlyoutService _flyoutService;
         private int _activePageIndex;
 
         public FlyoutContainerViewModel(
             IArtemisService artemisService,
             ArtemisDeviceTogglesViewModel artemisDeviceTogglesViewModel,
-            ArtemisMainControlViewModel artemisMainControlViewModel)
+            ArtemisMainControlViewModel artemisMainControlViewModel,
+            IFlyoutService flyoutService)
         {
             _artemisService = artemisService;
             _artemisMainControlViewModel = artemisMainControlViewModel;
             _artemisDeviceTogglesViewModel = artemisDeviceTogglesViewModel;
-
+            _flyoutService = flyoutService;
 
             this.WhenActivated(disposables =>
             {
@@ -44,16 +47,23 @@ namespace ArtemisFlyout.ViewModels
                 this.RaiseAndSetIfChanged(ref _activePageIndex, value);
             }
         }
-
-
+        
         public void SetActivePageIndex(int newPageIndex)
         {
             ActivePageindex = newPageIndex;
+            //TODO: Better handling o this
+
+            if (newPageIndex==1)
+                _flyoutService.SetHeight(580);
+            else
+            {
+                _flyoutService.SetHeight(510);
+            }
         }
 
         public void GoBack()
         {
-            ActivePageindex = 0;
+            SetActivePageIndex(0);
         }
 
         public void Restart()

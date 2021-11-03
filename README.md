@@ -5,4 +5,6 @@ ArtemisFlyout for use with Artemis RGB. Must be used with the followin plugins:
 
 
 
-![Artemis Flyout](https://user-images.githubusercontent.com/972765/139264270-22e52b60-30e1-4dd1-b133-cefe363cbc27.png)
+![b3CP6N5b7T](https://user-images.githubusercontent.com/972765/140191050-f1c16fcf-adff-4bf3-9155-d2ea57f207a5.gif)
+
+

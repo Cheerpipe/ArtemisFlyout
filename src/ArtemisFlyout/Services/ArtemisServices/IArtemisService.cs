@@ -6,6 +6,7 @@ namespace ArtemisFlyout.Services.ArtemisServices
     //TODO: Split
     public interface IArtemisService
     {
+        bool TestRestApi();
         void GoHome();
         void GoWorkshop();
         void GoSurfaceEditor();

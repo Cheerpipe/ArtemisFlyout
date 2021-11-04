@@ -11,21 +11,25 @@ namespace ArtemisFlyout.Services.RestServices
             _configurationService = configurationService;
 
         }
-        public string Post(string api, string content = "")
+        public IRestResponse Post(string api, string content = "")
         {
             var client = new RestClient($"{_configurationService.GetConfiguration().RestSettings.Host}:{_configurationService.GetConfiguration().RestSettings.Port}");
+            client.Timeout = 100;
+            client.ReadWriteTimeout = 100;
             var request = new RestRequest(api, Method.POST);
             request.AddParameter("text/plain", content, ParameterType.RequestBody);
-            return  client.Post(request).Content;
+            return  client.Post(request);
         }
 
-        public string Get(string api, string content = "")
+        public IRestResponse Get(string api, string content = "")
         {
             var client = new RestClient($"{_configurationService.GetConfiguration().RestSettings.Host}:{_configurationService.GetConfiguration().RestSettings.Port}");
+            client.Timeout = 100;
+            client.ReadWriteTimeout = 100;
             var request = new RestRequest(api, DataFormat.None);
             if (!string.IsNullOrEmpty(content))
                 request.AddParameter("text/plain", content, ParameterType.RequestBody);
-            return client.Get(request).Content;
+            return client.Get(request);
         }
     }
 }

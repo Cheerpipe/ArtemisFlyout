@@ -12,6 +12,7 @@ namespace ArtemisFlyout.JsonDatamodel
         protected RestRequest CreateRequest(string api, string content, Method method)
         {
             RestRequest restRequest = new RestRequest(EndpointBase + api, method);
+            restRequest.Timeout = 100;
             if (restRequest.Method != Method.GET)
                 restRequest.AddParameter("application/json", content, ParameterType.RequestBody);
             return restRequest;
@@ -19,16 +20,7 @@ namespace ArtemisFlyout.JsonDatamodel
 
         protected string ExecuteRequest(RestRequest restRequest)
         {
-            try
-            {
-                return _client.Execute(restRequest, restRequest.Method).Content.Trim();
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
-            return string.Empty;
+            return _client.Execute(restRequest, restRequest.Method).Content.Trim();
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using System.Reactive.Disposables;
+﻿using System;
+using System.Reactive.Disposables;
 using ArtemisFlyout.Services.ArtemisServices;
 using ArtemisFlyout.Services.FlyoutServices;
 using ReactiveUI;
+using Tmds.DBus;
 
 namespace ArtemisFlyout.ViewModels
 {
@@ -34,6 +36,11 @@ namespace ArtemisFlyout.ViewModels
                     })
                     .DisposeWith(disposables);
             });
+
+            //Test artemis
+
+            if (!_artemisService.TestRestApi())
+                throw new ConnectException("Artemis REST API not available.");
         }
 
         public ArtemisMainControlViewModel ArtemisMainControlViewModel => _artemisMainControlViewModel;
@@ -53,6 +60,7 @@ namespace ArtemisFlyout.ViewModels
             ActivePageindex = newPageIndex;
             //TODO: Better handling o this
 
+            //TODO:  Should be in the viewmodel
             if (newPageIndex==1)
                 _flyoutService.SetHeight(580);
             else

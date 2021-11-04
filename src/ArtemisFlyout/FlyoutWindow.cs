@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using ArtemisFlyout.Views;
 using Avalonia;
@@ -14,7 +15,7 @@ namespace ArtemisFlyout
         private readonly int _screenWidth;
         private bool _showing;
 
-        public int AnimationDelay { get; set; } = 200;
+        public int AnimationDelay { get; set; } = 250;
 
         public int VerticalSpacing { get; set; } = 12;
 
@@ -93,16 +94,22 @@ namespace ArtemisFlyout
             }
             else if (e.Property.Name == "HorizontalPosition")
             {
-                int calculatedWidth = _screenWidth + (-HorizontalPosition);
+                lock (this)
+                {
+                    int calculatedWidth = _screenWidth + (-HorizontalPosition);
+                    BeginBatchUpdate();
+                    Opacity = (calculatedWidth > 48) ? 1 : 0;
+                    TransparencyLevelHint =
+                        (calculatedWidth > 48)
+                            ? WindowTransparencyLevel.AcrylicBlur
+                            : WindowTransparencyLevel.Transparent;
 
-                TransparencyLevelHint =
-                    (calculatedWidth > 36)
-                        ? WindowTransparencyLevel.AcrylicBlur
-                        : WindowTransparencyLevel.Transparent;
-                Opacity = (calculatedWidth > 36) ? 1 : 0;
-
-                Width = calculatedWidth;
-                Position = new PixelPoint(HorizontalPosition, Position.Y);
+                    Width = calculatedWidth;
+                    Position = new PixelPoint(HorizontalPosition, Position.Y);
+                    EndBatchUpdate();
+                    InvalidateArrange();
+                    InvalidateVisual();
+                }
             }
         }
 

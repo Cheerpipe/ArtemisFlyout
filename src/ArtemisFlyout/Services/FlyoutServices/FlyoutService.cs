@@ -4,6 +4,7 @@ using ArtemisFlyout.Services.LauncherServices;
 using ArtemisFlyout.ViewModels;
 using ArtemisFlyout.Views;
 using Ninject;
+using Tmds.DBus;
 
 namespace ArtemisFlyout.Services.FlyoutServices
 {
@@ -25,10 +26,15 @@ namespace ArtemisFlyout.Services.FlyoutServices
             if (FlyoutContainerInstance != null) return;
 
             FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
-            if (_launcherService.IsArtemisRunning())
+            try
+            {
                 FlyoutContainerInstance.ViewModel = _kernel.Get<FlyoutContainerViewModel>();
-            else
+            }
+            catch(ConnectException)
+            {
                 FlyoutContainerInstance.DataContext = _kernel.Get<ArtemisLauncherViewModel>();
+            }
+                
             FlyoutContainerInstance.ShowAnimated();
         }
 

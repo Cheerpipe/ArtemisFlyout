@@ -25,6 +25,11 @@ namespace ArtemisFlyout.Services.ArtemisServices
             _restService = restService;
         }
 
+        public bool TestRestApi()
+        {
+            return (_restService.Get("/profiles").IsSuccessful);
+        }
+
         public void GoHome()
         {
             _ = _restService.Post("/remote/bring-to-foreground");
@@ -118,7 +123,10 @@ namespace ArtemisFlyout.Services.ArtemisServices
 
         public List<Profile> GetProfiles(string categoryName = "")
         {
-            string restResponse = _restService.Get("/profiles").Trim(new[] { '\uFEFF' });
+            string restResponse = _restService.Get("/profiles").Content.Trim(new[] { '\uFEFF' });
+
+            if (string.IsNullOrEmpty(restResponse)) return new List<Profile>();
+
             return string.IsNullOrEmpty(categoryName) ?
                 JsonConvert.DeserializeObject<IEnumerable<Profile>>(restResponse).ToList() :
                 JsonConvert.DeserializeObject<IEnumerable<Profile>>(restResponse).Where(p => p.Category.Name == categoryName).ToList();

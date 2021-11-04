@@ -11,12 +11,9 @@ namespace ArtemisFlyout.Services.ArtemisServices
         void GoSurfaceEditor();
         void ShowDebugger();
         void GoSettings();
-        void RunArtemis();
         void RestartArtemis();
-        bool IsArtemisRunning();
         bool SetBright(int value);
         int GetBright();
-
         bool SetSpeed(int value);
         int GetSpeed();
         public bool SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value);

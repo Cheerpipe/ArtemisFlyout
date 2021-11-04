@@ -1,4 +1,3 @@
-using System.Reflection;
 using Avalonia;
 using System.Threading;
 using ArtemisFlyout.DI;
@@ -20,7 +19,11 @@ namespace ArtemisFlyout
         {
             var builder = AppBuilder.Configure<App>().UsePlatformDetect().UseReactiveUI().UseSkia().With(new Win32PlatformOptions()
             {
-                UseWindowsUIComposition = true
+                UseWindowsUIComposition = true,
+                CompositionBackdropCornerRadius = 10f,
+                AllowEglInitialization = true,
+                 UseDeferredRendering = true
+
             });
             return builder;
         }
@@ -33,7 +36,6 @@ namespace ArtemisFlyout
         {
             BuildAvaloniaApp().Start(AppMain, args);
         }
-
 
         // Application entry point. Avalonia is completely initialized.
         static void AppMain(Application app, string[] args)

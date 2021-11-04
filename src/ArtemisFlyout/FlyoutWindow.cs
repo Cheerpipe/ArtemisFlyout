@@ -1,12 +1,10 @@
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using ArtemisFlyout.Views;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
-using Avalonia.Media;
 
 namespace ArtemisFlyout
 {
@@ -14,6 +12,7 @@ namespace ArtemisFlyout
     {
         private readonly int _screenHeight;
         private readonly int _screenWidth;
+        private bool _showing;
 
         public int AnimationDelay { get; set; } = 200;
 
@@ -23,20 +22,17 @@ namespace ArtemisFlyout
         {
             _screenWidth = Screens.Primary.WorkingArea.Width;
             _screenHeight = Screens.Primary.WorkingArea.Height;
+
         }
 
         public void ShowAnimated()
         {
-
-            this.PropertyChanged += FlyoutWindow_PropertyChanged;
-
+            PropertyChanged += FlyoutWindow_PropertyChanged;
+            MaxWidth = Width;
+            ClipToBounds = true;
             WindowStartupLocation = WindowStartupLocation.Manual;
-
+            Position = new PixelPoint(_screenWidth, (int)(_screenHeight + (-Height) + (-HorizontalSpacing)));
             this.Find<Panel>("FlyoutPanelContainer").Width = Width;
-
-            Show();
-
-            Clock = Avalonia.Animation.Clock.GlobalClock;
 
             var showTransition = new IntegerTransition()
             {
@@ -45,40 +41,9 @@ namespace ArtemisFlyout
                 Easing = new CircularEaseOut()
             };
 
-            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)base.Width, 0);
-  
-        }
-
-        public void SetHeight(double newHeight)
-        {
-            var heightTransition = new DoubleTransition()
-            {
-                Property = FlyoutContainer.HeightProperty,
-                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new CircularEaseOut()
-            };
-
-            heightTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, base.Height, newHeight);
-        }
-
-        public void SetWidth(double newWidth)
-        {
-            var widthTransition = new DoubleTransition()
-            {
-                Property = FlyoutContainer.WidthProperty,
-                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new CircularEaseOut()
-            };
-
-            widthTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, base.Width, newWidth);
-        }
-
-        private void FlyoutWindow_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
-        {
-            if (e.Property.Name == "Height" || e.Property.Name == "Width" || e.Property.Name == "HorizontalPosition")
-            {
-                Position = new PixelPoint(_screenWidth + (-(int)base.Width), _screenHeight + (-VerticalSpacing) + (-(int)Height));
-            }
+            Show();
+            _showing = true;
+            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenWidth, (int)(_screenWidth + (-Width) + (-HorizontalSpacing)));
         }
 
         public async Task CloseAnimated()
@@ -90,11 +55,58 @@ namespace ArtemisFlyout
                 Easing = new CircularEaseIn()
             };
 
-            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, 0, (int)base.Width);
+            _showing = false;
+            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, Position.X, _screenWidth);
             await Task.Delay(AnimationDelay);
             Close();
         }
 
+        public void SetHeight(double newHeight)
+        {
+            var heightTransition = new DoubleTransition()
+            {
+                Property = FlyoutContainer.HeightProperty,
+                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Easing = new CircularEaseOut()
+            };
+
+            heightTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, Height, newHeight);
+        }
+
+        public void SetWidth(double newWidth)
+        {
+            var widthTransition = new DoubleTransition()
+            {
+                Property = FlyoutContainer.WidthProperty,
+                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Easing = new CircularEaseOut()
+            };
+
+            widthTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, Width, newWidth);
+        }
+
+        private void FlyoutWindow_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.Property.Name == "Height" /*|| e.Property.Name == "Width" || e.Property.Name == "HorizontalPosition"*/)
+            {
+                Position = new PixelPoint(Position.X, _screenHeight + (-VerticalSpacing) + (-(int)Height));
+            }
+            else if (e.Property.Name == "HorizontalPosition")
+            {
+                int calculatedWidth = _screenWidth + (-HorizontalPosition);
+
+                TransparencyLevelHint =
+                    (calculatedWidth > 36)
+                        ? WindowTransparencyLevel.AcrylicBlur
+                        : WindowTransparencyLevel.Transparent;
+                Opacity = (calculatedWidth > 36) ? 1 : 0;
+
+                Width = calculatedWidth;
+                Position = new PixelPoint(HorizontalPosition, Position.Y);
+            }
+        }
+
+        // ReSharper disable once StaticMemberInGenericType
         public static readonly DirectProperty<FlyoutContainer, int> HorizontalPositionProperty =
             AvaloniaProperty.RegisterDirect<FlyoutContainer, int>(
                 nameof(HorizontalPosition),
@@ -108,39 +120,9 @@ namespace ArtemisFlyout
             set
             {
                 SetAndRaise(HorizontalPositionProperty, ref _horizontalPosition, value);
-                RenderTransform = new TranslateTransform(value, 0);
             }
         }
 
-        private double _maskedWidth;
-        public new double Width
-        {
-            get
-            {
-                return _maskedWidth;
-            }
-            set
-            {
-
-                _maskedWidth = value;
-                base.Width = _maskedWidth + HorizontalSpacing;
-
-            }
-        }
-
-        private int _horizontalSpacing = 12;
-        public int HorizontalSpacing
-        {
-            get
-            {
-                return _horizontalSpacing;
-            }
-            set
-            {
-
-                _horizontalSpacing = value;
-                base.Width = _maskedWidth + _horizontalSpacing;
-            }
-        }
+        public int HorizontalSpacing { get; set; } = 12;
     }
 }

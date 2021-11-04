@@ -10,12 +10,13 @@ namespace ArtemisFlyout.Services.TrayIcon
     public class TrayIconService : ITrayIconService
     {
         private readonly IFlyoutService _flyoutService;
-        private readonly AvaloniaTrayIcon _trayIcon = new AvaloniaTrayIcon();
+        private readonly AvaloniaTrayIcon _trayIcon;
 
         public TrayIconService(IFlyoutService flyoutService)
         {
             _flyoutService = flyoutService;
             _flyoutService.Preload();
+            _trayIcon = new AvaloniaTrayIcon();
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
             var icon = new WindowIcon(assets.Open(new Uri(@"resm:ArtemisFlyout.Assets.bow.ico")));
             _trayIcon.Icon = icon;

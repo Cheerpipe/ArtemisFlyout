@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using ArtemisFlyout.JsonDatamodel;
 using ArtemisFlyout.Services.Configuration;
 using ArtemisFlyout.Services.FlyoutServices;
@@ -57,14 +56,6 @@ namespace ArtemisFlyout.Services.ArtemisServices
             _flyoutService.Close();
         }
 
-        public void RunArtemis()
-        {
-            Process.Start(
-                _configurationService.GetConfiguration().LaunchSettings.ArtemisPath,
-                _configurationService.GetConfiguration().LaunchSettings.ArtemisLaunchArgs);
-            _flyoutService.Close();
-        }
-
         public async void RestartArtemis()
         {
             var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
@@ -77,7 +68,6 @@ namespace ArtemisFlyout.Services.ArtemisServices
             _flyoutService.Close();
         }
 
-        bool IArtemisService.IsArtemisRunning() => Process.GetProcessesByName("Artemis.UI").Length > 0;
         public bool SetBright(int value)
         {
             return SetJsonDataModelValue("DesktopVariables", "GlobalBrightness", value);

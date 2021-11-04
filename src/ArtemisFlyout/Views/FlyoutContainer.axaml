@@ -13,12 +13,13 @@
                                 CanResize="False"
                                 Topmost="True"
                                 SystemDecorations="None"
-                                TransparencyLevelHint="Transparent"
+                                TransparencyLevelHint="AcrylicBlur"
                                 ExtendClientAreaToDecorationsHint="True"
                                 ExtendClientAreaChromeHints="NoChrome"
                                 ExtendClientAreaTitleBarHeightHint="-1"
                                 Background="Transparent"
-                                UseLayoutRounding="True">
+                                UseLayoutRounding="True"
+                                CornerRadius="10 10 10 10">
   <!-- Set dimensions here to see the actual result -->
   <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer">
     <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
@@ -26,8 +27,8 @@
         <ExperimentalAcrylicMaterial
             BackgroundSource="Digger"
             TintColor="Black"
-            TintOpacity="0.8"
-            MaterialOpacity="0.8"/>
+            TintOpacity="1"
+            MaterialOpacity="0.65"/>
       </ExperimentalAcrylicBorder.Material>
       <Border CornerRadius="10 10 10 10"
               BorderBrush="#414141"

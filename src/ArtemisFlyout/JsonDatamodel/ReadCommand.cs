@@ -23,14 +23,14 @@ namespace ArtemisFlyout.JsonDatamodel
             // Create Root and Property
             if (string.IsNullOrEmpty(propertyJson))
             {
-                throw new Exception("Can't read JSON Datamodel");
+                return default(T);
             }
-
+            
             JObject responseObject = JObject.Parse(propertyJson);
             JToken token = responseObject.SelectToken(_jsonPath);
             if (token == null)
             {
-                throw new Exception("Value don't exists");
+                return default(T);
             }
 
             return token.Value<T>();

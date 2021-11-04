@@ -1,6 +1,5 @@
 using ArtemisFlyout.Services.FlyoutServices;
 using ArtemisFlyout.ViewModels;
-using Avalonia;
 using Avalonia.Markup.Xaml;
 using Ninject;
 using ReactiveUI;
@@ -32,9 +31,7 @@ namespace ArtemisFlyout.Views
             HorizontalSpacing = 12;
             Deactivated += (_, _) =>
             {
-                var x = FlyoutService;
                 FlyoutService?.Close();
-
             };
         }
     }

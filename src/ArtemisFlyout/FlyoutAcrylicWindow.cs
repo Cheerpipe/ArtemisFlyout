@@ -5,37 +5,33 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
-using Avalonia.Media;
 
 namespace ArtemisFlyout
 {
-    public class FlyoutWindow<TViewModel> : Avalonia.ReactiveUI.ReactiveWindow<TViewModel> where TViewModel : class
+    public class FlyoutAcrylicWindow<TViewModel> : Avalonia.ReactiveUI.ReactiveWindow<TViewModel> where TViewModel : class
     {
         private readonly int _screenHeight;
         private readonly int _screenWidth;
 
-        public int AnimationDelay { get; set; } = 200;
+        public int AnimationDelay { get; set; } = 250;
 
         public int VerticalSpacing { get; set; } = 12;
 
-        public FlyoutWindow()
+        public FlyoutAcrylicWindow()
         {
             _screenWidth = Screens.Primary.WorkingArea.Width;
             _screenHeight = Screens.Primary.WorkingArea.Height;
+
         }
 
         public void ShowAnimated()
         {
-            
-            this.PropertyChanged += FlyoutWindow_PropertyChanged;
-
+            PropertyChanged += FlyoutWindow_PropertyChanged;
+            MaxWidth = Width;
+            ClipToBounds = true;
             WindowStartupLocation = WindowStartupLocation.Manual;
-
+            Position = new PixelPoint(_screenWidth, (int)(_screenHeight + (-Height) + (-HorizontalSpacing)));
             this.Find<Panel>("FlyoutPanelContainer").Width = Width;
-
-            Show();
-
-            Clock = Avalonia.Animation.Clock.GlobalClock;
 
             var showTransition = new IntegerTransition()
             {
@@ -44,8 +40,22 @@ namespace ArtemisFlyout
                 Easing = new CircularEaseOut()
             };
 
-            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)base.Width, 0);
+            Show();
+            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenWidth, (int)(_screenWidth + (-Width) + (-HorizontalSpacing)));
+        }
 
+        public async Task CloseAnimated()
+        {
+            var closeTransition = new IntegerTransition()
+            {
+                Property = FlyoutContainer.HorizontalPositionProperty,
+                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Easing = new CircularEaseIn()
+            };
+
+            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, Position.X, _screenWidth);
+            await Task.Delay(AnimationDelay);
+            Close();
         }
 
         public void SetHeight(double newHeight)
@@ -69,29 +79,34 @@ namespace ArtemisFlyout
                 Easing = new CircularEaseOut()
             };
 
-            widthTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, base.Width, newWidth);
+            widthTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, Width, newWidth);
         }
 
         private void FlyoutWindow_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
         {
-            if (e.Property.Name == "Height" || e.Property.Name == "Width" || e.Property.Name == "HorizontalPosition")
+            if (e.Property.Name == "Height" /*|| e.Property.Name == "Width" || e.Property.Name == "HorizontalPosition"*/)
             {
-                Position = new PixelPoint(_screenWidth + (-(int)base.Width), _screenHeight + (-VerticalSpacing) + (-(int)Height));
+                Position = new PixelPoint(Position.X, _screenHeight + (-VerticalSpacing) + (-(int)Height));
             }
-        }
-
-        public async Task CloseAnimated()
-        {
-            var closeTransition = new IntegerTransition()
+            else if (e.Property.Name == "HorizontalPosition")
             {
-                Property = FlyoutContainer.HorizontalPositionProperty,
-                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new CircularEaseIn()
-            };
+                lock (this)
+                {
+                    int calculatedWidth = _screenWidth + (-HorizontalPosition);
+                    BeginBatchUpdate();
+                    Opacity = (calculatedWidth > 48) ? 1 : 0;
+                    TransparencyLevelHint =
+                        (calculatedWidth > 48)
+                            ? WindowTransparencyLevel.AcrylicBlur
+                            : WindowTransparencyLevel.Transparent;
 
-            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, 0, (int)base.Width);
-            await Task.Delay(AnimationDelay);
-            Close();
+                    Width = calculatedWidth;
+                    Position = new PixelPoint(HorizontalPosition, Position.Y);
+                    EndBatchUpdate();
+                    InvalidateArrange();
+                    InvalidateVisual();
+                }
+            }
         }
 
         // ReSharper disable once StaticMemberInGenericType
@@ -108,39 +123,9 @@ namespace ArtemisFlyout
             set
             {
                 SetAndRaise(HorizontalPositionProperty, ref _horizontalPosition, value);
-                RenderTransform = new TranslateTransform(value, 0);
             }
         }
 
-        private double _maskedWidth;
-        public new double Width
-        {
-            get
-            {
-                return _maskedWidth;
-            }
-            set
-            {
-
-                _maskedWidth = value;
-                base.Width = _maskedWidth + HorizontalSpacing;
-
-            }
-        }
-
-        private int _horizontalSpacing = 12;
-        public int HorizontalSpacing
-        {
-            get
-            {
-                return _horizontalSpacing;
-            }
-            set
-            {
-
-                _horizontalSpacing = value;
-                base.Width = _maskedWidth + _horizontalSpacing;
-            }
-        }
+        public int HorizontalSpacing { get; set; } = 12;
     }
 }

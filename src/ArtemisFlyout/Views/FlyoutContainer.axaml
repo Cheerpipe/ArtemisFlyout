@@ -13,7 +13,7 @@
                                 CanResize="False"
                                 Topmost="True"
                                 SystemDecorations="None"
-                                TransparencyLevelHint="AcrylicBlur"
+                                TransparencyLevelHint="Transparent"
                                 ExtendClientAreaToDecorationsHint="True"
                                 ExtendClientAreaChromeHints="NoChrome"
                                 ExtendClientAreaTitleBarHeightHint="-1"
@@ -27,8 +27,8 @@
         <ExperimentalAcrylicMaterial
             BackgroundSource="Digger"
             TintColor="Black"
-            TintOpacity="1"
-            MaterialOpacity="0.65"/>
+            TintOpacity="0.8"
+            MaterialOpacity="0.8"/>
       </ExperimentalAcrylicBorder.Material>
       <Border CornerRadius="10 10 10 10"
               BorderBrush="#414141"

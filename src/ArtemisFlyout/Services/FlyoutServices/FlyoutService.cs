@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ArtemisFlyout.IoC;
 using ArtemisFlyout.Screens;
-using ArtemisFlyout.UserControls;
+using Avalonia.Controls;
 using Ninject;
 using Tmds.DBus;
 
@@ -21,16 +21,14 @@ namespace ArtemisFlyout.Services.FlyoutServices
         public async void Show()
         {
             if (FlyoutContainerInstance != null) return;
-
             FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
-
             try
             {
                 FlyoutContainerInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
             }
             catch (ConnectException)
             {
-                FlyoutContainerInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
+                // Don't populate any viewmodel because it can be a dummy form for pre loading
             }
 
             await FlyoutContainerInstance.ShowAnimated();
@@ -48,23 +46,19 @@ namespace ArtemisFlyout.Services.FlyoutServices
 
         public async void Preload()
         {
-            if (FlyoutContainerInstance != null) return;
-
             FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
-
             try
             {
                 FlyoutContainerInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
             }
             catch (ConnectException)
             {
-               // Don't populate any viewmodel because it can be a dummy form for pre loading
+                // Don't populate any viewmodel because it can be a dummy form for pre loading
             }
 
-            FlyoutContainerInstance.Opacity = 0;
+            FlyoutContainerInstance.WindowState = WindowState.Minimized;
             await FlyoutContainerInstance.ShowAnimated();
-            FlyoutContainerInstance.Opacity = 0;
-            await Close();
+            FlyoutContainerInstance.Close();
         }
 
         public async Task Close()

@@ -58,7 +58,8 @@ namespace ArtemisFlyout.Services.FlyoutServices
 
             FlyoutContainerInstance.WindowState = WindowState.Minimized;
             await FlyoutContainerInstance.ShowAnimated();
-            FlyoutContainerInstance.Close();
+            await FlyoutContainerInstance.CloseAnimated();
+            FlyoutContainerInstance = null;
         }
 
         public async Task Close()

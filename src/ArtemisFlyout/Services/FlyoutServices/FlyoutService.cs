@@ -13,6 +13,8 @@ namespace ArtemisFlyout.Services
     {
         public static FlyoutContainer FlyoutWindowInstance { get; private set; }
         private readonly IKernel _kernel;
+        private bool _opening;
+        private bool _closing;
 
         public FlyoutService(IKernel kernel)
         {
@@ -21,6 +23,10 @@ namespace ArtemisFlyout.Services
 
         public async void Show(bool animate = true)
         {
+            if (_opening)
+                return;
+            _opening = true;
+
             if (FlyoutWindowInstance != null) return;
             FlyoutWindowInstance = GetInstance();
 
@@ -33,6 +39,7 @@ namespace ArtemisFlyout.Services
                 await FlyoutWindowInstance.ShowAnimated();
             else
                 FlyoutWindowInstance.Show();
+            _opening = false;
         }
 
         public void SetHeight(double newHeight)
@@ -62,7 +69,6 @@ namespace ArtemisFlyout.Services
 
         public async void Preload()
         {
-
             if (FlyoutWindowInstance != null) return;
             FlyoutWindowInstance = GetInstance();
             FlyoutWindowInstance.WindowState = WindowState.Minimized;
@@ -70,8 +76,24 @@ namespace ArtemisFlyout.Services
             await CloseAndRelease(false);
         }
 
+        public async void Toggle()
+        {
+            if (FlyoutWindowInstance is null)
+            {
+                Show();
+            }
+            else
+            {
+                await CloseAndRelease();
+            }
+        }
+
         public async Task CloseAndRelease(bool animate = true)
         {
+            if (_closing)
+                return;
+            _closing = true;
+
             if (animate)
                 await FlyoutWindowInstance.CloseAnimated();
             else
@@ -81,6 +103,7 @@ namespace ArtemisFlyout.Services
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
+            _closing = false;
         }
     }
 }

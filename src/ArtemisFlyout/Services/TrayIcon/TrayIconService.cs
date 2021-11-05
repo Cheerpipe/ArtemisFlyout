@@ -43,7 +43,7 @@ namespace ArtemisFlyout.Services
 
         private void TrayIcon_Clicked(object sender, EventArgs e)
         {
-            _flyoutService.Show();
+            _flyoutService.Toggle();
         }
     }
 }

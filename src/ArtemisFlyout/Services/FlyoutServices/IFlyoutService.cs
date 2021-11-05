@@ -9,5 +9,6 @@ namespace ArtemisFlyout.Services
         void SetHeight(double newHeight);
         void SetWidth(double newWidth);
         void Preload();
+        void Toggle();
     }
 }

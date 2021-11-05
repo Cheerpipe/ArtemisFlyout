@@ -43,8 +43,22 @@ namespace ArtemisFlyout.Screens
                 Easing = new CircularEaseOut()
             };
 
-            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)base.Width, 0);
+            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)base.Width, HorizontalPosition);
             await Task.Delay(AnimationDelay);
+        }
+
+        public async Task CloseAnimated()
+        {
+            var closeTransition = new IntegerTransition()
+            {
+                Property = FlyoutContainer.HorizontalPositionProperty,
+                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Easing = new CircularEaseIn()
+            };
+
+            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, HorizontalPosition, (int)base.Width);
+            await Task.Delay(AnimationDelay);
+            Close();
         }
 
         public void SetHeight(double newHeight)
@@ -77,20 +91,6 @@ namespace ArtemisFlyout.Screens
             {
                 Position = new PixelPoint(_screenWidth + (-(int)base.Width), _screenHeight + (-VerticalSpacing) + (-(int)Height));
             }
-        }
-
-        public async Task CloseAnimated()
-        {
-            var closeTransition = new IntegerTransition()
-            {
-                Property = FlyoutContainer.HorizontalPositionProperty,
-                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
-                Easing = new CircularEaseIn()
-            };
-
-            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, 0, (int)base.Width);
-            await Task.Delay(AnimationDelay);
-            Close();
         }
 
         // ReSharper disable once StaticMemberInGenericType

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ArtemisFlyout.IoC;
 using ArtemisFlyout.Screens;
 using ArtemisFlyout.UserControls;
-using ArtemisFlyout.ViewModels;
 using Ninject;
 using Tmds.DBus;
 
@@ -49,7 +48,21 @@ namespace ArtemisFlyout.Services.FlyoutServices
 
         public async void Preload()
         {
-            Show();
+            if (FlyoutContainerInstance != null) return;
+
+            FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
+
+            try
+            {
+                FlyoutContainerInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
+            }
+            catch (ConnectException)
+            {
+               // Don't populate any viewmodel because it can be a dummy form for pre loading
+            }
+
+            FlyoutContainerInstance.Opacity = 0;
+            await FlyoutContainerInstance.ShowAnimated();
             FlyoutContainerInstance.Opacity = 0;
             await Close();
         }

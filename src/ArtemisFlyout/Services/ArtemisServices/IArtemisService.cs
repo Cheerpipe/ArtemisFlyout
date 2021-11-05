@@ -1,7 +1,8 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
+using ArtemisFlyout.Events;
 
-namespace ArtemisFlyout.Services.ArtemisServices
+namespace ArtemisFlyout.Services
 {
     //TODO: Split
     public interface IArtemisService
@@ -23,5 +24,7 @@ namespace ArtemisFlyout.Services.ArtemisServices
         public void SetActiveProfile(string profileName);
         public string GetActiveProfile();
         void Launch();
+
+        event EventHandler<ProfileChangeEventArgs> ProfileChanged;
     }
 }

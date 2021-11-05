@@ -1,11 +1,10 @@
 ﻿using System;
-using ArtemisFlyout.Services.FlyoutServices;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Platform;
 using AvaloniaTrayIcon = Avalonia.Controls.TrayIcon;
 
-namespace ArtemisFlyout.Services.TrayIcon
+namespace ArtemisFlyout.Services
 {
     public class TrayIconService : ITrayIconService
     {

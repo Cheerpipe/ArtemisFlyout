@@ -1,6 +1,5 @@
 ﻿using System.Reactive.Disposables;
-using ArtemisFlyout.Services.ArtemisServices;
-using ArtemisFlyout.Services.FlyoutServices;
+using ArtemisFlyout.Services;
 using ArtemisFlyout.UserControls;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;

@@ -1,7 +1,6 @@
-﻿using ArtemisFlyout.Services.Configuration;
-using RestSharp;
+﻿using RestSharp;
 
-namespace ArtemisFlyout.Services.RestServices
+namespace ArtemisFlyout.Services
 {
     public class RestService : IRestService
     {
@@ -11,16 +10,16 @@ namespace ArtemisFlyout.Services.RestServices
             _configurationService = configurationService;
         }
 
-        private RestClient GetClient()
+        private RestClient GetArtemisClient()
         {
             return new(
-                $"{_configurationService.GetConfiguration().RestSettings.Host}:{_configurationService.GetConfiguration().RestSettings.Port}")
+                $"{_configurationService.GetConfiguration().RestClientSettings.Host}:{_configurationService.GetConfiguration().RestClientSettings.Port}")
             {
-                Timeout = _configurationService.GetConfiguration().RestSettings.Timeout
+                Timeout = _configurationService.GetConfiguration().RestClientSettings.Timeout
             };
         }
 
-        private RestRequest GetRequest(string api, string content = "", string contentType = "")
+        private static RestRequest GetRequest(string api, string content = "", string contentType = "")
         {
             RestRequest request = new(api);
             request.AddParameter(string.IsNullOrEmpty(contentType) ? "text/plain" : contentType, content, ParameterType.RequestBody);
@@ -29,21 +28,32 @@ namespace ArtemisFlyout.Services.RestServices
 
         public IRestResponse Post(string api, string content = "", string contentType = "")
         {
-            RestClient client = GetClient();
+            RestClient client = GetArtemisClient();
             RestRequest request = GetRequest(api, content, contentType);
             return client.Post(request);
         }
 
         public IRestResponse Get(string api, string content = "", string contentType = "")
         {
-            RestClient client = GetClient();
+            RestClient client = GetArtemisClient();
+            RestRequest request = GetRequest(api, content, contentType);
+            return client.Get(request);
+        }
+
+        public IRestResponse Get(string endPoint, int port, string api, string content = "", string contentType = "")
+        {
+            RestClient client = new($"{endPoint}:{port}")
+            {
+                Timeout = _configurationService.GetConfiguration().RestClientSettings.Timeout
+            };
+
             RestRequest request = GetRequest(api, content, contentType);
             return client.Get(request);
         }
 
         public IRestResponse Put(string api, string content = "", string contentType = "")
         {
-            RestClient client = GetClient();
+            RestClient client = GetArtemisClient();
             RestRequest request = GetRequest(api, content, contentType);
             return client.Put(request);
         }

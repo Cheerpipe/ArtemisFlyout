@@ -1,4 +1,4 @@
-﻿namespace ArtemisFlyout.Services.TrayIcon
+﻿namespace ArtemisFlyout.Services
 {
     public interface ITrayIconService
     {

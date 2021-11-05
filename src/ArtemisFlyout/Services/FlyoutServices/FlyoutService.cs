@@ -7,7 +7,7 @@ using Avalonia.Controls;
 using Ninject;
 using Tmds.DBus;
 
-namespace ArtemisFlyout.Services.FlyoutServices
+namespace ArtemisFlyout.Services
 {
     public class FlyoutService : IFlyoutService
     {

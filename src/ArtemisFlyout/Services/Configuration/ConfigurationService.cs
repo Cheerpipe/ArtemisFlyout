@@ -1,6 +1,6 @@
 ﻿using AnyConfig;
 
-namespace ArtemisFlyout.Services.Configuration
+namespace ArtemisFlyout.Services
 {
     public class ConfigurationService: IConfigurationService
     {

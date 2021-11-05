@@ -1,4 +1,4 @@
-﻿namespace ArtemisFlyout.Services.Configuration
+﻿namespace ArtemisFlyout.Services
 {
     public interface IConfigurationService
     {

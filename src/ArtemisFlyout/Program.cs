@@ -1,7 +1,8 @@
 using Avalonia;
 using System.Threading;
+using ArtemisFlyout.Controllers;
 using ArtemisFlyout.IoC;
-using ArtemisFlyout.Services.TrayIcon;
+using ArtemisFlyout.Services;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
 
@@ -24,7 +25,6 @@ namespace ArtemisFlyout
             return builder;
         }
 
-
         // The entry point. Things aren't ready yet, so at this point
         // you shouldn't use any Avalonia types or anything that expects
         // a SynchronizationContext to be ready
@@ -36,15 +36,30 @@ namespace ArtemisFlyout
         // Application entry point. Avalonia is completely initialized.
         static void AppMain(Application app, string[] args)
         {
+
             // Do you startup code here
             Kernel.Initialize(new Bindings());
 
+            IInstanceService instanceService = Kernel.Get<IInstanceService>();
+            if (instanceService.IsAlreadyRunning())
+            {
+                instanceService.ShowInstanceFlyout();
+                return;
+            }
+
+            var webServerService = Kernel.Get<IWebServerService>();
+            webServerService.AddController<FlyoutRestController>();
+            webServerService.Start();
+
             var trayIconService = Kernel.Get<ITrayIconService>();
-            
             trayIconService.Show();
 
             // Start the main loop
             app.Run(RunCancellationToken);
+
+            // Stop things
+            webServerService.Stop();
+            trayIconService.Hide();
         }
     }
 }

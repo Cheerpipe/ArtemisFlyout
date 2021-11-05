@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using ArtemisFlyout.Services.Configuration;
-using ArtemisFlyout.Services.FlyoutServices;
-using ArtemisFlyout.Services.RestServices;
+using ArtemisFlyout.Events;
 using MessageBox.Avalonia.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace ArtemisFlyout.Services.ArtemisServices
+namespace ArtemisFlyout.Services
 {
     public class ArtemisService : IArtemisService
     {
@@ -95,22 +93,14 @@ namespace ArtemisFlyout.Services.ArtemisServices
 
         public void SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value)
         {
-            string content;
-
-            switch (Type.GetTypeCode(typeof(T)))
+            string content = Type.GetTypeCode(typeof(T)) switch
             {
-                case TypeCode.Boolean:
-                    content = $"{{{jsonPath}: {value.ToString()?.ToLower()} }}";
-                    break;
-                case TypeCode.String:
-                    content = $"{{{jsonPath}: '{value}' }}";
-                    break;
-                default:
-                    content = $"{{{jsonPath}: {value} }}";
-                    break;
-            }
+                TypeCode.Boolean => $"{{{jsonPath}: {value.ToString()?.ToLower()} }}",
+                TypeCode.String => $"{{{jsonPath}: '{value}' }}",
+                _ => $"{{{jsonPath}: {value} }}"
+            };
 
-            string propertyJson = _restService.Put($"/json-datamodel/{dataModel}", content, "application/json").Content;
+            _ = _restService.Put($"/json-datamodel/{dataModel}", content, "application/json").Content;
         }
 
         public T GetJsonDataModelValue<T>(string dataModel, string jsonPath, T defaultValue)
@@ -120,14 +110,14 @@ namespace ArtemisFlyout.Services.ArtemisServices
             // Create Root and Property
             if (string.IsNullOrEmpty(propertyJson))
             {
-                return default(T);
+                return default;
             }
 
             JObject responseObject = JObject.Parse(propertyJson);
             JToken token = responseObject.SelectToken(jsonPath);
             if (token == null)
             {
-                return default(T);
+                return default;
             }
 
             return token.Value<T>();
@@ -147,6 +137,7 @@ namespace ArtemisFlyout.Services.ArtemisServices
         public void SetActiveProfile(string profileName)
         {
             SetJsonDataModelValue("DesktopVariables", "Profile", profileName);
+            ProfileChanged?.Invoke(this, new ProfileChangeEventArgs(profileName));
         }
 
         public string GetActiveProfile()
@@ -160,5 +151,7 @@ namespace ArtemisFlyout.Services.ArtemisServices
                 _configurationService.GetConfiguration().LaunchSettings.ArtemisPath,
                 _configurationService.GetConfiguration().LaunchSettings.ArtemisLaunchArgs);
         }
+
+        public event EventHandler<ProfileChangeEventArgs> ProfileChanged;
     }
 }

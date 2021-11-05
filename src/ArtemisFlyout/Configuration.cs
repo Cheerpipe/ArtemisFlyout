@@ -1,14 +1,21 @@
-﻿namespace ArtemisFlyout.Services.Configuration
+﻿namespace ArtemisFlyout
 {
 
     //TODO: Create a model
 
-    public class RestSettings
+    public class RestClientSettings
     {
         public string Host { get; set; }
         public int Port { get; set; }
         public int Timeout { get; set; }
     }
+
+    public class RestApiSettings
+    {
+        public string ListeningAt { get; set; }
+        public int Port { get; set; }
+    }
+    
     public class LaunchSettings
     {
         public string ArtemisPath { get; set; }
@@ -25,6 +32,7 @@
     {
         public LaunchSettings LaunchSettings { get; set; }
         public DatamodelSettings DatamodelSettings { get; set; }
-        public RestSettings RestSettings { get; set; }
+        public RestClientSettings RestClientSettings { get; set; }
+        public RestApiSettings RestApiSettings { get; set; }
     }
 }

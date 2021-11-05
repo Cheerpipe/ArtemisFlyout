@@ -30,6 +30,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.10" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.10" />
     <PackageReference Include="Avalonia.Skia" Version="0.10.10" />
+    <PackageReference Include="EmbedIO" Version="3.4.3" />
     <PackageReference Include="FluentAvaloniaUI" Version="1.1.5" />
     <PackageReference Include="Material.Icons.Avalonia" Version="1.0.2" />
     <PackageReference Include="MessageBox.Avalonia" Version="1.5.5" />
@@ -47,7 +48,7 @@
     <Compile Update="UserControls\ArtemisDeviceToggles\ArtemisDeviceToggles.axaml.cs">
       <DependentUpon>ArtemisDeviceToggles.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Screens\FlyoutContainer.axaml.cs">
+    <Compile Update="Screens\FlyoutContainer\FlyoutContainer.axaml.cs">
       <DependentUpon>FlyoutContainer.axaml</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -2,17 +2,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using ArtemisFlyout.Services.ArtemisServices;
+using ArtemisFlyout.ViewModels;
 using ReactiveUI;
 
-namespace ArtemisFlyout.ViewModels
+namespace ArtemisFlyout.UserControls
 {
-    public class ArtemisMainControlViewModel : ViewModelBase
+    public class ArtemisLightControlViewModel : ViewModelBase
     {
         private readonly IArtemisService _artemisService;
         private readonly List<Profile> _profiles;
         private Profile _selectedProfile;
 
-        public ArtemisMainControlViewModel(IArtemisService artemisService)
+        public ArtemisLightControlViewModel(IArtemisService artemisService)
         {
             _artemisService = artemisService;
             _profiles = _artemisService.GetProfiles("Ambient");

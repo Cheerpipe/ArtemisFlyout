@@ -1,21 +1,17 @@
+using ArtemisFlyout.IoC;
 using ArtemisFlyout.Services.FlyoutServices;
-using ArtemisFlyout.ViewModels;
 using Avalonia;
 using Avalonia.Markup.Xaml;
-using Ninject;
 using ReactiveUI;
+
 // ReSharper disable UnusedParameter.Local
 
-namespace ArtemisFlyout.Views
+namespace ArtemisFlyout.Screens
 {
     public class FlyoutContainer : FlyoutWindow<FlyoutContainerViewModel>
     {
-        [Inject]
-        public IFlyoutService FlyoutService { get; set; }
-
         public FlyoutContainer()
         {
-            
             this.WhenActivated(disposables =>
             {
                 /* Handle interactions etc. */
@@ -32,7 +28,7 @@ namespace ArtemisFlyout.Views
             HorizontalSpacing = 12;
             Deactivated += (_, _) =>
             {
-                FlyoutService?.Close();
+                Kernel.Get<IFlyoutService>().Close();
             };
         }
     }

@@ -1,9 +1,10 @@
-﻿using ArtemisFlyout.Services.ArtemisServices;
+﻿using ArtemisFlyout.Screens;
+using ArtemisFlyout.Services.ArtemisServices;
 using ArtemisFlyout.Services.Configuration;
 using ArtemisFlyout.Services.FlyoutServices;
-using ArtemisFlyout.Services.LauncherServices;
 using ArtemisFlyout.Services.RestServices;
 using ArtemisFlyout.Services.TrayIcon;
+using ArtemisFlyout.UserControls;
 using Ninject.Modules;
 
 namespace ArtemisFlyout.IoC
@@ -17,7 +18,12 @@ namespace ArtemisFlyout.IoC
             Bind<IArtemisService>().To<ArtemisService>().InSingletonScope();
             Bind<IConfigurationService>().To<ConfigurationService>().InSingletonScope();
             Bind<IRestService>().To<RestService>().InSingletonScope();
-            Bind<ILauncherService>().To<LauncherService>().InSingletonScope();
+            
+            Bind<ArtemisDeviceTogglesViewModel>().To<ArtemisDeviceTogglesViewModel>().InSingletonScope();
+            Bind<ArtemisLauncherViewModel>().To<ArtemisLauncherViewModel>().InSingletonScope();
+            Bind<ArtemisLightControlViewModel>().To<ArtemisLightControlViewModel>().InSingletonScope();
+            Bind<FlyoutContainerViewModel>().To<FlyoutContainerViewModel>().InSingletonScope();
+           
         }
     }
 }

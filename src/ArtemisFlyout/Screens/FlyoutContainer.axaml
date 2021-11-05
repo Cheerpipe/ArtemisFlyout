@@ -1,13 +1,15 @@
-<reactiveUi:ReactiveWindow      x:TypeArguments="vm:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
+<reactiveUi:ReactiveWindow      x:TypeArguments="screens:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                 xmlns:vm="using:ArtemisFlyout.ViewModels"
+                                xmlns:vml="using:ArtemisFlyout.IoC"
                                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                 xmlns:uc="clr-namespace:ArtemisFlyout.UserControls"
                                 xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                                 xmlns:reactiveUi="http://reactiveui.net"
+                                xmlns:screens="clr-namespace:ArtemisFlyout.Screens"
                                 mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="310"
-                                x:Class="ArtemisFlyout.Views.FlyoutContainer"
+                                x:Class="ArtemisFlyout.Screens.FlyoutContainer"
                                 Title="Artemis Flyout"
                                 ShowInTaskbar="false"
                                 CanResize="False"
@@ -20,7 +22,8 @@
                                 Background="Transparent"
                                 UseLayoutRounding="True"
                                 CornerRadius="10 10 10 10">
-  <!-- Set dimensions here to see the actual result -->
+                      
+    <!-- Set dimensions here to see the actual result -->
   <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer">
     <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
       <ExperimentalAcrylicBorder.Material>
@@ -44,8 +47,8 @@
                 <Carousel.PageTransition>
                   <PageSlide Duration="0.25" Orientation="Horizontal" SlideInEasing="CircularEaseOut" SlideOutEasing="CircularEaseOut"/>
                 </Carousel.PageTransition>
-                <uc:ArtemisControl />
-                <uc:DeviceToggles />
+                <uc:ArtemisLightControl />
+                <uc:ArtemisDeviceToggles />
                 <uc:ArtemisLauncher />
               </Carousel>
             </Panel>

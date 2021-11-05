@@ -5,9 +5,9 @@ using ReactiveUI;
 
 namespace ArtemisFlyout.UserControls
 {
-    public class ArtemisLauncher : ReactiveUserControl<ArtemisLauncher>
+    public class ArtemisLightControl : ReactiveUserControl<ArtemisLightControlViewModel>
     {
-        public ArtemisLauncher()
+        public ArtemisLightControl()
         {
             // If you put a WhenActivated block here, your activatable view model 
             // will also support activation, otherwise it won't.

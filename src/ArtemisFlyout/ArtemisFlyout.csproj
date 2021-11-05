@@ -38,21 +38,18 @@
     <PackageReference Include="TypeSupport" Version="1.1.12" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="UserControls\ArtemisMainControl.axaml.cs">
-      <DependentUpon>ArtemisMainControl.axaml</DependentUpon>
+    <Compile Update="UserControls\ArtemisLightControl\ArtemisLightControl.axaml.cs">
+      <DependentUpon>ArtemisLightControl.axaml</DependentUpon>
     </Compile>
-    <Compile Update="UserControls\ArtemisLauncher.axaml.cs">
+    <Compile Update="UserControls\ArtemisLauncher\ArtemisLauncher.axaml.cs">
       <DependentUpon>ArtemisLauncher.axaml</DependentUpon>
     </Compile>
-    <Compile Update="UserControls\ArtemisDeviceToggles.axaml.cs">
+    <Compile Update="UserControls\ArtemisDeviceToggles\ArtemisDeviceToggles.axaml.cs">
       <DependentUpon>ArtemisDeviceToggles.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\FlyoutContainer.axaml.cs">
+    <Compile Update="Screens\FlyoutContainer.axaml.cs">
       <DependentUpon>FlyoutContainer.axaml</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

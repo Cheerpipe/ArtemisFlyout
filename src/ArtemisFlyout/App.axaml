@@ -4,14 +4,11 @@
              x:Class="ArtemisFlyout.App"
              xmlns:sty="using:FluentAvalonia.Styling"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
-            xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
-            xmlns:ioC="clr-namespace:ArtemisFlyout.IoC">
+             xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+             xmlns:IoC="clr-namespace:ArtemisFlyout.IoC">
   <Application.DataTemplates>
     <local:ViewLocator/>
   </Application.DataTemplates>
-  <Application.Resources>
-    <ioC:ViewModelLocator x:Key="ViewModelLocator"/>
-  </Application.Resources>
   <Application.Styles>
     <sty:FluentAvaloniaTheme />
     <StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml"></StyleInclude>

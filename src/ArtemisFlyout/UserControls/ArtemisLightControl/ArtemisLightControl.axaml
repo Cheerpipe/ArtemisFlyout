@@ -1,4 +1,4 @@
-<reactiveUi:ReactiveUserControl x:TypeArguments="vm:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
+<reactiveUi:ReactiveUserControl x:TypeArguments="screens:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                 xmlns:vm="using:ArtemisFlyout.ViewModels"
                                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,8 +7,9 @@
                                 xmlns:converters="clr-namespace:ArtemisFlyout.Converters;assembly=ArtemisFlyout"
                                 xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                                 xmlns:reactiveUi="http://reactiveui.net"
+                                xmlns:screens="clr-namespace:ArtemisFlyout.Screens"
                                 mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="500"
-                                x:Class="ArtemisFlyout.UserControls.ArtemisControl"
+                                x:Class="ArtemisFlyout.UserControls.ArtemisLightControl"
                                 Background="Transparent">
   <UserControl.Resources>
     <converters:SubtractionValueConverter x:Key="SubtractionConverter"/>
@@ -30,7 +31,7 @@
         Devices settings
       </controls:HyperlinkButton>
       <ToggleSwitch
-        IsChecked="{Binding !ArtemisMainControlViewModel.FullBlackout}"
+        IsChecked="{Binding !ArtemisLightControlViewModel.FullBlackout}"
         Content=""
         OffContent=""
         OnContent=""
@@ -39,7 +40,7 @@
         MinHeight="0"/>
     </DockPanel>
     <!-- Global toggle End -->
-    <StackPanel IsEnabled="{Binding !ArtemisMainControlViewModel.FullBlackout}">
+    <StackPanel IsEnabled="{Binding !ArtemisLightControlViewModel.FullBlackout}">
       <!-- Ambiente profile selector Start -->
       <StackPanel Margin="10 0 10 40">
         <TextBlock
@@ -49,8 +50,8 @@
         </TextBlock>
         <ComboBox
           HorizontalAlignment="Stretch"
-          Items="{Binding ArtemisMainControlViewModel.Profiles}"
-          SelectedItem="{Binding ArtemisMainControlViewModel.SelectedProfile}">
+          Items="{Binding ArtemisLightControlViewModel.Profiles}"
+          SelectedItem="{Binding ArtemisLightControlViewModel.SelectedProfile}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding Name}"/>
@@ -69,7 +70,7 @@
             Width="110"
             Height="48"
             HorizontalAlignment="Center"
-            IsChecked="{Binding ArtemisMainControlViewModel.AudioReactive}">
+            IsChecked="{Binding ArtemisLightControlViewModel.AudioReactive}">
             <avalonia:MaterialIcon
               Kind="Equalizer"
               Width="24"
@@ -109,7 +110,7 @@
               Width="110"
               Height="48"
               HorizontalAlignment="Center"
-              IsChecked="{Binding ArtemisMainControlViewModel.AmbiLight}">
+              IsChecked="{Binding ArtemisLightControlViewModel.AmbiLight}">
             <avalonia:MaterialIcon
                 Kind="MonitorMultiple"
                 Width="24"
@@ -121,7 +122,7 @@
               Width="110"
               Height="48"
               HorizontalAlignment="Center"
-              IsChecked="{Binding ArtemisMainControlViewModel.Teams}">
+              IsChecked="{Binding ArtemisLightControlViewModel.Teams}">
             <avalonia:MaterialIcon
                 Kind="MicrosoftTeams"
                 Width="24"
@@ -165,15 +166,15 @@
           <Slider
               Grid.Row="0"
               Grid.Column="1"
-              Value="{Binding ArtemisMainControlViewModel.Bright}"
-              IsEnabled="{Binding !ArtemisMainControlViewModel.FullBlackout}"/>
+              Value="{Binding ArtemisLightControlViewModel.Bright}"
+              IsEnabled="{Binding !ArtemisLightControlViewModel.FullBlackout}"/>
           <avalonia:MaterialIcon Kind="Brightness7" Grid.Row="0" Grid.Column="2"></avalonia:MaterialIcon>
           <avalonia:MaterialIcon Kind="SpeedometerSlow" Grid.Row="1" Grid.Column="0"></avalonia:MaterialIcon>
           <Slider
               Grid.Row="1"
               Grid.Column="1"
-              Value="{Binding ArtemisMainControlViewModel.Speed}"
-              IsEnabled="{Binding !ArtemisMainControlViewModel.FullBlackout}"/>
+              Value="{Binding ArtemisLightControlViewModel.Speed}"
+              IsEnabled="{Binding !ArtemisLightControlViewModel.FullBlackout}"/>
           <avalonia:MaterialIcon Kind="Speedometer" Grid.Row="1" Grid.Column="2"></avalonia:MaterialIcon>
         </Grid>
       </StackPanel>

@@ -13,14 +13,15 @@ namespace ArtemisFlyout.Services.ArtemisServices
         void ShowDebugger();
         void GoSettings();
         void RestartArtemis();
-        bool SetBright(int value);
+        void SetBright(int value);
         int GetBright();
-        bool SetSpeed(int value);
+        void SetSpeed(int value);
         int GetSpeed();
-        public bool SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value);
+        public void SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value);
         public T GetJsonDataModelValue<T>(string dataModel, string jsonPath, T defaultValue);
         public List<Profile> GetProfiles(string categoryName = "");
-        public bool SetActiveProfile(string profileName);
+        public void SetActiveProfile(string profileName);
         public string GetActiveProfile();
+        void Launch();
     }
 }

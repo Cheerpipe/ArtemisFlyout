@@ -1,4 +1,3 @@
-using ArtemisFlyout.ViewModels;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
@@ -6,9 +5,9 @@ using ReactiveUI;
 
 namespace ArtemisFlyout.UserControls
 {
-    public class DeviceToggles :  ReactiveUserControl<ArtemisDeviceTogglesViewModel>
+    public class ArtemisDeviceToggles :  ReactiveUserControl<ArtemisDeviceTogglesViewModel>
     {
-        public DeviceToggles()
+        public ArtemisDeviceToggles()
         {
             // If you put a WhenActivated block here, your activatable view model 
             // will also support activation, otherwise it won't.

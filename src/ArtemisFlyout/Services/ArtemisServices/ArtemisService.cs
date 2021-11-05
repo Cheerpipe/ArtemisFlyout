@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using ArtemisFlyout.JsonDatamodel;
 using ArtemisFlyout.Services.Configuration;
 using ArtemisFlyout.Services.FlyoutServices;
 using ArtemisFlyout.Services.RestServices;
 using MessageBox.Avalonia.Enums;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ArtemisFlyout.Services.ArtemisServices
 {
@@ -70,12 +70,12 @@ namespace ArtemisFlyout.Services.ArtemisServices
             if (result != ButtonResult.Yes)
                 return;
             _ = _restService.Post("/remote/restart");
-            _flyoutService.Close();
+            await _flyoutService.Close();
         }
 
-        public bool SetBright(int value)
+        public void SetBright(int value)
         {
-            return SetJsonDataModelValue("DesktopVariables", "GlobalBrightness", value);
+            SetJsonDataModelValue("DesktopVariables", "GlobalBrightness", value);
         }
 
         public int GetBright()
@@ -83,9 +83,9 @@ namespace ArtemisFlyout.Services.ArtemisServices
             return GetJsonDataModelValue("DesktopVariables", "GlobalBrightness", 0);
         }
 
-        public bool SetSpeed(int value)
+        public void SetSpeed(int value)
         {
-            return SetJsonDataModelValue("DesktopVariables", "GlobalSpeed", value);
+            SetJsonDataModelValue("DesktopVariables", "GlobalSpeed", value);
         }
 
         public int GetSpeed()
@@ -93,32 +93,44 @@ namespace ArtemisFlyout.Services.ArtemisServices
             return GetJsonDataModelValue("DesktopVariables", "GlobalSpeed", 0);
         }
 
-        public bool SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value)
+        public void SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value)
         {
-            WriteCommand writeCommand = new WriteCommand(dataModel, jsonPath);
-            try
+            string content;
+
+            switch (Type.GetTypeCode(typeof(T)))
             {
-                if (value != null)
-                    writeCommand.Execute<T>(value);
-                return true;
+                case TypeCode.Boolean:
+                    content = $"{{{jsonPath}: {value.ToString()?.ToLower()} }}";
+                    break;
+                case TypeCode.String:
+                    content = $"{{{jsonPath}: '{value}' }}";
+                    break;
+                default:
+                    content = $"{{{jsonPath}: {value} }}";
+                    break;
             }
-            catch
-            {
-                return false;
-            }
+
+            string propertyJson = _restService.Put($"/json-datamodel/{dataModel}", content, "application/json").Content;
         }
 
         public T GetJsonDataModelValue<T>(string dataModel, string jsonPath, T defaultValue)
         {
-            try
-            {
-                ReadCommand readCommand = new ReadCommand(dataModel, jsonPath);
-                return readCommand.Execute<T>();
-            }
-            catch (InvalidCastException)
+            string propertyJson = _restService.Get($"/json-datamodel/{dataModel}").Content;
+
+            // Create Root and Property
+            if (string.IsNullOrEmpty(propertyJson))
             {
                 return default(T);
             }
+
+            JObject responseObject = JObject.Parse(propertyJson);
+            JToken token = responseObject.SelectToken(jsonPath);
+            if (token == null)
+            {
+                return default(T);
+            }
+
+            return token.Value<T>();
         }
 
         public List<Profile> GetProfiles(string categoryName = "")
@@ -132,14 +144,21 @@ namespace ArtemisFlyout.Services.ArtemisServices
                 JsonConvert.DeserializeObject<IEnumerable<Profile>>(restResponse).Where(p => p.Category.Name == categoryName).ToList();
         }
 
-        public bool SetActiveProfile(string profileName)
+        public void SetActiveProfile(string profileName)
         {
-            return SetJsonDataModelValue("DesktopVariables", "Profile", profileName);
+            SetJsonDataModelValue("DesktopVariables", "Profile", profileName);
         }
 
         public string GetActiveProfile()
         {
             return GetJsonDataModelValue("DesktopVariables", "Profile", "");
+        }
+
+        public void Launch()
+        {
+            Process.Start(
+                _configurationService.GetConfiguration().LaunchSettings.ArtemisPath,
+                _configurationService.GetConfiguration().LaunchSettings.ArtemisLaunchArgs);
         }
     }
 }

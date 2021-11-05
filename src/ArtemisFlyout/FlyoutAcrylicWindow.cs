@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using ArtemisFlyout.Views;
+using ArtemisFlyout.Screens;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
@@ -8,6 +8,7 @@ using Avalonia.Controls;
 
 namespace ArtemisFlyout
 {
+    // Avalonia not ready get
     public class FlyoutAcrylicWindow<TViewModel> : Avalonia.ReactiveUI.ReactiveWindow<TViewModel> where TViewModel : class
     {
         private readonly int _screenHeight;
@@ -21,7 +22,6 @@ namespace ArtemisFlyout
         {
             _screenWidth = Screens.Primary.WorkingArea.Width;
             _screenHeight = Screens.Primary.WorkingArea.Height;
-
         }
 
         public void ShowAnimated()

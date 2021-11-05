@@ -1,28 +1,29 @@
-﻿using System;
-using System.Reactive.Disposables;
+﻿using System.Reactive.Disposables;
 using ArtemisFlyout.Services.ArtemisServices;
 using ArtemisFlyout.Services.FlyoutServices;
+using ArtemisFlyout.UserControls;
+using ArtemisFlyout.ViewModels;
 using ReactiveUI;
 using Tmds.DBus;
 
-namespace ArtemisFlyout.ViewModels
+namespace ArtemisFlyout.Screens
 {
     public class FlyoutContainerViewModel : ViewModelBase
     {
         private readonly IArtemisService _artemisService;
         private readonly ArtemisDeviceTogglesViewModel _artemisDeviceTogglesViewModel;
-        private readonly ArtemisMainControlViewModel _artemisMainControlViewModel;
+        private readonly ArtemisLightControlViewModel _artemisLightControlViewModel;
         private readonly IFlyoutService _flyoutService;
         private int _activePageIndex;
 
         public FlyoutContainerViewModel(
             IArtemisService artemisService,
             ArtemisDeviceTogglesViewModel artemisDeviceTogglesViewModel,
-            ArtemisMainControlViewModel artemisMainControlViewModel,
+            ArtemisLightControlViewModel artemisMainControlViewModel,
             IFlyoutService flyoutService)
         {
             _artemisService = artemisService;
-            _artemisMainControlViewModel = artemisMainControlViewModel;
+            _artemisLightControlViewModel = artemisMainControlViewModel;
             _artemisDeviceTogglesViewModel = artemisDeviceTogglesViewModel;
             _flyoutService = flyoutService;
 
@@ -43,7 +44,7 @@ namespace ArtemisFlyout.ViewModels
                 throw new ConnectException("Artemis REST API not available.");
         }
 
-        public ArtemisMainControlViewModel ArtemisMainControlViewModel => _artemisMainControlViewModel;
+        public ArtemisLightControlViewModel ArtemisLightControlViewModel => _artemisLightControlViewModel;
         public ArtemisDeviceTogglesViewModel ArtemisDeviceTogglesViewModel => _artemisDeviceTogglesViewModel;
 
         public int ActivePageindex

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ArtemisFlyout.Services.LauncherServices;
+using ArtemisFlyout.IoC;
+using ArtemisFlyout.Screens;
+using ArtemisFlyout.UserControls;
 using ArtemisFlyout.ViewModels;
-using ArtemisFlyout.Views;
 using Ninject;
 using Tmds.DBus;
 
@@ -11,31 +12,29 @@ namespace ArtemisFlyout.Services.FlyoutServices
     public class FlyoutService : IFlyoutService
     {
         public static FlyoutContainer FlyoutContainerInstance { get; private set; }
-        public readonly ILauncherService _launcherService;
         private readonly IKernel _kernel;
-        private bool _animating;
 
-        public FlyoutService(IKernel kernel, ILauncherService launcherService)
+        public FlyoutService(IKernel kernel)
         {
-            _launcherService = launcherService;
             _kernel = kernel;
         }
 
-        public void Show()
+        public async void Show()
         {
             if (FlyoutContainerInstance != null) return;
 
             FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
+
             try
             {
-                FlyoutContainerInstance.ViewModel = _kernel.Get<FlyoutContainerViewModel>();
+                FlyoutContainerInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
             }
-            catch(ConnectException)
+            catch (ConnectException)
             {
-                FlyoutContainerInstance.DataContext = _kernel.Get<ArtemisLauncherViewModel>();
+                FlyoutContainerInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
             }
-                
-            FlyoutContainerInstance.ShowAnimated();
+
+            await FlyoutContainerInstance.ShowAnimated();
         }
 
         public void SetHeight(double newHeight)

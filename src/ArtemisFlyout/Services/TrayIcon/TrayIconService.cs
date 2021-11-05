@@ -26,7 +26,7 @@ namespace ArtemisFlyout.Services.TrayIcon
         public void Show()
         {
             _trayIcon.Menu = new NativeMenu();
-            NativeMenuItem exitMenu = new NativeMenuItem("Exit Artemis Flyout");
+            NativeMenuItem exitMenu = new ("Exit Artemis Flyout");
             exitMenu.Click += ExitMenu_Click;
             _trayIcon.Menu.Items.Add(exitMenu);
             _trayIcon.IsVisible = true;
@@ -39,7 +39,7 @@ namespace ArtemisFlyout.Services.TrayIcon
         private void ExitMenu_Click(object sender, EventArgs e)
         {
             //TODO: DI
-            Program.runCancellationTokenSource.Cancel();
+            Program.RunCancellationTokenSource.Cancel();
         }
 
         private void TrayIcon_Clicked(object sender, EventArgs e)

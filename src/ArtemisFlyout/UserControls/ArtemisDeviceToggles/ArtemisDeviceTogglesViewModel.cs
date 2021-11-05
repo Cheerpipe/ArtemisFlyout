@@ -1,8 +1,9 @@
 ﻿using System.Reactive.Disposables;
 using ArtemisFlyout.Services.ArtemisServices;
+using ArtemisFlyout.ViewModels;
 using ReactiveUI;
 
-namespace ArtemisFlyout.ViewModels
+namespace ArtemisFlyout.UserControls
 {
     public class ArtemisDeviceTogglesViewModel : ViewModelBase
     {

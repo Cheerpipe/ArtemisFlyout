@@ -4,16 +4,14 @@ using ArtemisFlyout.IoC;
 using ArtemisFlyout.Services.TrayIcon;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Ninject;
 
 namespace ArtemisFlyout
 {
     public class Program
     {
-        public static CancellationTokenSource runCancellationTokenSource = new CancellationTokenSource();
+        public static CancellationTokenSource RunCancellationTokenSource { get; } = new();
 
-        static CancellationToken runCancellationToken = runCancellationTokenSource.Token;
+        private static readonly CancellationToken RunCancellationToken = RunCancellationTokenSource.Token;
 
         // This method is needed for IDE previewer infrastructure
         public static AppBuilder BuildAvaloniaApp()
@@ -46,7 +44,7 @@ namespace ArtemisFlyout
             trayIconService.Show();
 
             // Start the main loop
-            app.Run(runCancellationToken);
+            app.Run(RunCancellationToken);
         }
     }
 }

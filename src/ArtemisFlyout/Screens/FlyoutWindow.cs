@@ -1,13 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using ArtemisFlyout.Views;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Media;
 
-namespace ArtemisFlyout
+namespace ArtemisFlyout.Screens
 {
     public class FlyoutWindow<TViewModel> : Avalonia.ReactiveUI.ReactiveWindow<TViewModel> where TViewModel : class
     {

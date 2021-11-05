@@ -1,7 +1,7 @@
 ArtemisFlyout for use with Artemis RGB. Must be used with the followin plugins:
 
- * JSON DataModel Plugin
- * Extended REST API
+ * JSON DataModel Plugin : https://github.com/Cheerpipe/Artemis.Plugins.Public/tree/master/src/Modules/Artemis.Plugins.Modules.Json
+ * Extended REST API : https://github.com/Cheerpipe/Artemis.Plugins.Public/tree/master/src/Collections/Artemis.Plugins.ExtendedWebAPI
 
 
 

@@ -33,32 +33,32 @@ namespace ArtemisFlyout.Services.ArtemisServices
         public void GoHome()
         {
             _ = _restService.Post("/remote/bring-to-foreground");
-            _flyoutService.Close();
+            _flyoutService.CloseAndRelease();
 
         }
 
         public void GoWorkshop()
         {
             _ = _restService.Post("/windows/show-workshop");
-            _flyoutService.Close();
+            _flyoutService.CloseAndRelease();
         }
 
         public void GoSurfaceEditor()
         {
             _ = _restService.Post("/windows/show-surface-editor");
-            _flyoutService.Close();
+            _flyoutService.CloseAndRelease();
         }
 
         public void ShowDebugger()
         {
             _ = _restService.Post("/windows/show-debugger");
-            _flyoutService.Close();
+            _flyoutService.CloseAndRelease();
         }
 
         public void GoSettings()
         {
             _ = _restService.Post("/windows/show-settings");
-            _flyoutService.Close();
+            _flyoutService.CloseAndRelease();
         }
 
         public async void RestartArtemis()
@@ -70,7 +70,7 @@ namespace ArtemisFlyout.Services.ArtemisServices
             if (result != ButtonResult.Yes)
                 return;
             _ = _restService.Post("/remote/restart");
-            await _flyoutService.Close();
+            await _flyoutService.CloseAndRelease();
         }
 
         public void SetBright(int value)

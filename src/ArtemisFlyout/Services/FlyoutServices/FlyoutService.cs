@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ArtemisFlyout.IoC;
 using ArtemisFlyout.Screens;
+using ArtemisFlyout.UserControls;
 using Avalonia.Controls;
 using Ninject;
 using Tmds.DBus;
@@ -10,7 +11,7 @@ namespace ArtemisFlyout.Services.FlyoutServices
 {
     public class FlyoutService : IFlyoutService
     {
-        public static FlyoutContainer FlyoutContainerInstance { get; private set; }
+        public static FlyoutContainer FlyoutWindowInstance { get; private set; }
         private readonly IKernel _kernel;
 
         public FlyoutService(IKernel kernel)
@@ -18,58 +19,68 @@ namespace ArtemisFlyout.Services.FlyoutServices
             _kernel = kernel;
         }
 
-        public async void Show()
+        public async void Show(bool animate = true)
         {
-            if (FlyoutContainerInstance != null) return;
-            FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
-            try
-            {
-                FlyoutContainerInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
-            }
-            catch (ConnectException)
-            {
-                // Don't populate any viewmodel because it can be a dummy form for pre loading
-            }
+            if (FlyoutWindowInstance != null) return;
+            FlyoutWindowInstance = GetInstance();
 
-            await FlyoutContainerInstance.ShowAnimated();
+            FlyoutWindowInstance.Deactivated += (_, _) =>
+            {
+                _ = CloseAndRelease();
+            };
+
+            if (animate)
+                await FlyoutWindowInstance.ShowAnimated();
+            else
+                FlyoutWindowInstance.Show();
         }
 
         public void SetHeight(double newHeight)
         {
-            FlyoutContainerInstance.SetHeight(newHeight);
+            FlyoutWindowInstance.SetHeight(newHeight);
         }
 
         public void SetWidth(double newWidth)
         {
-            FlyoutContainerInstance.SetWidth(newWidth);
+            FlyoutWindowInstance.SetWidth(newWidth);
+        }
+
+        private FlyoutContainer GetInstance()
+        {
+            FlyoutContainer flyoutInstance = _kernel.Get<FlyoutContainer>();
+            try
+            {
+                flyoutInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
+            }
+            catch (ConnectException)
+            {
+                flyoutInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
+            }
+
+            return flyoutInstance;
         }
 
         public async void Preload()
         {
-            FlyoutContainerInstance = _kernel.Get<FlyoutContainer>();
-            try
-            {
-                FlyoutContainerInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
-            }
-            catch (ConnectException)
-            {
-                // Don't populate any viewmodel because it can be a dummy form for pre loading
-            }
 
-            FlyoutContainerInstance.WindowState = WindowState.Minimized;
-            await FlyoutContainerInstance.ShowAnimated();
-            await FlyoutContainerInstance.CloseAnimated();
-            FlyoutContainerInstance = null;
+            if (FlyoutWindowInstance != null) return;
+            FlyoutWindowInstance = GetInstance();
+            FlyoutWindowInstance.WindowState = WindowState.Minimized;
+            await FlyoutWindowInstance.ShowAnimated();
+            await CloseAndRelease(false);
         }
 
-        public async Task Close()
+        public async Task CloseAndRelease(bool animate = true)
         {
-            await FlyoutContainerInstance.CloseAnimated();
-            FlyoutContainerInstance = null;
+            if (animate)
+                await FlyoutWindowInstance.CloseAnimated();
+            else
+                FlyoutWindowInstance.Close();
+
+            FlyoutWindowInstance = null;
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
-
         }
     }
 }

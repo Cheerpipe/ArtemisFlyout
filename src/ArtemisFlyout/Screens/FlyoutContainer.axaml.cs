@@ -1,6 +1,3 @@
-using ArtemisFlyout.IoC;
-using ArtemisFlyout.Services.FlyoutServices;
-using Avalonia;
 using Avalonia.Markup.Xaml;
 using ReactiveUI;
 
@@ -26,10 +23,6 @@ namespace ArtemisFlyout.Screens
             Width = 320;
             Height = 510;
             HorizontalSpacing = 12;
-            Deactivated += (_, _) =>
-            {
-                Kernel.Get<IFlyoutService>().Close();
-            };
         }
     }
 }

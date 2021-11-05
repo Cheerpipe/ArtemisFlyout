@@ -6,7 +6,7 @@ using ArtemisFlyout.Services.RestServices;
 using ArtemisFlyout.Services.TrayIcon;
 using Ninject.Modules;
 
-namespace ArtemisFlyout.DI
+namespace ArtemisFlyout.IoC
 {
     public class Bindings : NinjectModule
     {

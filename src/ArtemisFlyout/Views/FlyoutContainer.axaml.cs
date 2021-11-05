@@ -1,5 +1,6 @@
 using ArtemisFlyout.Services.FlyoutServices;
 using ArtemisFlyout.ViewModels;
+using Avalonia;
 using Avalonia.Markup.Xaml;
 using Ninject;
 using ReactiveUI;

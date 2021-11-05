@@ -24,7 +24,7 @@ namespace ArtemisFlyout
             _screenHeight = Screens.Primary.WorkingArea.Height;
         }
 
-        public void ShowAnimated()
+        public async Task ShowAnimated()
         {
             
             this.PropertyChanged += FlyoutWindow_PropertyChanged;
@@ -45,7 +45,7 @@ namespace ArtemisFlyout
             };
 
             showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)base.Width, 0);
-
+            await Task.Delay(AnimationDelay);
         }
 
         public void SetHeight(double newHeight)

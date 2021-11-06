@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using ArtemisFlyout.Models.Configuration;
 
-namespace ArtemisFlyout.Models
+namespace ArtemisFlyout.Models.Configuration
 {
 
     public class Configurations
@@ -9,6 +10,6 @@ namespace ArtemisFlyout.Models
         public DatamodelSettings DatamodelSettings { get; set; }
         public RestClientSettings RestClientSettings { get; set; }
         public RestApiSettings RestApiSettings { get; set; }
-        public List<BlackoutSetting> BlackoutSettings { get; set; }
+       public List<Blackout> Blackouts { get; set; }
     }
 }

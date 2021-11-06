@@ -1,4 +1,4 @@
-﻿namespace ArtemisFlyout.Models
+﻿namespace ArtemisFlyout.Models.Configuration
 {
     public class DatamodelSettings
     {

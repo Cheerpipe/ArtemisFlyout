@@ -21,7 +21,8 @@
                                 ExtendClientAreaTitleBarHeightHint="-1"
                                 Background="Transparent"
                                 UseLayoutRounding="True"
-                                CornerRadius="10 10 10 10">
+                                CornerRadius="10 10 10 10"
+                                Height="{Binding FlyoutHeight}">
                       
     <!-- Set dimensions here to see the actual result -->
   <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer">

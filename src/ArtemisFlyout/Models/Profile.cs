@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ArtemisFlyout.Services
+namespace ArtemisFlyout.Models
 {
 
     //TODO: Create models

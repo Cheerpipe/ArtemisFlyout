@@ -1,19 +1,31 @@
-﻿using System.Reactive.Disposables;
+﻿using System.Collections.Generic;
+using System.Reactive.Disposables;
+using ArtemisFlyout.Models.Configuration;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;
 
 namespace ArtemisFlyout.UserControls
 {
+
     public class ArtemisDeviceTogglesViewModel : ViewModelBase
     {
         private readonly IArtemisService _artemisService;
+        private readonly IConfigurationService _configurationService;
+        private List<Blackout> _blackoutSettings;
+        private List<BlackoutViewModel> _blackouts;
 
-        
-        public ArtemisDeviceTogglesViewModel(IArtemisService artemisService)
+        public ArtemisDeviceTogglesViewModel(IArtemisService artemisService, IConfigurationService configurationService)
         {
             _artemisService = artemisService;
-            _ceiling= _artemisService.GetJsonDataModelValue("Blackouts", "MoonBlackout", false);
+            _configurationService = configurationService;
+            _ceiling = _artemisService.GetJsonDataModelValue("Blackouts", "MoonBlackout", false);
+            _blackoutSettings = _configurationService.Get().Blackouts;
+            _blackouts = new();
+            foreach (var blackout in _blackoutSettings)
+            {
+                _blackouts.Add(new BlackoutViewModel(blackout));
+            }
 
             this.WhenActivated(disposables =>
             {
@@ -41,6 +53,13 @@ namespace ArtemisFlyout.UserControls
         {
             get => _artemisService.GetJsonDataModelValue("Blackouts", "TvBlackout", false);
             set => this._artemisService.SetJsonDataModelValue("Blackouts", "TvBlackout", value);
+        }
+
+        public List<BlackoutViewModel> Blackouts => _blackouts;
+
+        public void BlackoutStateChange()
+        {
+
         }
 
         public bool Display

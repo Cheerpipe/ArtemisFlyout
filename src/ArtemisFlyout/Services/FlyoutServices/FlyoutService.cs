@@ -34,7 +34,6 @@ namespace ArtemisFlyout.Services
             {
                 _ = CloseAndRelease();
             };
-
             if (animate)
                 await FlyoutWindowInstance.ShowAnimated();
             else
@@ -58,7 +57,6 @@ namespace ArtemisFlyout.Services
             try
             {
                 FlyoutContainerViewModel flyoutContainerViewModel= Kernel.Get<FlyoutContainerViewModel>();
-                flyoutContainerViewModel.Reset();
                 flyoutInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
             }
             catch (ConnectException)
@@ -100,6 +98,7 @@ namespace ArtemisFlyout.Services
                 await FlyoutWindowInstance.CloseAnimated();
             else
                 FlyoutWindowInstance.Close();
+            FlyoutWindowInstance.ViewModel?.Reset();
 
             FlyoutWindowInstance = null;
             GC.Collect();

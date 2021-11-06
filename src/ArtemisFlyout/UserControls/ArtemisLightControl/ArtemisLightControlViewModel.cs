@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
+using ArtemisFlyout.Models;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;

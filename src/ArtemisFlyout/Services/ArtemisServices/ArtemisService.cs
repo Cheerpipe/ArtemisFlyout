@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using ArtemisFlyout.Events;
+using ArtemisFlyout.Models;
 using MessageBox.Avalonia.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

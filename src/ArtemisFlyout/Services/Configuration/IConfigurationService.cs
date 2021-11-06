@@ -1,10 +1,11 @@
 ﻿using ArtemisFlyout.Models;
+using ArtemisFlyout.Models.Configuration;
 
 namespace ArtemisFlyout.Services
 {
     public interface IConfigurationService
     {
-        T GetConfig<T>(string settingName, T defaultValue);
         Configurations Get();
+        void Load();
     }
 }

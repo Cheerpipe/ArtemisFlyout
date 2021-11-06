@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Disposables;
+using System.Reflection.Metadata.Ecma335;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.UserControls;
 using ArtemisFlyout.ViewModels;
@@ -48,7 +49,7 @@ namespace ArtemisFlyout.Screens
 
         public void Reset()
         {
-            ActivePageindex = 0;
+            GoMainPage();
         }
 
         public int ActivePageindex
@@ -59,24 +60,37 @@ namespace ArtemisFlyout.Screens
                 this.RaiseAndSetIfChanged(ref _activePageIndex, value);
             }
         }
-        
+
+        private double _flyoutHeight = 510;
+        public double FlyoutHeight
+        {
+            get
+            {
+                return _flyoutHeight;
+            }
+            set
+            {
+                _flyoutHeight = value;
+                _flyoutService.SetHeight(value);
+            }
+
+        }
+
         public void SetActivePageIndex(int newPageIndex)
         {
             ActivePageindex = newPageIndex;
-            //TODO: Better handling o this
-
-            //TODO:  Should be in the viewmodel
-            if (newPageIndex==1)
-                _flyoutService.SetHeight(580);
-            else
-            {
-                _flyoutService.SetHeight(510);
-            }
         }
 
-        public void GoBack()
+        public void GoMainPage()
         {
             SetActivePageIndex(0);
+            FlyoutHeight = 510;
+        }
+
+        public void GoDevices()
+        {
+            SetActivePageIndex(1);
+            FlyoutHeight = (46 * ArtemisDeviceTogglesViewModel.Blackouts.Count) + 110;
         }
 
         public void Restart()

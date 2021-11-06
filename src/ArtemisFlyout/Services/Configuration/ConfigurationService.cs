@@ -1,24 +1,27 @@
-﻿using AnyConfig;
-using Configurations = ArtemisFlyout.Models.Configurations;
+﻿using System.IO;
+using ArtemisFlyout.Models.Configuration;
+using Newtonsoft.Json;
 
 namespace ArtemisFlyout.Services
 {
-    public class ConfigurationService: IConfigurationService
+    public class ConfigurationService : IConfigurationService
     {
-
+        private Configurations _configurations;
         public ConfigurationService()
         {
-            ConfigurationManager.ConfigurationFilename = "settings.json";
+            Load();
         }
 
-        public T GetConfig<T>(string settingName, T defaultValue)
+        public void Load()
         {
-            return  Config.Get(settingName,defaultValue);
+            using (StreamReader r = new StreamReader("appsettings.json"))
+            {
+                string appsettingsString = r.ReadToEnd();
+                _configurations = JsonConvert.DeserializeObject<Configurations>(appsettingsString);
+            }
         }
 
-        public Configurations Get()
-        {
-            return Config.Get<Configurations>();
-        }
+        public Configurations Get() => _configurations;
+
     }
 }

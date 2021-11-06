@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ArtemisFlyout.Events;
+using ArtemisFlyout.Models;
 
 namespace ArtemisFlyout.Services
 {

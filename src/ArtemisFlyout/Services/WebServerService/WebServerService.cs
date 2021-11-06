@@ -44,7 +44,7 @@ namespace ArtemisFlyout.Services
             WebApiModule webApiModule = new("/", JsonNetSerializer);
             WebServer server = new WebServer(o =>
                     o.WithUrlPrefix(
-                            $"http://{_configurationService.GetConfiguration().RestApiSettings.ListeningAt}:{_configurationService.GetConfiguration().RestApiSettings.Port}/")
+                            $"http://{_configurationService.Get().RestApiSettings.ListeningAt}:{_configurationService.Get().RestApiSettings.Port}/")
                         .WithMode(HttpListenerMode.EmbedIO))
                 .WithLocalSessionManager()
                 .WithModule(webApiModule);

@@ -25,7 +25,7 @@ namespace ArtemisFlyout.Services
         {
             _restService.Get(
                 "http://127.0.0.1",
-                _configurationService.GetConfiguration().RestApiSettings.Port,
+                _configurationService.Get().RestApiSettings.Port,
                 "/flyout/show");
         }
     }

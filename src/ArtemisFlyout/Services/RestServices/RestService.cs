@@ -13,9 +13,9 @@ namespace ArtemisFlyout.Services
         private RestClient GetArtemisClient()
         {
             return new(
-                $"{_configurationService.GetConfiguration().RestClientSettings.Host}:{_configurationService.GetConfiguration().RestClientSettings.Port}")
+                $"{_configurationService.Get().RestClientSettings.Host}:{_configurationService.Get().RestClientSettings.Port}")
             {
-                Timeout = _configurationService.GetConfiguration().RestClientSettings.Timeout
+                Timeout = _configurationService.Get().RestClientSettings.Timeout
             };
         }
 
@@ -44,7 +44,7 @@ namespace ArtemisFlyout.Services
         {
             RestClient client = new($"{endPoint}:{port}")
             {
-                Timeout = _configurationService.GetConfiguration().RestClientSettings.Timeout
+                Timeout = _configurationService.Get().RestClientSettings.Timeout
             };
 
             RestRequest request = GetRequest(api, content, contentType);

@@ -1,4 +1,5 @@
 ﻿using AnyConfig;
+using Configurations = ArtemisFlyout.Models.Configurations;
 
 namespace ArtemisFlyout.Services
 {
@@ -15,9 +16,9 @@ namespace ArtemisFlyout.Services
             return  Config.Get(settingName,defaultValue);
         }
 
-        public Configuration GetConfiguration()
+        public Configurations Get()
         {
-            return Config.Get<Configuration>();
+            return Config.Get<Configurations>();
         }
     }
 }

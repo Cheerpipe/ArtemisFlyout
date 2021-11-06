@@ -17,22 +17,12 @@ namespace ArtemisFlyout.UserControls
         {
             _artemisService = artemisService;
             _profiles = _artemisService.GetProfiles("Ambient");
-            _artemisService.ProfileChanged += _artemisService_ProfileChanged;
             _fullBlackout = _artemisService.GetJsonDataModelValue("Blackouts", "FullBlackout", false);
 
             this.WhenActivated(disposables =>
             {
                 Disposable.Create(() => { }).DisposeWith(disposables);
             });
-        }
-
-        private void _artemisService_ProfileChanged(object sender, Events.ProfileChangeEventArgs e)
-        {
-            var p = _profiles.FirstOrDefault(p => p.Name == e.ProfileName);
-            if (e.ProfileName != SelectedProfile.Name)
-            {
-                SelectedProfile = p;
-            }
         }
 
         public int Bright
@@ -52,8 +42,8 @@ namespace ArtemisFlyout.UserControls
             }
             set
             {
-                this.RaiseAndSetIfChanged(ref _selectedProfile, value);
                 _artemisService.SetActiveProfile(value.Name);
+                this.RaiseAndSetIfChanged(ref _selectedProfile, value);
             }
         }
 

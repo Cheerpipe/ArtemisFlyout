@@ -148,8 +148,8 @@ namespace ArtemisFlyout.Services
         public void Launch()
         {
             Process.Start(
-                _configurationService.GetConfiguration().LaunchSettings.ArtemisPath,
-                _configurationService.GetConfiguration().LaunchSettings.ArtemisLaunchArgs);
+                _configurationService.Get().LaunchSettings.ArtemisPath,
+                _configurationService.Get().LaunchSettings.ArtemisLaunchArgs);
         }
 
         public event EventHandler<ProfileChangeEventArgs> ProfileChanged;

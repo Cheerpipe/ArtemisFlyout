@@ -46,6 +46,11 @@ namespace ArtemisFlyout.Screens
         public ArtemisLightControlViewModel ArtemisLightControlViewModel => _artemisLightControlViewModel;
         public ArtemisDeviceTogglesViewModel ArtemisDeviceTogglesViewModel => _artemisDeviceTogglesViewModel;
 
+        public void Reset()
+        {
+            ActivePageindex = 0;
+        }
+
         public int ActivePageindex
         {
             get => _activePageIndex;

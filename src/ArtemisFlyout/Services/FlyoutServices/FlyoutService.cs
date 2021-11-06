@@ -4,6 +4,7 @@ using ArtemisFlyout.IoC;
 using ArtemisFlyout.Screens;
 using ArtemisFlyout.UserControls;
 using Avalonia.Controls;
+using MessageBox.Avalonia.Enums;
 using Ninject;
 using Tmds.DBus;
 
@@ -12,12 +13,14 @@ namespace ArtemisFlyout.Services
     public class FlyoutService : IFlyoutService
     {
         public static FlyoutContainer FlyoutWindowInstance { get; private set; }
+        private readonly IConfigurationService _configurationService;
         private readonly IKernel _kernel;
         private bool _opening;
         private bool _closing;
 
-        public FlyoutService(IKernel kernel)
+        public FlyoutService(IKernel kernel, IConfigurationService configurationService)
         {
+            _configurationService = configurationService;
             _kernel = kernel;
         }
 
@@ -56,6 +59,7 @@ namespace ArtemisFlyout.Services
             FlyoutContainer flyoutInstance = _kernel.Get<FlyoutContainer>();
             try
             {
+                _configurationService.Load();
                 FlyoutContainerViewModel flyoutContainerViewModel= Kernel.Get<FlyoutContainerViewModel>();
                 flyoutInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
             }

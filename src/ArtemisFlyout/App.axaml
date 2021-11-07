@@ -1,16 +1,16 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:ArtemisFlyout"
-             x:Class="ArtemisFlyout.App"
              xmlns:sty="using:FluentAvalonia.Styling"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
-             xmlns:IoC="clr-namespace:ArtemisFlyout.IoC">
+             xmlns:IoC="clr-namespace:ArtemisFlyout.IoC"
+             x:Class="ArtemisFlyout.App">
   <Application.DataTemplates>
     <local:ViewLocator/>
   </Application.DataTemplates>
   <Application.Styles>
-    <sty:FluentAvaloniaTheme />
     <StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml"></StyleInclude>
+    <sty:FluentAvaloniaTheme />
   </Application.Styles>
 </Application>

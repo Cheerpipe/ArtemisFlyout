@@ -41,8 +41,9 @@
               Background="Transparent"
               BoxShadow="3 4 0 0 #64000000">
         <Panel>
-          <DockPanel>
-            <!-- Flyout content Start -->
+           
+            <DockPanel>
+              <!-- Flyout content Start -->
             <Panel DockPanel.Dock="Top" Margin="10 0 10 0">
               <Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
                 <Carousel.PageTransition>
@@ -50,6 +51,7 @@
                 </Carousel.PageTransition>
                 <uc:ArtemisLightControl />
                 <uc:ArtemisDeviceToggles />
+                <uc:ArtemisCustomProfile />
                 <uc:ArtemisLauncher />
               </Carousel>
             </Panel>

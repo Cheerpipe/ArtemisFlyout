@@ -47,16 +47,38 @@
            Padding=" 0 0 0 5">
           Ambient profile
         </TextBlock>
-        <ComboBox
-          HorizontalAlignment="Stretch"
-          Items="{Binding ArtemisLightControlViewModel.Profiles}"
-          SelectedItem="{Binding ArtemisLightControlViewModel.SelectedProfile}">
-          <ComboBox.ItemTemplate>
-            <DataTemplate>
-              <TextBlock Text="{Binding Name}"/>
-            </DataTemplate>
-          </ComboBox.ItemTemplate>
-        </ComboBox>
+        <DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
+          <Button
+              VerticalAlignment="Center"
+              HorizontalAlignment="Right"
+              DockPanel.Dock="Right"
+              Height="32"
+              Width="32"
+              Command="{Binding GoCustomProfile}"
+              Content=">"
+              BorderThickness="0 1 1 1"
+              CornerRadius="0 8 8 0">
+              <ToolTip.Tip>
+                  <StackPanel>
+                      <TextBlock Classes="h1">Edit custom profile</TextBlock>
+                      <TextBlock Classes="h2">This option allows you to quickly set custom colors for Custom profile</TextBlock>
+                  </StackPanel>
+              </ToolTip.Tip>
+          </Button>
+          <ComboBox
+              HorizontalAlignment="Stretch"
+              DockPanel.Dock="Left"
+              VerticalAlignment="Center"
+              CornerRadius=" 8 0 0 8"
+              Items="{Binding ArtemisLightControlViewModel.Profiles}"
+              SelectedItem="{Binding ArtemisLightControlViewModel.SelectedProfile}">
+              <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                      <TextBlock Text="{Binding Name}"/>
+                  </DataTemplate>
+              </ComboBox.ItemTemplate>
+          </ComboBox>
+        </DockPanel>
       </StackPanel>
       <!-- Ambiente profile selector End -->
 

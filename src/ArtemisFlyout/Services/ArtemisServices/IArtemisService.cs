@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ArtemisFlyout.Events;
 using ArtemisFlyout.Models;
+using Avalonia.Media;
 
 namespace ArtemisFlyout.Services
 {
@@ -25,6 +26,9 @@ namespace ArtemisFlyout.Services
         public void SetActiveProfile(string profileName);
         public string GetActiveProfile();
         void Launch();
+        void SetColor(string colorName, Color color);
+        Color GetColor(string colorName, Color defaultColor);
+
 
         event EventHandler<ProfileChangeEventArgs> ProfileChanged;
     }

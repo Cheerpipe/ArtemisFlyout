@@ -1,9 +1,10 @@
 ﻿using ArtemisFlyout.IoC;
 using ArtemisFlyout.Models.Configuration;
 using ArtemisFlyout.Services;
+using ArtemisFlyout.ViewModels;
 using ReactiveUI;
 
-namespace ArtemisFlyout.ViewModels
+namespace ArtemisFlyout.UserControls
 {
     public class BlackoutViewModel : ViewModelBase
     {

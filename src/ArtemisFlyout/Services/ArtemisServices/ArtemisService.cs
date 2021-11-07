@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using ArtemisFlyout.Events;
 using ArtemisFlyout.Models;
+using ArtemisFlyout.Utiles;
+using Avalonia.Media;
 using MessageBox.Avalonia.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -153,6 +155,25 @@ namespace ArtemisFlyout.Services
                 _configurationService.Get().LaunchSettings.ArtemisLaunchArgs);
         }
 
+        public void SetColor(string colorName, Color color)
+        {
+            SetJsonDataModelValue("DesktopVariables", colorName, ColorUtiles.ToHexString(color));
+        }
+
+        public Color GetColor(string colorName, Color defaultColor)
+        {
+            if (Color.TryParse(GetJsonDataModelValue("DesktopVariables", colorName, ""), out Color color))
+            {
+                return color;
+            }
+
+            return defaultColor;
+        }
+
+        public void SetBackgroundColor(Color color)
+        {
+            SetJsonDataModelValue("DesktopVariables", "BackgroundColor", ColorUtiles.ToHexString(color));
+        }
         public event EventHandler<ProfileChangeEventArgs> ProfileChanged;
     }
 }

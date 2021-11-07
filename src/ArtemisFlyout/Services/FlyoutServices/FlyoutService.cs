@@ -102,7 +102,8 @@ namespace ArtemisFlyout.Services
                 await FlyoutWindowInstance.CloseAnimated();
             else
                 FlyoutWindowInstance.Close();
-            FlyoutWindowInstance.ViewModel?.Reset();
+
+            FlyoutWindowInstance.ViewModel?.GoMainPage();
 
             FlyoutWindowInstance = null;
             GC.Collect();

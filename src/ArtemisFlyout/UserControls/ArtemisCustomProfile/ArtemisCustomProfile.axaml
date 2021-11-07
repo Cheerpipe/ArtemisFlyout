@@ -1,0 +1,87 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="310" d:DesignHeight="240"
+             xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             x:Class="ArtemisFlyout.UserControls.ArtemisCustomProfile">
+
+  <!-- Flyout content start-->
+  <StackPanel>
+    <Button
+        Name="BtnBack"
+        Margin="0 10 0 20"
+        Width="36"
+        Height="36"
+        Background="Transparent"
+        BorderBrush="Transparent"
+        Command="{Binding GoMainPage}"
+        CommandParameter="0">
+      <controls:SymbolIcon Symbol="Back" Width="16" Height="16"/>
+    </Button>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+      <StackPanel Width="130">
+        <TextBlock>Background color</TextBlock>
+        <controls:ColorPickerButton
+            ShowAcceptDismissButtons="False"
+            UseColorPalette="False"
+            UseSpectrum="False"
+            Color="{Binding ArtemisCustomProfileViewModel.Background}">
+          <controls:ColorPickerButton.Styles>
+            <StyleInclude Source="/UserControls/ArtemisCustomProfile/ColorPickerStyles.axaml" />
+          </controls:ColorPickerButton.Styles>
+        </controls:ColorPickerButton>
+      </StackPanel>
+      <StackPanel Width="130">
+        <TextBlock
+            HorizontalAlignment="Left">
+          Foreground color
+        </TextBlock>
+        <controls:ColorPickerButton
+            ShowAcceptDismissButtons="False"
+            UseColorPalette="False"
+            UseSpectrum="False"
+            HorizontalAlignment="Left"
+            Color="{Binding ArtemisCustomProfileViewModel.Foreground}">
+          <controls:ColorPickerButton.Styles>
+            <StyleInclude Source="/UserControls/ArtemisCustomProfile/ColorPickerStyles.axaml" />
+          </controls:ColorPickerButton.Styles>
+        </controls:ColorPickerButton>
+      </StackPanel>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+      <StackPanel Width="130">
+        <TextBlock>Keyboard accent</TextBlock>
+        <controls:ColorPickerButton
+            ShowAcceptDismissButtons="False"
+            UseColorPalette="False"
+            UseSpectrum="False"
+            Color="{Binding ArtemisCustomProfileViewModel.KeyboardAccentColor}">
+          <controls:ColorPickerButton.Styles>
+            <StyleInclude Source="/UserControls/ArtemisCustomProfile/ColorPickerStyles.axaml" />
+          </controls:ColorPickerButton.Styles>
+        </controls:ColorPickerButton>
+      </StackPanel>
+      <StackPanel Width="130">
+        <TextBlock>Effects accent color</TextBlock>
+        <controls:ColorPickerButton
+            ShowAcceptDismissButtons="False"
+            UseColorPalette="False"
+            UseSpectrum="False"
+            Color="{Binding ArtemisCustomProfileViewModel.EffectsAccentColor}">
+          <controls:ColorPickerButton.Styles>
+            <StyleInclude Source="/UserControls/ArtemisCustomProfile/ColorPickerStyles.axaml" />
+          </controls:ColorPickerButton.Styles>
+        </controls:ColorPickerButton>
+      </StackPanel>
+    </StackPanel>
+    <TextBlock
+        HorizontalAlignment="Center"
+        TextWrapping="WrapWithOverflow"
+        Padding="10 30 10 10"
+        Classes="h1">
+      This opcions works only when Custom profile is selected.
+    </TextBlock>
+  </StackPanel>
+  <!-- Flyout content End-->
+</UserControl>

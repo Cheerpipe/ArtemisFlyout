@@ -12,6 +12,7 @@ namespace ArtemisFlyout.Screens
     {
         private readonly IArtemisService _artemisService;
         private readonly ArtemisDeviceTogglesViewModel _artemisDeviceTogglesViewModel;
+        private readonly ArtemisCustomProfileViewModel _artemisCustomProfileViewModel;
         private readonly ArtemisLightControlViewModel _artemisLightControlViewModel;
         private readonly IFlyoutService _flyoutService;
         private int _activePageIndex;
@@ -20,11 +21,13 @@ namespace ArtemisFlyout.Screens
             IArtemisService artemisService,
             ArtemisDeviceTogglesViewModel artemisDeviceTogglesViewModel,
             ArtemisLightControlViewModel artemisMainControlViewModel,
+            ArtemisCustomProfileViewModel artemisCustomProfileViewModel,
             IFlyoutService flyoutService)
         {
             _artemisService = artemisService;
             _artemisLightControlViewModel = artemisMainControlViewModel;
             _artemisDeviceTogglesViewModel = artemisDeviceTogglesViewModel;
+            _artemisCustomProfileViewModel = artemisCustomProfileViewModel;
             _flyoutService = flyoutService;
 
             this.WhenActivated(disposables =>
@@ -46,11 +49,7 @@ namespace ArtemisFlyout.Screens
 
         public ArtemisLightControlViewModel ArtemisLightControlViewModel => _artemisLightControlViewModel;
         public ArtemisDeviceTogglesViewModel ArtemisDeviceTogglesViewModel => _artemisDeviceTogglesViewModel;
-
-        public void Reset()
-        {
-            GoMainPage();
-        }
+        public ArtemisCustomProfileViewModel ArtemisCustomProfileViewModel => _artemisCustomProfileViewModel;
 
         public int ActivePageindex
         {
@@ -85,6 +84,12 @@ namespace ArtemisFlyout.Screens
         {
             SetActivePageIndex(0);
             FlyoutHeight = 510;
+        }
+
+        public void GoCustomProfile()
+        {
+            SetActivePageIndex(2);
+            FlyoutHeight = 340;
         }
 
         public void GoDevices()

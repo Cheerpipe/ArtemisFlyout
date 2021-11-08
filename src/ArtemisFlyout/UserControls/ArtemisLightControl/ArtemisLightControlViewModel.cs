@@ -4,7 +4,6 @@ using System.Reactive.Disposables;
 using ArtemisFlyout.Models;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
-using MessageBox.Avalonia.Enums;
 using ReactiveUI;
 
 namespace ArtemisFlyout.UserControls
@@ -12,7 +11,6 @@ namespace ArtemisFlyout.UserControls
     public class ArtemisLightControlViewModel : ViewModelBase
     {
         private readonly IArtemisService _artemisService;
-        private readonly IConfigurationService _configurationService;
         private List<Profile> _profiles;
         private readonly string _devicesStatesDatamodelName;
         private readonly string _globalVariablesDatamodelName;
@@ -21,9 +19,9 @@ namespace ArtemisFlyout.UserControls
         public ArtemisLightControlViewModel(IArtemisService artemisService, IConfigurationService configurationService)
         {
             _artemisService = artemisService;
-            _configurationService = configurationService;
-            _devicesStatesDatamodelName = _configurationService.Get().DatamodelSettings.DevicesStatesDatamodelName;
-            _globalVariablesDatamodelName= _configurationService.Get().DatamodelSettings.GlobalVariablesDatamodelName;
+            var configurationService1 = configurationService;
+            _devicesStatesDatamodelName = configurationService1.Get().DatamodelSettings.DevicesStatesDatamodelName;
+            _globalVariablesDatamodelName= configurationService1.Get().DatamodelSettings.GlobalVariablesDatamodelName;
             _allDevices = _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", false);
 
             this.WhenActivated(disposables =>

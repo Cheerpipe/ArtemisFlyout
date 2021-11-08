@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <ApplicationIcon>Main.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -9,15 +10,11 @@
     <Compile Remove="Win\**" />
     <EmbeddedResource Remove="Win\**" />
     <None Remove="Win\**" />
-    <AvaloniaResource Remove="Assets\bow-black.ico" />
-    <AvaloniaResource Remove="Assets\bow-white.ico" />
-    <AvaloniaResource Remove="Assets\bow.ico" />
+    <AvaloniaResource Remove="Assets\flyout.ico" />
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Assets\bow-black.ico" />
-    <EmbeddedResource Include="Assets\bow-white.ico" />
-    <EmbeddedResource Include="Assets\bow.ico" />
+    <EmbeddedResource Include="Assets\flyout.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.10" />

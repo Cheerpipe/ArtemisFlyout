@@ -1,5 +1,4 @@
 ﻿using System.Reactive.Disposables;
-using System.Reflection.Metadata.Ecma335;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.UserControls;
 using ArtemisFlyout.ViewModels;
@@ -16,6 +15,7 @@ namespace ArtemisFlyout.Screens
         private readonly ArtemisLightControlViewModel _artemisLightControlViewModel;
         private readonly IFlyoutService _flyoutService;
         private int _activePageIndex;
+        private const int MainPageHeight = 510;
 
         public FlyoutContainerViewModel(
             IArtemisService artemisService,
@@ -37,6 +37,7 @@ namespace ArtemisFlyout.Screens
                     .Create(() =>
                     {
                         /* Handle deactivation */
+
                     })
                     .DisposeWith(disposables);
             });
@@ -47,7 +48,7 @@ namespace ArtemisFlyout.Screens
                 throw new ConnectException("Artemis REST API not available.");
         }
 
-        
+
         public ArtemisLightControlViewModel ArtemisLightControlViewModel => _artemisLightControlViewModel;
         public ArtemisDeviceTogglesViewModel ArtemisDeviceTogglesViewModel => _artemisDeviceTogglesViewModel;
         public ArtemisCustomProfileViewModel ArtemisCustomProfileViewModel => _artemisCustomProfileViewModel;
@@ -61,19 +62,15 @@ namespace ArtemisFlyout.Screens
             }
         }
 
-        private double _flyoutHeight = 510;
+        private double _flyoutHeight= MainPageHeight;
         public double FlyoutHeight
         {
-            get
-            {
-                return _flyoutHeight;
-            }
+            get => _flyoutHeight;
             set
             {
                 _flyoutHeight = value;
                 _flyoutService.SetHeight(value);
             }
-
         }
 
         public void SetActivePageIndex(int newPageIndex)
@@ -84,7 +81,7 @@ namespace ArtemisFlyout.Screens
         public void GoMainPage()
         {
             SetActivePageIndex(0);
-            FlyoutHeight = 510;
+            FlyoutHeight = MainPageHeight;
         }
 
         public void GoCustomProfile()

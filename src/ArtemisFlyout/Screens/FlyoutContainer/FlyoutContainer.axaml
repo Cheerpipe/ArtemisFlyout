@@ -8,7 +8,8 @@
                                 xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:screens="clr-namespace:ArtemisFlyout.Screens"
-                                mc:Ignorable="d" d:DesignWidth="520" d:DesignHeight="310"
+                                xmlns:converters="clr-namespace:ArtemisFlyout.Converters"
+                                mc:Ignorable="d" d:DesignWidth="320" d:DesignHeight="530"
                                 x:Class="ArtemisFlyout.Screens.FlyoutContainer"
                                 Title="Artemis Flyout"
                                 ShowInTaskbar="false"
@@ -22,10 +23,18 @@
                                 Background="Transparent"
                                 UseLayoutRounding="True"
                                 CornerRadius="10 10 10 10"
-                                Height="{Binding FlyoutHeight}">
-                      
-    <!-- Set dimensions here to see the actual result -->
-  <Panel HorizontalAlignment="Left" Name="FlyoutPanelContainer">
+                                Height="{Binding FlyoutHeight}"
+                                Width="{Binding FlyoutWidth}"
+                                x:Name="FlyoutWindow">
+
+  <reactiveUi:ReactiveWindow.Resources>
+    <converters:SubtractionValueConverter x:Key="SubtractionConverter"/>
+  </reactiveUi:ReactiveWindow.Resources>
+
+    <Panel 
+      HorizontalAlignment="Left" 
+      Name="FlyoutPanelContainer" 
+      Width="{Binding Path=Width, ElementName=FlyoutWindow, Converter={StaticResource SubtractionConverter}, ConverterParameter=12}">
     <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
       <ExperimentalAcrylicBorder.Material>
         <ExperimentalAcrylicMaterial
@@ -44,7 +53,7 @@
            
             <DockPanel>
               <!-- Flyout content Start -->
-            <Panel DockPanel.Dock="Top" Margin="10 0 10 0">
+            <Panel DockPanel.Dock="Top" Margin="0 0 0 0">
               <Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
                 <Carousel.PageTransition>
                   <PageSlide Duration="0.25" Orientation="Horizontal" SlideInEasing="CircularEaseOut" SlideOutEasing="CircularEaseOut"/>

@@ -23,7 +23,6 @@ namespace ArtemisFlyout.Screens
             AnimationDelay = 250;
             Width = 320;
             Height = 510;
-            HorizontalSpacing = 12;
         }
     }
 }

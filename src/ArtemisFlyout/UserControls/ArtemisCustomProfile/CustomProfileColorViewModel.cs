@@ -17,6 +17,7 @@ namespace ArtemisFlyout.UserControls
         {
             _artemisService = Kernel.Get<IArtemisService>();
             Name = device.Name;
+            Condition = device.Condition;
             _customProfileColorsDatamodelName = Kernel.Get<IConfigurationService>().Get().DatamodelSettings.CustomProfileColorsDatamodelName;
         }
 
@@ -26,20 +27,21 @@ namespace ArtemisFlyout.UserControls
         {
             get
             {
-                var hexColor = _artemisService.GetJsonDataModelValue(_customProfileColorsDatamodelName, Name, "");
+                var hexColor = _artemisService.GetJsonDataModelValue(_customProfileColorsDatamodelName, Condition, "");
                 if (Color.TryParse(hexColor, out Color parsedColor))
                     return parsedColor;
                 return Colors.White;
             }
             set
             {
-                _artemisService.SetJsonDataModelValue(_customProfileColorsDatamodelName, Name,
+                _artemisService.SetJsonDataModelValue(_customProfileColorsDatamodelName, Condition,
                     ColorUtiles.ToHexString(value));
                 this.RaiseAndSetIfChanged(ref _color, value);
             }
         }
 
         public string Name { get; set; }
+        public string Condition { get; set; }
 
     }
 }

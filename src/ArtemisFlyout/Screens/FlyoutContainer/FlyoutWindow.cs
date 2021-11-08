@@ -30,8 +30,6 @@ namespace ArtemisFlyout.Screens
 
             WindowStartupLocation = WindowStartupLocation.Manual;
 
-            this.Find<Panel>("FlyoutPanelContainer").Width = Width;
-
             Show();
 
             Clock = Avalonia.Animation.Clock.GlobalClock;
@@ -108,37 +106,6 @@ namespace ArtemisFlyout.Screens
             {
                 SetAndRaise(HorizontalPositionProperty, ref _horizontalPosition, value);
                 RenderTransform = new TranslateTransform(value, 0);
-            }
-        }
-
-        private double _maskedWidth;
-        public new double Width
-        {
-            get
-            {
-                return _maskedWidth;
-            }
-            set
-            {
-
-                _maskedWidth = value;
-                base.Width = _maskedWidth + HorizontalSpacing;
-
-            }
-        }
-
-        private int _horizontalSpacing = 12;
-        public int HorizontalSpacing
-        {
-            get
-            {
-                return _horizontalSpacing;
-            }
-            set
-            {
-
-                _horizontalSpacing = value;
-                base.Width = _maskedWidth + _horizontalSpacing;
             }
         }
     }

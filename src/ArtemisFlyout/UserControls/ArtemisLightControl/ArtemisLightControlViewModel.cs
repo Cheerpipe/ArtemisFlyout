@@ -63,10 +63,16 @@ namespace ArtemisFlyout.UserControls
             }
         }
 
-        public bool Teams
+        public bool Webcam
         {
-            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "TeamsLight", false);
-            set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "TeamsLight", value);
+            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", false);
+            set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", value);
+        }
+
+        public bool QuickProfile
+        {
+            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", false);
+            set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", value);
         }
 
         public bool Ambilight

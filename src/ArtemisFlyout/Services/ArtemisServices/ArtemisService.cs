@@ -99,8 +99,8 @@ namespace ArtemisFlyout.Services
         {
             string content = Type.GetTypeCode(typeof(T)) switch
             {
-                TypeCode.Boolean => $"{{{jsonPath}: {value.ToString()?.ToLower()} }}",
-                TypeCode.String => $"{{{jsonPath}: '{value}' }}",
+                TypeCode.Boolean => $"{{'{jsonPath}' : {value.ToString()?.ToLower()} }}",
+                TypeCode.String => $"{{'{jsonPath}' : '{value}' }}",
                 _ => $"{{{jsonPath}: {value} }}"
             };
 
@@ -123,14 +123,14 @@ namespace ArtemisFlyout.Services
                 JToken token = responseObject.SelectToken(jsonPath);
                 if (token == null)
                 {
-                    return default;
+                    return defaultValue;
                 }
 
                 return token.Value<T>();
             }
             catch (Exception)
             {
-                return default;
+                return defaultValue;
             }
         }
 

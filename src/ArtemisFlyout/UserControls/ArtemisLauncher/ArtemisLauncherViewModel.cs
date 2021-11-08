@@ -20,7 +20,7 @@ namespace ArtemisFlyout.UserControls
             });
         }
 
-        public int ActivePageindex { get; } = 2;
+        public int ActivePageindex { get; } = 3;
 
         public void LaunchArtemis() => _artemisService.Launch();
     }

@@ -21,7 +21,7 @@
       <controls:SymbolIcon Symbol="Back" Width="16" Height="16"/>
     </Button>
     <DockPanel>
-      <ItemsRepeater Items="{Binding ArtemisDeviceTogglesViewModel.Blackouts}">
+      <ItemsRepeater Items="{Binding ArtemisDeviceTogglesViewModel.DeviceStates}">
           <ItemsRepeater.ItemTemplate>
               <DataTemplate>
                       <DockPanel
@@ -33,7 +33,7 @@
                               Text="{Binding Name}">
                           </TextBlock>
                           <ToggleSwitch
-                              IsChecked="{Binding !Activated}"
+                              IsChecked="{Binding Activated}"
                               HorizontalAlignment="Right"
                               MinWidth="0"/>
                       </DockPanel>

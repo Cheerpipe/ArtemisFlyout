@@ -56,6 +56,7 @@ namespace ArtemisFlyout.Services
 
         private FlyoutContainer GetInstance()
         {
+
             FlyoutContainer flyoutInstance = _kernel.Get<FlyoutContainer>();
             try
             {
@@ -65,9 +66,9 @@ namespace ArtemisFlyout.Services
             }
             catch (ConnectException)
             {
+                
                 flyoutInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
             }
-
             return flyoutInstance;
         }
 

@@ -1,9 +1,8 @@
 ﻿namespace ArtemisFlyout.Models.Configuration
 {
-    public class Blackout
+    public class DeviceStateSetting
     {
         public string Name { get; set; }
         public string Condition { get; set; }
-        public bool Activated { get; set; }
     }
 }

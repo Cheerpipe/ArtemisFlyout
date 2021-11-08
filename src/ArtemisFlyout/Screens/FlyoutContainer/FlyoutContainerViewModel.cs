@@ -47,6 +47,7 @@ namespace ArtemisFlyout.Screens
                 throw new ConnectException("Artemis REST API not available.");
         }
 
+        
         public ArtemisLightControlViewModel ArtemisLightControlViewModel => _artemisLightControlViewModel;
         public ArtemisDeviceTogglesViewModel ArtemisDeviceTogglesViewModel => _artemisDeviceTogglesViewModel;
         public ArtemisCustomProfileViewModel ArtemisCustomProfileViewModel => _artemisCustomProfileViewModel;
@@ -89,13 +90,13 @@ namespace ArtemisFlyout.Screens
         public void GoCustomProfile()
         {
             SetActivePageIndex(2);
-            FlyoutHeight = 340;
+            FlyoutHeight = (65 * ArtemisCustomProfileViewModel.Colors.Count) + 110;
         }
 
         public void GoDevices()
         {
             SetActivePageIndex(1);
-            FlyoutHeight = (46 * ArtemisDeviceTogglesViewModel.Blackouts.Count) + 110;
+            FlyoutHeight = (46 * ArtemisDeviceTogglesViewModel.DeviceStates.Count) + 110;
         }
 
         public void Restart()

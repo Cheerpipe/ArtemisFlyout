@@ -2,7 +2,8 @@
 {
     public class DatamodelSettings
     {
-        public string BlackoutDatamodelName { get; set; }
-        public string DesktopVariablesDatamodelName { get; set; }
+        public string DevicesStatesDatamodelName { get; set; }
+        public string GlobalVariablesDatamodelName { get; set; }
+        public string CustomProfileColorsDatamodelName { get; set; }
     }
 }

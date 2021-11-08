@@ -1,39 +1,35 @@
-﻿using ArtemisFlyout.Services;
+﻿using System.Collections.Generic;
+using System.Reactive.Disposables;
+using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
-using Avalonia.Media;
+
+using ReactiveUI;
 
 namespace ArtemisFlyout.UserControls
 {
     public class ArtemisCustomProfileViewModel : ViewModelBase
     {
         private readonly IArtemisService _artemisService;
-        public ArtemisCustomProfileViewModel(IArtemisService artemisService)
+        private readonly List<CustomProfileColorViewModel> _customProfileColors;
+        public ArtemisCustomProfileViewModel(IConfigurationService configurationService)
         {
-            _artemisService = artemisService;
-        }
+            var customProfileColorsSetting = configurationService.Get().CustomProfilesColorSettings;
 
-        public Color Foreground
-        {
-            get => _artemisService.GetColor("ForegroundColor", Color.Parse("#FF00FCCC"));
-            set => _artemisService.SetColor("ForegroundColor",value);
-        }
+            _customProfileColors = new();
+            foreach (var customProfileColor in customProfileColorsSetting)
+            {
+                _customProfileColors.Add(new CustomProfileColorViewModel(customProfileColor));
+            }
 
-        public Color Background
-        {
-            get => _artemisService.GetColor("BackgroundColor", Color.Parse("#FFFF6D00"));
-            set => _artemisService.SetColor("BackgroundColor", value);
+            this.WhenActivated(disposables =>
+            {
+                Disposable
+                    .Create(() =>
+                    {
+                    })
+                    .DisposeWith(disposables);
+            });
         }
-
-        public Color KeyboardAccentColor
-        {
-            get => _artemisService.GetColor("KeyboardAccentColor", Color.Parse("#FFEF1788"));
-            set => _artemisService.SetColor("KeyboardAccentColor", value);
-        }
-
-        public Color EffectsAccentColor
-        {
-            get => _artemisService.GetColor("EffectsAccentColor", Color.Parse("#FFEF1788"));
-            set => _artemisService.SetColor("EffectsAccentColor", value);
-        }
+        public List<CustomProfileColorViewModel> Colors => _customProfileColors;
     }
 }

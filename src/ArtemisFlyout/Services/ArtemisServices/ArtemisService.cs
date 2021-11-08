@@ -14,15 +14,16 @@ namespace ArtemisFlyout.Services
 {
     public class ArtemisService : IArtemisService
     {
-
         private readonly IFlyoutService _flyoutService;
         private readonly IConfigurationService _configurationService;
+        private readonly string _globalVariablesDatamodelName;
         private readonly IRestService _restService;
 
         public ArtemisService(IFlyoutService flyoutService, IConfigurationService configurationService, IRestService restService)
         {
             _flyoutService = flyoutService;
             _configurationService = configurationService;
+            _globalVariablesDatamodelName = _configurationService.Get().DatamodelSettings.GlobalVariablesDatamodelName;
             _restService = restService;
         }
 
@@ -76,22 +77,22 @@ namespace ArtemisFlyout.Services
 
         public void SetBright(int value)
         {
-            SetJsonDataModelValue("DesktopVariables", "GlobalBrightness", value);
+            SetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalBrightness", value);
         }
 
         public int GetBright()
         {
-            return GetJsonDataModelValue("DesktopVariables", "GlobalBrightness", 0);
+            return GetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalBrightness", 0);
         }
 
         public void SetSpeed(int value)
         {
-            SetJsonDataModelValue("DesktopVariables", "GlobalSpeed", value);
+            SetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalSpeed", value);
         }
 
         public int GetSpeed()
         {
-            return GetJsonDataModelValue("DesktopVariables", "GlobalSpeed", 0);
+            return GetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalSpeed", 0);
         }
 
         public void SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value)
@@ -113,17 +114,24 @@ namespace ArtemisFlyout.Services
             // Create Root and Property
             if (string.IsNullOrEmpty(propertyJson))
             {
-                return default;
+                return defaultValue;
             }
 
-            JObject responseObject = JObject.Parse(propertyJson);
-            JToken token = responseObject.SelectToken(jsonPath);
-            if (token == null)
+            try
+            {
+                JObject responseObject = JObject.Parse(propertyJson);
+                JToken token = responseObject.SelectToken(jsonPath);
+                if (token == null)
+                {
+                    return default;
+                }
+
+                return token.Value<T>();
+            }
+            catch (Exception)
             {
                 return default;
             }
-
-            return token.Value<T>();
         }
 
         public List<Profile> GetProfiles(string categoryName = "")
@@ -139,13 +147,13 @@ namespace ArtemisFlyout.Services
 
         public void SetActiveProfile(string profileName)
         {
-            SetJsonDataModelValue("DesktopVariables", "Profile", profileName);
+            SetJsonDataModelValue(_globalVariablesDatamodelName, "Profile", profileName);
             ProfileChanged?.Invoke(this, new ProfileChangeEventArgs(profileName));
         }
 
         public string GetActiveProfile()
         {
-            return GetJsonDataModelValue("DesktopVariables", "Profile", "");
+            return GetJsonDataModelValue(_globalVariablesDatamodelName, "Profile", "");
         }
 
         public void Launch()
@@ -157,22 +165,17 @@ namespace ArtemisFlyout.Services
 
         public void SetColor(string colorName, Color color)
         {
-            SetJsonDataModelValue("DesktopVariables", colorName, ColorUtiles.ToHexString(color));
+            SetJsonDataModelValue(_globalVariablesDatamodelName, colorName, ColorUtiles.ToHexString(color));
         }
 
         public Color GetColor(string colorName, Color defaultColor)
         {
-            if (Color.TryParse(GetJsonDataModelValue("DesktopVariables", colorName, ""), out Color color))
+            if (Color.TryParse(GetJsonDataModelValue(_globalVariablesDatamodelName, colorName, ""), out Color color))
             {
                 return color;
             }
 
             return defaultColor;
-        }
-
-        public void SetBackgroundColor(Color color)
-        {
-            SetJsonDataModelValue("DesktopVariables", "BackgroundColor", ColorUtiles.ToHexString(color));
         }
         public event EventHandler<ProfileChangeEventArgs> ProfileChanged;
     }

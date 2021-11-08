@@ -16,12 +16,6 @@ namespace ArtemisFlyout.IoC
             Bind<IRestService>().To<RestService>().InSingletonScope();
             Bind<IWebServerService>().To<WebServerService>().InSingletonScope();
             Bind<IInstanceService>().To<InstanceService>().InSingletonScope();
-
-            Bind<ArtemisDeviceTogglesViewModel>().To<ArtemisDeviceTogglesViewModel>().InSingletonScope();
-            Bind<ArtemisLauncherViewModel>().To<ArtemisLauncherViewModel>().InSingletonScope();
-            Bind<ArtemisLightControlViewModel>().To<ArtemisLightControlViewModel>().InSingletonScope();
-            Bind<FlyoutContainerViewModel>().To<FlyoutContainerViewModel>().InSingletonScope();
-
         }
     }
 }

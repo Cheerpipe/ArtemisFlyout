@@ -30,7 +30,7 @@
         Devices settings
       </controls:HyperlinkButton>
       <ToggleSwitch
-        IsChecked="{Binding !ArtemisLightControlViewModel.FullBlackout}"
+        IsChecked="{Binding ArtemisLightControlViewModel.AllDevices}"
         Content=""
         OffContent=""
         OnContent=""
@@ -39,7 +39,7 @@
         MinHeight="0"/>
     </DockPanel>
     <!-- Global toggle End -->
-    <StackPanel IsEnabled="{Binding !ArtemisLightControlViewModel.FullBlackout}">
+    <StackPanel IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}">
       <!-- Ambiente profile selector Start -->
       <StackPanel Margin="10 0 10 40">
         <TextBlock
@@ -103,7 +103,7 @@
             Width="110"
             Height="48"
             HorizontalAlignment="Center"
-            IsChecked="{Binding !ArtemisDeviceTogglesViewModel.Ceiling}">
+            IsChecked="{Binding ArtemisDeviceTogglesViewModel.Ceiling}">
             <avalonia:MaterialIcon
               Kind="CeilingLight"
               Width="24"
@@ -131,7 +131,7 @@
               Width="110"
               Height="48"
               HorizontalAlignment="Center"
-              IsChecked="{Binding ArtemisLightControlViewModel.AmbiLight}">
+              IsChecked="{Binding ArtemisLightControlViewModel.Ambilight}">
             <avalonia:MaterialIcon
                 Kind="MonitorMultiple"
                 Width="24"
@@ -188,14 +188,14 @@
               Grid.Row="0"
               Grid.Column="1"
               Value="{Binding ArtemisLightControlViewModel.Bright}"
-              IsEnabled="{Binding !ArtemisLightControlViewModel.FullBlackout}"/>
+              IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}"/>
           <avalonia:MaterialIcon Kind="Brightness7" Grid.Row="0" Grid.Column="2"></avalonia:MaterialIcon>
           <avalonia:MaterialIcon Kind="SpeedometerSlow" Grid.Row="1" Grid.Column="0"></avalonia:MaterialIcon>
           <Slider
               Grid.Row="1"
               Grid.Column="1"
               Value="{Binding ArtemisLightControlViewModel.Speed}"
-              IsEnabled="{Binding !ArtemisLightControlViewModel.FullBlackout}"/>
+              IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}"/>
           <avalonia:MaterialIcon Kind="Speedometer" Grid.Row="1" Grid.Column="2"></avalonia:MaterialIcon>
         </Grid>
       </StackPanel>

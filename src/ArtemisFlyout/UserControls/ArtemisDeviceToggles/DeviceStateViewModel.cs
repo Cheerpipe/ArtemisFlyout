@@ -6,24 +6,26 @@ using ReactiveUI;
 
 namespace ArtemisFlyout.UserControls
 {
-    public class BlackoutViewModel : ViewModelBase
+    public class DeviceStateViewModel : ViewModelBase
     {
         private readonly IArtemisService _artemisService;
+        private readonly string _devicesStatesDatamodelName;
         private bool _activated;
 
-        public BlackoutViewModel(Blackout blackout)
+        public DeviceStateViewModel(DeviceStateSetting device)
         {
-            Name = blackout.Name;
-            Condition = blackout.Condition;
+            Name = device.Name;
+            Condition = device.Condition;
             _artemisService = Kernel.Get<IArtemisService>();
+            _devicesStatesDatamodelName = Kernel.Get<IConfigurationService>().Get().DatamodelSettings.DevicesStatesDatamodelName;
         }
 
         public bool Activated
         {
-            get => _artemisService.GetJsonDataModelValue("Blackouts", Condition, false);
+            get => _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, Condition, false);
             set
             {
-                _artemisService.SetJsonDataModelValue("Blackouts", Condition, value);
+                _artemisService.SetJsonDataModelValue(_devicesStatesDatamodelName, Condition, value);
                 this.RaiseAndSetIfChanged(ref _activated, value);
             }
         }

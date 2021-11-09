@@ -52,7 +52,7 @@
             <Panel DockPanel.Dock="Top" Margin="0 0 0 0">
               <Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
                 <Carousel.PageTransition>
-                  <PageSlide Duration="0.3" Orientation="Horizontal" SlideInEasing="QuinticEaseOut" SlideOutEasing="QuinticEaseOut"/>
+                  <PageSlide Duration="0.15" Orientation="Horizontal" SlideInEasing="CircularEaseOut" SlideOutEasing="CircularEaseOut"/>
                 </Carousel.PageTransition>
                 <pages:ArtemisLightControl />
                 <pages:ArtemisDeviceToggles />

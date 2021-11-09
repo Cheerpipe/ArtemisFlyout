@@ -13,8 +13,8 @@ namespace ArtemisFlyout.Screens
         private readonly int _screenHeight;
         private readonly int _screenWidth;
 
-        public int RevealAnimationDelay { get; set; } = 200;
-        public int ResizeAnimationDelay { get; set; } = 150;
+        public int RevealAnimationDelay { get; set; } = 250;
+        public int ResizeAnimationDelay { get; set; } = 250;
 
         public int VerticalSpacing { get; set; } = 12;
 

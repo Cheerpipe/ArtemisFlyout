@@ -21,7 +21,7 @@ namespace ArtemisFlyout.Screens
 #endif
 
             RevealAnimationDelay = 250;
-            ResizeAnimationDelay = 50;
+            ResizeAnimationDelay = 150;
             Width = 320;
             Height = 510;
         }

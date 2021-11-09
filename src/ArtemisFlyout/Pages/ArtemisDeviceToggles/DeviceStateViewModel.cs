@@ -4,7 +4,7 @@ using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;
 
-namespace ArtemisFlyout.UserControls
+namespace ArtemisFlyout.Pages
 {
     public class DeviceStateViewModel : ViewModelBase
     {

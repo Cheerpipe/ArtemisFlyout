@@ -1,13 +1,14 @@
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
+
 // ReSharper disable UnusedParameter.Local
 
-namespace ArtemisFlyout.UserControls
+namespace ArtemisFlyout.Pages
 {
-    public class ArtemisLightControl : ReactiveUserControl<ArtemisLightControlViewModel>
+    public class ArtemisLauncher : ReactiveUserControl<ArtemisLauncherViewModel>
     {
-        public ArtemisLightControl()
+        public ArtemisLauncher()
         {
             // If you put a WhenActivated block here, your activatable view model 
             // will also support activation, otherwise it won't.

@@ -31,13 +31,16 @@
     <PackageReference Include="TypeSupport" Version="1.1.12" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="UserControls\ArtemisLightControl\ArtemisLightControl.axaml.cs">
+    <Compile Update="Controls\CustomTogleSplitButton.axaml.cs">
+      <DependentUpon>CustomTogleSplitButton.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\ArtemisLightControl\ArtemisLightControl.axaml.cs">
       <DependentUpon>ArtemisLightControl.axaml</DependentUpon>
     </Compile>
-    <Compile Update="UserControls\ArtemisLauncher\ArtemisLauncher.axaml.cs">
+    <Compile Update="Pages\ArtemisLauncher\ArtemisLauncher.axaml.cs">
       <DependentUpon>ArtemisLauncher.axaml</DependentUpon>
     </Compile>
-    <Compile Update="UserControls\ArtemisDeviceToggles\ArtemisDeviceToggles.axaml.cs">
+    <Compile Update="Pages\ArtemisDeviceToggles\ArtemisDeviceToggles.axaml.cs">
       <DependentUpon>ArtemisDeviceToggles.axaml</DependentUpon>
     </Compile>
     <Compile Update="Screens\FlyoutContainer\FlyoutContainer.axaml.cs">

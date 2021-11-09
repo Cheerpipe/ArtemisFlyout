@@ -8,7 +8,7 @@ namespace ArtemisFlyout.Services
     {
         public WebApiControllerRegistration() : base(typeof(T))
         {
-            Factory = () => Kernel.Get<T>();
+            Factory = Kernel.Get<T>;
         }
 
         public Func<T> Factory { get; set; }

@@ -1,6 +1,4 @@
-﻿using ArtemisFlyout.Screens;
-using ArtemisFlyout.Services;
-using ArtemisFlyout.UserControls;
+﻿using ArtemisFlyout.Services;
 using Ninject.Modules;
 
 namespace ArtemisFlyout.IoC

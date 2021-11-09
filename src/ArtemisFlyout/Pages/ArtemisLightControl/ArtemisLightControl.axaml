@@ -1,20 +1,17 @@
 <reactiveUi:ReactiveUserControl x:TypeArguments="screens:FlyoutContainerViewModel" xmlns="https://github.com/avaloniaui"
                                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                                xmlns:vm="using:ArtemisFlyout.ViewModels"
                                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                 xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-                                xmlns:converters="clr-namespace:ArtemisFlyout.Converters;assembly=ArtemisFlyout"
+
                                 xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:screens="clr-namespace:ArtemisFlyout.Screens"
+                                xmlns:customControls="clr-namespace:ArtemisFlyout.Controls"
+                                xmlns:models="clr-namespace:ArtemisFlyout.Models"
                                 mc:Ignorable="d" d:DesignWidth="285" d:DesignHeight="480"
-                                x:Class="ArtemisFlyout.UserControls.ArtemisLightControl"
+                                x:Class="ArtemisFlyout.Pages.ArtemisLightControl"
                                 Background="Transparent">
-  <UserControl.Resources>
-    <converters:SubtractionValueConverter x:Key="SubtractionConverter"/>
-  </UserControl.Resources>
-
   <!-- Flyout content start-->
   <StackPanel>
     <!-- Global toggle Start -->
@@ -57,7 +54,7 @@
               Items="{Binding ArtemisLightControlViewModel.Profiles}"
               SelectedItem="{Binding ArtemisLightControlViewModel.SelectedProfile}">
             <ComboBox.ItemTemplate>
-              <DataTemplate>
+              <DataTemplate DataType="models:Profile">
                 <TextBlock Text="{Binding Name}"/>
               </DataTemplate>
             </ComboBox.ItemTemplate>
@@ -78,8 +75,6 @@
             Grid.Row="0"
             HorizontalAlignment="Left">
           <ToggleButton
-              Grid.Row="0"
-              Grid.Column="0"
               Width="110"
               Height="48"
               HorizontalAlignment="Center"
@@ -90,8 +85,6 @@
                 Height="24"/>
           </ToggleButton>
           <TextBlock
-              Grid.Row="1"
-              Grid.Column="0"
               HorizontalAlignment="Center"
               Padding="0 5 0 0"
               FontSize="12">
@@ -148,31 +141,8 @@
             Grid.Row="1"
             HorizontalAlignment="Right">
           <StackPanel Orientation="Horizontal">
-            <ToggleButton
-                Width="70"
-                Height="48"
-                HorizontalAlignment="Center"
-                CornerRadius="5 0 0 5"
-                IsChecked="{Binding ArtemisLightControlViewModel.QuickProfile}"
-                Name="ButtonCustomProfile">
-              <avalonia:MaterialIcon
-                  Kind="LightningBolt"
-                  Width="24"
-                  Height="24"/>
-            </ToggleButton>
-              <ToggleButton
-                  Width="40"
-                  Height="48"
-                  HorizontalAlignment="Center"
-                  CornerRadius="0 5 5 0"
-                  BorderThickness="0 1 1 1"
-                  IsChecked="{Binding Path=IsChecked, ElementName=ButtonCustomProfile, Mode=OneWay}"
-                  Command="{Binding GoCustomProfile}">
-                  <avalonia:MaterialIcon
-                      Kind="ChevronRight"
-                      Width="24"
-                      Height="24"/>
-              </ToggleButton>
+            <customControls:CustomToggleSplitButton>
+            </customControls:CustomToggleSplitButton>
           </StackPanel>
           <TextBlock
               HorizontalAlignment="Center"

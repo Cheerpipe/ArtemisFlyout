@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ArtemisFlyout.Models.Configuration;
 
 namespace ArtemisFlyout.Models.Configuration
 {

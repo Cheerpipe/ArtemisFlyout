@@ -5,13 +5,13 @@ using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;
 
-namespace ArtemisFlyout.UserControls
+namespace ArtemisFlyout.Pages
 {
 
     public class ArtemisDeviceTogglesViewModel : ViewModelBase
     {
+        private readonly List<DeviceStateSetting> _devicesStatesSettings;
         private List<DeviceStateViewModel> _devicesStates;
-        private List<DeviceStateSetting> _devicesStatesSettings;
 
         public ArtemisDeviceTogglesViewModel(IConfigurationService configurationService)
         {

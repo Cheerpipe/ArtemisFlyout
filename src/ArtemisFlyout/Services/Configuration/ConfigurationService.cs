@@ -14,11 +14,9 @@ namespace ArtemisFlyout.Services
 
         public void Load()
         {
-            using (StreamReader r = new StreamReader("appsettings.json"))
-            {
-                string appsettingsString = r.ReadToEnd();
-                _configurations = JsonConvert.DeserializeObject<Configurations>(appsettingsString);
-            }
+            using StreamReader r = new StreamReader("appsettings.json");
+            string appsettingsString = r.ReadToEnd();
+            _configurations = JsonConvert.DeserializeObject<Configurations>(appsettingsString);
         }
 
         public Configurations Get() => _configurations;

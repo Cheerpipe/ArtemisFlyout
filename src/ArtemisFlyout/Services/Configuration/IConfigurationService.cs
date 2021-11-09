@@ -1,5 +1,4 @@
-﻿using ArtemisFlyout.Models;
-using ArtemisFlyout.Models.Configuration;
+﻿using ArtemisFlyout.Models.Configuration;
 
 namespace ArtemisFlyout.Services
 {

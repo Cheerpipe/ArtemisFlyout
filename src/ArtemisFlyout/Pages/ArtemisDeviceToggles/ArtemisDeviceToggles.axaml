@@ -6,7 +6,7 @@
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:screens="clr-namespace:ArtemisFlyout.Screens"
                                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="850"
-                                x:Class="ArtemisFlyout.UserControls.ArtemisDeviceToggles">
+                                x:Class="ArtemisFlyout.Pages.ArtemisDeviceToggles">
     <!-- Flyout content start-->
   <StackPanel>
     <Button
@@ -20,7 +20,7 @@
         CommandParameter="0">
       <controls:SymbolIcon Symbol="Back" Width="16" Height="16"/>
     </Button>
-    <DockPanel>
+    <DockPanel Margin="20 0 20 0">
       <ItemsRepeater Items="{Binding ArtemisDeviceTogglesViewModel.DeviceStates}">
           <ItemsRepeater.ItemTemplate>
               <DataTemplate>

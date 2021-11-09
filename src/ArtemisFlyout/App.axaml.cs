@@ -9,10 +9,5 @@ namespace ArtemisFlyout
         {
             AvaloniaXamlLoader.Load(this);
         }
-
-        public override void OnFrameworkInitializationCompleted()
-        {
-            base.OnFrameworkInitializationCompleted();
-        }
     }
 }

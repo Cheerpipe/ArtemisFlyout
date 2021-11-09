@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             x:Class="ArtemisFlyout.Controls.CustomToggleSplitButton">
+  <StackPanel>
+    <StackPanel Orientation="Horizontal">
+      <ToggleButton
+          Width="70"
+          Height="48"
+          HorizontalAlignment="Center"
+          CornerRadius="5 0 0 5"
+          IsChecked="{Binding ArtemisLightControlViewModel.QuickProfile}"
+          Name="ButtonCustomProfile">
+        <avalonia:MaterialIcon
+            Kind="LightningBolt"
+            Width="24"
+            Height="24"/>
+      </ToggleButton>
+      <ToggleButton
+          Width="40"
+          Height="48"
+          HorizontalAlignment="Center"
+          CornerRadius="0 5 5 0"
+          BorderThickness="0 1 1 1"
+          Command="{Binding GoCustomProfile}"
+          IsChecked="{Binding Path=IsChecked, ElementName=ButtonCustomProfile, Mode=OneWay}"
+          IsEnabled="{Binding Path=IsChecked, ElementName=ButtonCustomProfile}"
+          Click="ButtonMore_OnClick"
+          Name="ButtonMore">
+        <avalonia:MaterialIcon
+            Kind="ChevronRight"
+            Width="24"
+            Height="24"/>
+      </ToggleButton>
+    </StackPanel>
+
+  </StackPanel>
+</UserControl>

@@ -1,11 +1,9 @@
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 
-namespace ArtemisFlyout.UserControls
+namespace ArtemisFlyout.Pages
 {
-    public partial class ArtemisCustomProfile : ReactiveUserControl<ArtemisDeviceTogglesViewModel>
+    public  class ArtemisCustomProfile : ReactiveUserControl<ArtemisDeviceTogglesViewModel>
     {
         public ArtemisCustomProfile()
         {

@@ -2,14 +2,12 @@
 using System.Reactive.Disposables;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
-
 using ReactiveUI;
 
-namespace ArtemisFlyout.UserControls
+namespace ArtemisFlyout.Pages
 {
     public class ArtemisCustomProfileViewModel : ViewModelBase
     {
-        private readonly IArtemisService _artemisService;
         private readonly List<CustomProfileColorViewModel> _customProfileColors;
         public ArtemisCustomProfileViewModel(IConfigurationService configurationService)
         {

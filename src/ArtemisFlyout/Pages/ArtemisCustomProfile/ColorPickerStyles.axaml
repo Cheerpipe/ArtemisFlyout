@@ -32,7 +32,6 @@
                            HorizontalAlignment="Center"
                            Grid.Column="2"
                            Grid.ColumnSpan="5" />
-
                 <Border Name="PreviousColorPreviewBackground"
                         Background="{x:Static ui:ColorRamp.CheckeredBrush}"
                         Height="40"

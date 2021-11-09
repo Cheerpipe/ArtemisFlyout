@@ -6,7 +6,7 @@ using ArtemisFlyout.ViewModels;
 using Avalonia.Media;
 using ReactiveUI;
 
-namespace ArtemisFlyout.UserControls
+namespace ArtemisFlyout.Pages
 {
     public class CustomProfileColorViewModel : ViewModelBase
     {

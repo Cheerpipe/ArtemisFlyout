@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ArtemisFlyout.IoC;
+using ArtemisFlyout.Pages;
 using ArtemisFlyout.Screens;
-using ArtemisFlyout.UserControls;
 using Avalonia.Controls;
-using MessageBox.Avalonia.Enums;
 using Ninject;
 using Tmds.DBus;
 
@@ -61,7 +60,6 @@ namespace ArtemisFlyout.Services
             try
             {
                 _configurationService.Load();
-                FlyoutContainerViewModel flyoutContainerViewModel= Kernel.Get<FlyoutContainerViewModel>();
                 flyoutInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
             }
             catch (ConnectException)

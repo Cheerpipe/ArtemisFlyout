@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Ninject;
+﻿using Ninject;
 using Ninject.Modules;
 
 namespace ArtemisFlyout.IoC

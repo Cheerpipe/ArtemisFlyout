@@ -1,6 +1,6 @@
 ﻿using System.Reactive.Disposables;
+using ArtemisFlyout.Pages;
 using ArtemisFlyout.Services;
-using ArtemisFlyout.UserControls;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;
 using Tmds.DBus;
@@ -10,13 +10,10 @@ namespace ArtemisFlyout.Screens
     public class FlyoutContainerViewModel : ViewModelBase
     {
         private readonly IArtemisService _artemisService;
-        private readonly ArtemisDeviceTogglesViewModel _artemisDeviceTogglesViewModel;
-        private readonly ArtemisCustomProfileViewModel _artemisCustomProfileViewModel;
-        private readonly ArtemisLightControlViewModel _artemisLightControlViewModel;
         private readonly IFlyoutService _flyoutService;
         private int _activePageIndex;
         private const int MainPageHeight = 530;
-        private const int MainPageWidth = 320;
+        private const int MainPageWidth = 290;
 
         public FlyoutContainerViewModel(
             IArtemisService artemisService,
@@ -26,9 +23,9 @@ namespace ArtemisFlyout.Screens
             IFlyoutService flyoutService)
         {
             _artemisService = artemisService;
-            _artemisLightControlViewModel = artemisMainControlViewModel;
-            _artemisDeviceTogglesViewModel = artemisDeviceTogglesViewModel;
-            _artemisCustomProfileViewModel = artemisCustomProfileViewModel;
+            ArtemisLightControlViewModel = artemisMainControlViewModel;
+            ArtemisDeviceTogglesViewModel = artemisDeviceTogglesViewModel;
+            ArtemisCustomProfileViewModel = artemisCustomProfileViewModel;
             _flyoutService = flyoutService;
 
             this.WhenActivated(disposables =>
@@ -50,17 +47,16 @@ namespace ArtemisFlyout.Screens
         }
 
 
-        public ArtemisLightControlViewModel ArtemisLightControlViewModel => _artemisLightControlViewModel;
-        public ArtemisDeviceTogglesViewModel ArtemisDeviceTogglesViewModel => _artemisDeviceTogglesViewModel;
-        public ArtemisCustomProfileViewModel ArtemisCustomProfileViewModel => _artemisCustomProfileViewModel;
+        public ArtemisLightControlViewModel ArtemisLightControlViewModel { get; }
+
+        public ArtemisDeviceTogglesViewModel ArtemisDeviceTogglesViewModel { get; }
+
+        public ArtemisCustomProfileViewModel ArtemisCustomProfileViewModel { get; }
 
         public int ActivePageindex
         {
             get => _activePageIndex;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _activePageIndex, value);
-            }
+            set => this.RaiseAndSetIfChanged(ref _activePageIndex, value);
         }
 
         private double _flyoutHeight= MainPageHeight;
@@ -81,7 +77,7 @@ namespace ArtemisFlyout.Screens
             set
             {
                 _flyoutWidth = value;
-                _flyoutService.SetHeight(value);
+                _flyoutService.SetWidth(value);
             }
         }
 
@@ -94,18 +90,21 @@ namespace ArtemisFlyout.Screens
         {
             SetActivePageIndex(0);
             FlyoutHeight = MainPageHeight;
+            FlyoutWidth = 290;
         }
 
         public void GoCustomProfile()
         {
             SetActivePageIndex(2);
-            FlyoutHeight = (65 * ArtemisCustomProfileViewModel.Colors.Count) + 110;
+            FlyoutHeight = (65 * ArtemisCustomProfileViewModel.Colors.Count) + 130;
+            FlyoutWidth = 290;
         }
 
         public void GoDevices()
         {
             SetActivePageIndex(1);
             FlyoutHeight = (46 * ArtemisDeviceTogglesViewModel.DeviceStates.Count) + 110;
+            FlyoutWidth = 330;
         }
 
         public void Restart()

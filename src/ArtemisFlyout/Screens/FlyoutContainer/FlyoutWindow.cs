@@ -13,7 +13,8 @@ namespace ArtemisFlyout.Screens
         private readonly int _screenHeight;
         private readonly int _screenWidth;
 
-        public int AnimationDelay { get; set; } = 200;
+        public int RevealAnimationDelay { get; set; } = 200;
+        public int ResizeAnimationDelay { get; set; } = 150;
 
         public int VerticalSpacing { get; set; } = 12;
 
@@ -37,12 +38,12 @@ namespace ArtemisFlyout.Screens
             var showTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.HorizontalPositionProperty,
-                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Duration = TimeSpan.FromMilliseconds(RevealAnimationDelay),
                 Easing = new CircularEaseOut()
             };
 
             showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, (int)Width, HorizontalPosition);
-            await Task.Delay(AnimationDelay);
+            await Task.Delay(RevealAnimationDelay);
         }
 
         public async Task CloseAnimated()
@@ -50,12 +51,12 @@ namespace ArtemisFlyout.Screens
             var closeTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.HorizontalPositionProperty,
-                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Duration = TimeSpan.FromMilliseconds(RevealAnimationDelay),
                 Easing = new CircularEaseIn()
             };
 
             closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, HorizontalPosition, (int)Width);
-            await Task.Delay(AnimationDelay);
+            await Task.Delay(RevealAnimationDelay);
             Close();
         }
 
@@ -64,7 +65,7 @@ namespace ArtemisFlyout.Screens
             var heightTransition = new DoubleTransition()
             {
                 Property = HeightProperty,
-                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Duration = TimeSpan.FromMilliseconds(ResizeAnimationDelay),
                 Easing = new CircularEaseOut()
             };
 
@@ -76,7 +77,7 @@ namespace ArtemisFlyout.Screens
             var widthTransition = new DoubleTransition()
             {
                 Property = WidthProperty,
-                Duration = TimeSpan.FromMilliseconds(AnimationDelay),
+                Duration = TimeSpan.FromMilliseconds(ResizeAnimationDelay),
                 Easing = new CircularEaseOut()
             };
 

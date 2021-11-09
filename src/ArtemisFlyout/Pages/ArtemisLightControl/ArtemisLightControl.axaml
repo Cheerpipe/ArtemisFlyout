@@ -40,7 +40,7 @@
     <StackPanel IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}">
 
       <!-- Ambiente profile selector Start -->
-      <StackPanel Margin="20 0 20 40">
+      <StackPanel Margin="20 0 20 25">
         <TextBlock
            HorizontalAlignment="Left"
            Padding=" 0 0 0 5">

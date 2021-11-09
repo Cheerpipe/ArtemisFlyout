@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ArtemisFlyout.IoC;
 using ArtemisFlyout.Pages;
@@ -64,7 +65,7 @@ namespace ArtemisFlyout.Services
             }
             catch (ConnectException)
             {
-                
+
                 flyoutInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
             }
             return flyoutInstance;
@@ -76,6 +77,10 @@ namespace ArtemisFlyout.Services
             FlyoutWindowInstance = GetInstance();
             FlyoutWindowInstance.WindowState = WindowState.Minimized;
             await FlyoutWindowInstance.ShowAnimated();
+            FlyoutWindowInstance.ViewModel?.GoCustomProfile();
+            await Task.Run(() => { Task.Delay(300); });
+            FlyoutWindowInstance.ViewModel?.GoDevices();
+            await Task.Run(() => { Task.Delay(300); });
             await CloseAndRelease(false);
         }
 

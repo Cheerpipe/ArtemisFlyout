@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "66b68656-2523-428c-a057-10d4a3d5e10b": {
+      "ProjectGuid": "66b68656-2523-428c-a057-10d4a3d5e10b",
+      "DisplayName": "ArtemisFlyout",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

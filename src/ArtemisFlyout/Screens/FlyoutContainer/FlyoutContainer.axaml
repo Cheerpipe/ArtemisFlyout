@@ -19,7 +19,7 @@
                                 ExtendClientAreaChromeHints="NoChrome"
                                 ExtendClientAreaTitleBarHeightHint="-1"
                                 Background="Transparent"
-                                UseLayoutRounding="True"
+                                UseLayoutRounding="False"
                                 CornerRadius="10 10 10 10"
                                 Height="{Binding FlyoutHeight}"
                                 Width="{Binding FlyoutWidth}"

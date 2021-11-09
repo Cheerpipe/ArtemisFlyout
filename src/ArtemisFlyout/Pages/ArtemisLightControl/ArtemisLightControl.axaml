@@ -11,172 +11,174 @@
                                 xmlns:models="clr-namespace:ArtemisFlyout.Models"
                                 mc:Ignorable="d" d:DesignWidth="285" d:DesignHeight="480"
                                 x:Class="ArtemisFlyout.Pages.ArtemisLightControl"
-                                Background="Transparent">
-  <!-- Flyout content start-->
-  <StackPanel>
-    <!-- Global toggle Start -->
+                                Background="Transparent"
+                                UseLayoutRounding="False">
+	<!-- Flyout content start-->
+	<StackPanel>
+		<!-- Global toggle Start -->
 
-    <!-- Workaround for toggle switch width -->
-    <DockPanel Margin="0 0 0 15">
-      <controls:HyperlinkButton
-        VerticalAlignment="Center"
-        FontSize="12"
-        Foreground="LightGray"
-        Margin="0 0 0 0"
-        Command="{Binding GoDevices}">
-        Devices settings
-      </controls:HyperlinkButton>
-      <ToggleSwitch
-        IsChecked="{Binding ArtemisLightControlViewModel.AllDevices}"
-        Content=""
-        OffContent=""
-        OnContent=""
-        HorizontalAlignment="Right"
-        MinWidth ="0"
-        MinHeight="0"/>
-    </DockPanel>
-    <!-- Global toggle End -->
+		<!-- Workaround for toggle switch width -->
+		<DockPanel Margin="0 0 0 15">
+			<controls:HyperlinkButton
+			  VerticalAlignment="Center"
+			  FontSize="12"
+			  Foreground="LightGray"
+			  Margin="0 0 0 0"
+			  Command="{Binding GoDevices}">
+				Devices settings
+			</controls:HyperlinkButton>
+			<ToggleSwitch
+			  IsChecked="{Binding ArtemisLightControlViewModel.AllDevices}"
+			  Content=""
+			  OffContent=""
+			  OnContent=""
+			  HorizontalAlignment="Right"
+			  MinWidth ="0"
+			  MinHeight="0"/>
+		</DockPanel>
+		<!-- Global toggle End -->
 
-    <StackPanel IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}">
+		<StackPanel IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}">
 
-      <!-- Ambiente profile selector Start -->
-      <StackPanel Margin="20 0 20 25">
-        <TextBlock
-           HorizontalAlignment="Left"
-           Padding=" 0 0 0 5">
-          Ambient profile
-        </TextBlock>
-        <DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
-          <ComboBox
-              HorizontalAlignment="Stretch"
-              DockPanel.Dock="Left"
-              VerticalAlignment="Center"
-              Items="{Binding ArtemisLightControlViewModel.Profiles}"
-              SelectedItem="{Binding ArtemisLightControlViewModel.SelectedProfile}">
-            <ComboBox.ItemTemplate>
-              <DataTemplate DataType="models:Profile">
-                <TextBlock Text="{Binding Name}"/>
-              </DataTemplate>
-            </ComboBox.ItemTemplate>
-          </ComboBox>
-        </DockPanel>
-      </StackPanel>
-      <!-- Ambiente profile selector End -->
+			<!-- Ambiente profile selector Start -->
+			<StackPanel Margin="20 0 20 25">
+				<TextBlock
+				   HorizontalAlignment="Left"
+				   Padding=" 0 0 0 5">
+					Ambient profile
+				</TextBlock>
+				<DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
+					<ComboBox
+						HorizontalAlignment="Stretch"
+						DockPanel.Dock="Left"
+						VerticalAlignment="Center"
+						Items="{Binding ArtemisLightControlViewModel.Profiles}"
+						SelectedItem="{Binding ArtemisLightControlViewModel.SelectedProfile}"
+						IsEnabled="{Binding !ArtemisLightControlViewModel.QuickProfile}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate DataType="models:Profile">
+								<TextBlock Text="{Binding Name}"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</DockPanel>
+			</StackPanel>
+			<!-- Ambiente profile selector End -->
 
-      <!-- Action buttons Start-->
-      <Grid
-          ColumnDefinitions="*,*"
-          RowDefinitions="*,*"
-          Margin="20 10 20 10"
-          HorizontalAlignment="Stretch">
-        <StackPanel
-            Margin="0 10 0 10"
-            Grid.Column="0"
-            Grid.Row="1"
-            HorizontalAlignment="Left">
-          <ToggleButton
-              Width="110"
-              Height="48"
-              HorizontalAlignment="Center"
-              IsChecked="{Binding ArtemisLightControlViewModel.AudioReactive}">
-            <avalonia:MaterialIcon
-                Kind="Equalizer"
-                Width="24"
-                Height="24"/>
-          </ToggleButton>
-          <TextBlock
-              HorizontalAlignment="Center"
-              Padding="0 5 0 0"
-              FontSize="12">
-            Audio reactive
-          </TextBlock>
-        </StackPanel>
-        <StackPanel
-            Margin="0 10 0 10"
-            Grid.Column="1"
-            Grid.Row="0"
-            HorizontalAlignment="Right">
-          <ToggleButton
-              Width="110"
-              Height="48"
-              HorizontalAlignment="Center"
-              IsChecked="{Binding ArtemisLightControlViewModel.Ambilight}">
-            <avalonia:MaterialIcon
-                Kind="MonitorMultiple"
-                Width="24"
-                Height="24"/>
-          </ToggleButton>
-          <TextBlock
-              HorizontalAlignment="Center"
-              Padding="0 5 0 0"
-              FontSize="12">
-            Ambilight
-          </TextBlock>
-        </StackPanel>
-        <StackPanel
-            Margin="0 10 0 10"
-            Grid.Column="0"
-            Grid.Row="0"
-            HorizontalAlignment="Left">
-          <ToggleButton
-              Width="110"
-              Height="48"
-              HorizontalAlignment="Center"
-              IsChecked="{Binding ArtemisLightControlViewModel.Webcam}">
-            <avalonia:MaterialIcon
-                Kind="Webcam"
-                Width="24"
-                Height="24"/>
-          </ToggleButton>
-          <TextBlock
-              HorizontalAlignment="Center"
-              Padding="0 5 0 0"
-              FontSize="12">
-            Webcam
-          </TextBlock>
-        </StackPanel>
-        <StackPanel
-            Margin="0 10 0 10"
-            Grid.Column="1"
-            Grid.Row="1"
-            HorizontalAlignment="Right">
-          <StackPanel Orientation="Horizontal">
-            <customControls:CustomToggleSplitButton>
-            </customControls:CustomToggleSplitButton>
-          </StackPanel>
-          <TextBlock
-              HorizontalAlignment="Center"
-              Padding="0 5 0 0"
-              FontSize="12">
-            Quick profile
-          </TextBlock>
-        </StackPanel>
-      </Grid>
-      <!-- Action buttons End-->
+			<!-- Action buttons Start-->
+			<Grid
+				ColumnDefinitions="*,*"
+				RowDefinitions="*,*"
+				Margin="20 10 20 10"
+				HorizontalAlignment="Stretch">
+				<StackPanel
+					Margin="0 10 0 10"
+					Grid.Column="0"
+					Grid.Row="1"
+					HorizontalAlignment="Left">
+					<ToggleButton
+						Width="110"
+						Height="48"
+						HorizontalAlignment="Center"
+						IsChecked="{Binding ArtemisLightControlViewModel.AudioReactive}">
+						<avalonia:MaterialIcon
+							Kind="Equalizer"
+							Width="24"
+							Height="24"/>
+					</ToggleButton>
+					<TextBlock
+						HorizontalAlignment="Center"
+						Padding="0 5 0 0"
+						FontSize="12">
+						Audio reactive
+					</TextBlock>
+				</StackPanel>
+				<StackPanel
+					Margin="0 10 0 10"
+					Grid.Column="1"
+					Grid.Row="0"
+					HorizontalAlignment="Right">
+					<ToggleButton
+						Width="110"
+						Height="48"
+						HorizontalAlignment="Center"
+						IsChecked="{Binding ArtemisLightControlViewModel.Ambilight}">
+						<avalonia:MaterialIcon
+							Kind="MonitorMultiple"
+							Width="24"
+							Height="24"/>
+					</ToggleButton>
+					<TextBlock
+						HorizontalAlignment="Center"
+						Padding="0 5 0 0"
+						FontSize="12">
+						Ambilight
+					</TextBlock>
+				</StackPanel>
+				<StackPanel
+					Margin="0 10 0 10"
+					Grid.Column="0"
+					Grid.Row="0"
+					HorizontalAlignment="Left">
+					<ToggleButton
+						Width="110"
+						Height="48"
+						HorizontalAlignment="Center"
+						IsChecked="{Binding ArtemisLightControlViewModel.Webcam}">
+						<avalonia:MaterialIcon
+							Kind="Webcam"
+							Width="24"
+							Height="24"/>
+					</ToggleButton>
+					<TextBlock
+						HorizontalAlignment="Center"
+						Padding="0 5 0 0"
+						FontSize="12">
+						Webcam
+					</TextBlock>
+				</StackPanel>
+				<StackPanel
+					Margin="0 10 0 10"
+					Grid.Column="1"
+					Grid.Row="1"
+					HorizontalAlignment="Right">
+					<StackPanel Orientation="Horizontal">
+						<customControls:CustomToggleSplitButton>
+						</customControls:CustomToggleSplitButton>
+					</StackPanel>
+					<TextBlock
+						HorizontalAlignment="Center"
+						Padding="0 5 0 0"
+						FontSize="12">
+						Quick profile
+					</TextBlock>
+				</StackPanel>
+			</Grid>
+			<!-- Action buttons End-->
 
-      <!-- Bright Slider Start -->
-      <StackPanel Margin="20 15 20 0">
-        <Grid ColumnDefinitions="25,*,20" RowDefinitions="50,50"  Margin="0">
-          <avalonia:MaterialIcon Kind="Brightness5" Grid.Row="0" Grid.Column="0"></avalonia:MaterialIcon>
-          <Slider
-              Grid.Row="0"
-              Grid.Column="1"
-              Value="{Binding ArtemisLightControlViewModel.Bright}"
-              IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}"/>
-          <avalonia:MaterialIcon Kind="Brightness7" Grid.Row="0" Grid.Column="2"></avalonia:MaterialIcon>
-          <avalonia:MaterialIcon Kind="SpeedometerSlow" Grid.Row="1" Grid.Column="0"></avalonia:MaterialIcon>
-          <Slider
-              Grid.Row="1"
-              Grid.Column="1"
-              Value="{Binding ArtemisLightControlViewModel.Speed}"
-              IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}"/>
-          <avalonia:MaterialIcon Kind="Speedometer" Grid.Row="1" Grid.Column="2"></avalonia:MaterialIcon>
-        </Grid>
-      </StackPanel>
-      <!-- Bright Slider End -->
+			<!-- Bright Slider Start -->
+			<StackPanel Margin="20 15 20 0">
+				<Grid ColumnDefinitions="25,*,20" RowDefinitions="50,50"  Margin="0">
+					<avalonia:MaterialIcon Kind="Brightness5" Grid.Row="0" Grid.Column="0"></avalonia:MaterialIcon>
+					<Slider
+						Grid.Row="0"
+						Grid.Column="1"
+						Value="{Binding ArtemisLightControlViewModel.Bright}"
+						IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}"/>
+					<avalonia:MaterialIcon Kind="Brightness7" Grid.Row="0" Grid.Column="2"></avalonia:MaterialIcon>
+					<avalonia:MaterialIcon Kind="SpeedometerSlow" Grid.Row="1" Grid.Column="0"></avalonia:MaterialIcon>
+					<Slider
+						Grid.Row="1"
+						Grid.Column="1"
+						Value="{Binding ArtemisLightControlViewModel.Speed}"
+						IsEnabled="{Binding ArtemisLightControlViewModel.AllDevices}"/>
+					<avalonia:MaterialIcon Kind="Speedometer" Grid.Row="1" Grid.Column="2"></avalonia:MaterialIcon>
+				</Grid>
+			</StackPanel>
+			<!-- Bright Slider End -->
 
-    </StackPanel>
-  </StackPanel>
-  <!-- Flyout content End-->
+		</StackPanel>
+	</StackPanel>
+	<!-- Flyout content End-->
 
 </reactiveUi:ReactiveUserControl>

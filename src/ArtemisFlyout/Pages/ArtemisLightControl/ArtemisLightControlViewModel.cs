@@ -22,6 +22,7 @@ namespace ArtemisFlyout.Pages
             var configurationService1 = configurationService;
             _devicesStatesDatamodelName = configurationService1.Get().DatamodelSettings.DevicesStatesDatamodelName;
             _globalVariablesDatamodelName= configurationService1.Get().DatamodelSettings.GlobalVariablesDatamodelName;
+            _quickProfile = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", false);
             _allDevices = _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", false);
 
             this.WhenActivated(disposables =>
@@ -69,10 +70,15 @@ namespace ArtemisFlyout.Pages
             set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", value);
         }
 
+        private bool _quickProfile;
         public bool QuickProfile
         {
             get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", false);
-            set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", value);
+            set
+            {
+                _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", value);
+                this.RaiseAndSetIfChanged(ref _quickProfile, value);
+            }
         }
 
         public bool Ambilight

@@ -19,6 +19,7 @@ namespace ArtemisFlyout.Screens
         public int ResizeAnimationDelay { get; set; } = 250;
 
         public int VerticalSpacing { get; set; } = 12;
+
         Panel FlyoutPanelContainer;
 
         public FlyoutWindow()
@@ -59,9 +60,9 @@ namespace ArtemisFlyout.Screens
         private async void FlyoutPanelContainer_PointerReleased(object sender, PointerReleasedEventArgs e)
         {
             isOnDrag = false;
-            if (HorizontalPosition >= this.Width / 2)
+            if (HorizontalPosition >= (this.Width + 12) / 2) // 12 to a property
             {
-                await CloseAnimated(RevealAnimationDelay * 0.3d);
+                await CloseAnimated(RevealAnimationDelay * 0.25d);
             }
             else
             {
@@ -73,23 +74,19 @@ namespace ArtemisFlyout.Screens
         {
             if (!isOnDrag)
             {
-                previousPosition = e.Device.GetPosition(this).X;
+                previousPosition = e.GetPosition(this).X;
                 return;
             }
+
             if (e.Pointer.IsPrimary)
             {
-                double currentPosition = e.Device.GetPosition(this).X;
+                double currentPosition = e.GetPosition(this).X;
                 double delta = previousPosition - currentPosition;
                 previousPosition = currentPosition;
 
-
-                Debug.WriteLine(currentPosition);
-
-                if (currentPosition < 0)
+                if ((currentPosition < 0) || (HorizontalPosition <= 0 && delta > 0))
                     return;
 
-                if (HorizontalPosition <= 0 && delta > 0)
-                    return;
                 HorizontalPosition = HorizontalPosition - (int)delta;
             }
         }

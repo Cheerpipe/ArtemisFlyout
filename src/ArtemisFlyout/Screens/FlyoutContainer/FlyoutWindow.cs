@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 
 namespace ArtemisFlyout.Screens
@@ -17,6 +19,7 @@ namespace ArtemisFlyout.Screens
         public int ResizeAnimationDelay { get; set; } = 250;
 
         public int VerticalSpacing { get; set; } = 12;
+        Panel FlyoutPanelContainer;
 
         public FlyoutWindow()
         {
@@ -26,7 +29,13 @@ namespace ArtemisFlyout.Screens
 
         public async Task ShowAnimated()
         {
-            
+
+
+            FlyoutPanelContainer = this.Find<Panel>("FlyoutPanelContainer");
+            FlyoutPanelContainer.PointerPressed += FlyoutPanelContainer_PointerPressed;
+            FlyoutPanelContainer.PointerReleased += FlyoutPanelContainer_PointerReleased;
+            FlyoutPanelContainer.PointerMoved += FlyoutPanelContainer_PointerMoved;
+
             PropertyChanged += FlyoutWindow_PropertyChanged;
 
             WindowStartupLocation = WindowStartupLocation.Manual;
@@ -46,18 +55,66 @@ namespace ArtemisFlyout.Screens
             await Task.Delay(RevealAnimationDelay);
         }
 
-        public async Task CloseAnimated()
+        #region Drag to move
+        private async void FlyoutPanelContainer_PointerReleased(object sender, PointerReleasedEventArgs e)
+        {
+            isOnDrag = false;
+            if (HorizontalPosition >= this.Width / 2)
+            {
+                await CloseAnimated(RevealAnimationDelay*0.3d);
+            }
+            else
+            {
+                HorizontalPosition = 0;
+            }
+        }
+        double previousPosition = 0;
+        private void FlyoutPanelContainer_PointerMoved(object sender, PointerEventArgs e)
+        {
+            if (!isOnDrag)
+            {
+                previousPosition = e.Device.GetPosition(this).X;
+                return;
+            }
+            if (e.Pointer.IsPrimary)
+            {
+                double currentPosition = e.Device.GetPosition(this).X;
+                double delta = previousPosition - currentPosition;
+                previousPosition = currentPosition;
+                if (HorizontalPosition <= 0 && delta > 0)
+                    return;
+                HorizontalPosition = HorizontalPosition - (int)delta;
+            }
+        }
+
+        bool isOnDrag = false;
+        private void FlyoutPanelContainer_PointerPressed(object sender, PointerPressedEventArgs e)
+        {
+            if (e.Pointer.IsPrimary)
+            {
+                isOnDrag = true;
+            }
+        }
+
+        #endregion
+
+        public async Task CloseAnimated(double animationDuration)
         {
             var closeTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.HorizontalPositionProperty,
-                Duration = TimeSpan.FromMilliseconds(RevealAnimationDelay),
-                Easing = new CircularEaseIn()
+                Duration = TimeSpan.FromMilliseconds(animationDuration),
+                Easing = new CircularEaseIn(),
             };
 
             closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, HorizontalPosition, (int)Width);
             await Task.Delay(RevealAnimationDelay);
             Close();
+        }
+
+        public async Task CloseAnimated()
+        {
+            await CloseAnimated(RevealAnimationDelay);
         }
 
         public void SetHeight(double newHeight)

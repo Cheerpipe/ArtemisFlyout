@@ -24,6 +24,7 @@ namespace ArtemisFlyout.Screens
             ResizeAnimationDelay = 150;
             Width = 320;
             Height = 510;
+            
         }
     }
 }

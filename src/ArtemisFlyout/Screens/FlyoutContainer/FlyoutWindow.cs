@@ -61,7 +61,7 @@ namespace ArtemisFlyout.Screens
             isOnDrag = false;
             if (HorizontalPosition >= this.Width / 2)
             {
-                await CloseAnimated(RevealAnimationDelay*0.3d);
+                await CloseAnimated(RevealAnimationDelay * 0.3d);
             }
             else
             {
@@ -81,6 +81,13 @@ namespace ArtemisFlyout.Screens
                 double currentPosition = e.Device.GetPosition(this).X;
                 double delta = previousPosition - currentPosition;
                 previousPosition = currentPosition;
+
+
+                Debug.WriteLine(currentPosition);
+
+                if (currentPosition < 0)
+                    return;
+
                 if (HorizontalPosition <= 0 && delta > 0)
                     return;
                 HorizontalPosition = HorizontalPosition - (int)delta;

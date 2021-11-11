@@ -114,6 +114,7 @@ namespace ArtemisFlyout.Services
             // Create Root and Property
             if (string.IsNullOrEmpty(propertyJson))
             {
+                SetJsonDataModelValue<T>(dataModel, jsonPath, defaultValue);
                 return defaultValue;
             }
 
@@ -123,6 +124,7 @@ namespace ArtemisFlyout.Services
                 JToken token = responseObject.SelectToken(jsonPath);
                 if (token == null)
                 {
+                    SetJsonDataModelValue<T>(dataModel, jsonPath, defaultValue);
                     return defaultValue;
                 }
 
@@ -153,7 +155,7 @@ namespace ArtemisFlyout.Services
 
         public string GetActiveProfile()
         {
-            return GetJsonDataModelValue(_globalVariablesDatamodelName, "Profile", "");
+            return GetJsonDataModelValue(_globalVariablesDatamodelName, "Profile", "Default");
         }
 
         public void Launch()
@@ -170,7 +172,7 @@ namespace ArtemisFlyout.Services
 
         public Color GetColor(string colorName, Color defaultColor)
         {
-            if (Color.TryParse(GetJsonDataModelValue(_globalVariablesDatamodelName, colorName, ""), out Color color))
+            if (Color.TryParse(GetJsonDataModelValue(_globalVariablesDatamodelName, colorName, ColorUtiles.ToHexString(Colors.White)), out Color color))
             {
                 return color;
             }

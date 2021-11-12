@@ -69,7 +69,8 @@
 							ClipToBounds="True"
 							Background="Transparent"
 							VerticalAlignment="Bottom"
-							DockPanel.Dock="Bottom">
+							DockPanel.Dock="Bottom"
+							IsVisible="{Binding CommandBarVisibleState}">
 						<DockPanel Background="#40000000" Height="48">
 							<StackPanel
 								Margin="10 0 0 0"

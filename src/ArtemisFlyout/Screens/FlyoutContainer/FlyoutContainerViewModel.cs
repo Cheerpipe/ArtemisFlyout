@@ -54,7 +54,9 @@ namespace ArtemisFlyout.Screens
             set => this.RaiseAndSetIfChanged(ref _activePageIndex, value);
         }
 
-        private double _flyoutHeight= MainPageHeight;
+        public bool CommandBarVisibleState => true;
+
+        private double _flyoutHeight = MainPageHeight;
         public double FlyoutHeight
         {
             get => _flyoutHeight;

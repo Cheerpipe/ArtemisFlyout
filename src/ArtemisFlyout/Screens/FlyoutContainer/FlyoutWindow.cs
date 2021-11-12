@@ -61,14 +61,12 @@ namespace ArtemisFlyout.Screens
         private async void FlyoutPanelContainer_PointerReleased(object sender, PointerReleasedEventArgs e)
         {
             isOnDrag = false;
-            if (HorizontalPosition >= (this.Width + 12) / 2) // 12 to a property
-            {
+
+            //TODO: 12 to a property
+            if (HorizontalPosition >= (this.Width + 12) / 2)
                 await CloseAnimated(RevealAnimationDelay * 0.25d);
-            }
             else
-            {
                 HorizontalPosition = 0;
-            }
         }
         double previousPosition = 0;
         private void FlyoutPanelContainer_PointerMoved(object sender, PointerEventArgs e)
@@ -95,10 +93,13 @@ namespace ArtemisFlyout.Screens
         bool isOnDrag = false;
         private void FlyoutPanelContainer_PointerPressed(object sender, PointerPressedEventArgs e)
         {
-            if (e.Pointer.IsPrimary)
-            {
-                isOnDrag = true;
-            }
+            if (!e.Pointer.IsPrimary) return;
+
+            if (e.Source is Border)
+                if ((e.Source as Border).TemplatedParent is ComboBox)
+                    return;
+
+            isOnDrag = true;
         }
 
         #endregion

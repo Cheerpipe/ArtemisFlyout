@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Media;
 
@@ -86,9 +87,9 @@ namespace ArtemisFlyout.Screens
 
                 if ((currentPosition < 0) || (HorizontalPosition <= 0 && delta > 0))
                     return;
-
                 HorizontalPosition = HorizontalPosition - (int)delta;
             }
+
         }
 
         bool isOnDrag = false;

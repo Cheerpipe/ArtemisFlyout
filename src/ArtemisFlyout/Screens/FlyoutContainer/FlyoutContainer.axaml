@@ -24,138 +24,138 @@
                                 Height="{Binding FlyoutHeight}"
                                 Width="{Binding FlyoutWidth}"
                                 x:Name="FlyoutWindow">
-  <reactiveUi:ReactiveWindow.Resources>
-    <converters:SubtractionValueConverter x:Key="SubtractionConverter"/>
-  </reactiveUi:ReactiveWindow.Resources>
-  <Panel
-    HorizontalAlignment="Left"
-    Name="FlyoutPanelContainer"
-    Width="{Binding Path=Width, ElementName=FlyoutWindow, Converter={StaticResource SubtractionConverter}, ConverterParameter=12}">
-    <ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
-      <ExperimentalAcrylicBorder.Material>
-        <ExperimentalAcrylicMaterial
-            BackgroundSource="Digger"
-            TintColor="Black"
-            TintOpacity="0.8"
-            MaterialOpacity="0.8"/>
-      </ExperimentalAcrylicBorder.Material>
-      <Border CornerRadius="10 10 10 10"
-              BorderBrush="#414141"
-              BorderThickness="1"
-              ClipToBounds="False"
-              Background="Transparent"
-              BoxShadow="3 4 0 0 #64000000">
-        <Panel>
+	<reactiveUi:ReactiveWindow.Resources>
+		<converters:SubtractionValueConverter x:Key="SubtractionConverter"/>
+	</reactiveUi:ReactiveWindow.Resources>
+	<Panel
+	  HorizontalAlignment="Left"
+	  Name="FlyoutPanelContainer"
+	  Width="{Binding Path=Width, ElementName=FlyoutWindow, Converter={StaticResource SubtractionConverter}, ConverterParameter=12}">
+		<ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					BackgroundSource="Digger"
+					TintColor="Black"
+					TintOpacity="0.8"
+					MaterialOpacity="0.8"/>
+			</ExperimentalAcrylicBorder.Material>
+			<Border CornerRadius="10 10 10 10"
+					BorderBrush="#414141"
+					BorderThickness="1"
+					ClipToBounds="False"
+					Background="Transparent"
+					BoxShadow="3 4 0 0 #64000000">
+			</Border>
+		</ExperimentalAcrylicBorder>
+		<Panel>
 
-          <DockPanel>
-            <!-- Flyout content Start -->
-            <Panel DockPanel.Dock="Top" Margin="0 0 0 0">
-              <Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
-                <Carousel.PageTransition>
-                  <PageSlide Duration="0.15" Orientation="Horizontal" SlideInEasing="CircularEaseOut" SlideOutEasing="CircularEaseOut"/>
-                </Carousel.PageTransition>
-                <pages:ArtemisLightControl />
-                <pages:ArtemisDeviceToggles />
-                <pages:ArtemisCustomProfile />
-                <pages:ArtemisLauncher />
-              </Carousel>
-            </Panel>
-            <!-- Flyout content End-->
-          </DockPanel>
-          <!-- Bottom command bar Start -->
-          <Border CornerRadius="0 0 10 10"
-                  BorderBrush="#414141"
-                  BorderThickness="0"
-                  ClipToBounds="True"
-                  Background="Transparent"
-                  VerticalAlignment="Bottom"
-                  DockPanel.Dock="Bottom"
-                  Height="48"
-                  ZIndex="0">
-            <DockPanel Background="#40000000" Height="48">
-              <StackPanel
-                  Margin="10 0 0 0"
-                  DockPanel.Dock="Left"
-                  Orientation="Horizontal"
-                  HorizontalAlignment="Left"
-                  Height="48">
-                <Button
-                    HorizontalAlignment="Left"
-                    Name="BtnHome"
-                    Height="36"
-                    Width="36"
-                    Margin="0 0 0 0"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Command="{Binding GoHome}"
-                    IsVisible="{Binding IsArtemisRunning}" >
-                  <controls:SymbolIcon Symbol="Home" Width="16" Height="16"/>
-                </Button>
-                <Button HorizontalAlignment="Left"
-                        Name="BtnWorkshop"
-                        Height="36"
-                        Width="36"
-                        Margin="0 0 0 0"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        Command="{Binding GoWorkshop}"
-                        IsVisible="{Binding IsArtemisRunning}">
-                  <controls:SymbolIcon Symbol="Share" Width="16" Height="16"/>
-                </Button>
-                <Button
-                    Name="BtnShowSurfaceEditor"
-                    HorizontalAlignment="Left"
-                    Height="36"
-                    Width="36"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Command="{Binding GoSurfaceEditor}"
-                    IsVisible="{Binding IsArtemisRunning}">
-                  <controls:SymbolIcon Symbol="Edit" Width="16" Height="16"/>
-                </Button>
-                <Button
-                    Name="BtnShowSettings"
-                    HorizontalAlignment="Left"
-                    Height="36"
-                    Width="36"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Command="{Binding GoSettings}"
-                    IsVisible="{Binding IsArtemisRunning}">
-                  <controls:SymbolIcon Symbol="Settings" Width="16" Height="16"/>
-                </Button>
-              </StackPanel>
-              <StackPanel
-                          Margin="0 0 10 0"
-                          DockPanel.Dock="Right"
-                          Orientation="Horizontal"
-                          HorizontalAlignment="Right">
-                <Button
-                    Name="BtnShowDebugger"
-                    HorizontalAlignment="Right"
-                    Height="36"
-                    Width="36"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Command="{Binding ShowDebugger}"
-                    IsVisible="{Binding IsArtemisRunning}">
-                  <controls:SymbolIcon Symbol="View" Width="16" Height="16"/>
-                </Button>
-                <Button HorizontalAlignment="Right"
-                        Name="BtnRestart"
-                        Height="36"
-                        Width="36"
-                        Background="Transparent"
-                        Command="{Binding Restart}"
-                        BorderBrush="Transparent">
-                  <controls:SymbolIcon Symbol="RotateCounterClockwise" Width="16" Height="16"/>
-                </Button>
-              </StackPanel >
-            </DockPanel>
-          </Border>
-          <!-- Bottom command bar End -->
-        </Panel>
-      </Border>
-    </ExperimentalAcrylicBorder>
-  </Panel>
+			<DockPanel>
+				<!-- Flyout content Start -->
+				<Panel DockPanel.Dock="Top" Margin="0 0 0 0">
+					<Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
+						<Carousel.PageTransition>
+							<PageSlide Duration="0.15" Orientation="Horizontal" SlideInEasing="CircularEaseOut" SlideOutEasing="CircularEaseOut"/>
+						</Carousel.PageTransition>
+						<pages:ArtemisLightControl />
+						<pages:ArtemisDeviceToggles />
+						<pages:ArtemisCustomProfile />
+						<pages:ArtemisLauncher />
+					</Carousel>
+				</Panel>
+				<!-- Flyout content End-->
+			</DockPanel>
+			<!-- Bottom command bar Start -->
+			<Border CornerRadius="0 0 10 10"
+					BorderBrush="#414141"
+					BorderThickness="0"
+					ClipToBounds="True"
+					Background="Transparent"
+					VerticalAlignment="Bottom"
+					DockPanel.Dock="Bottom"
+					Height="48"
+					ZIndex="0">
+				<DockPanel Background="#40000000" Height="48">
+					<StackPanel
+						Margin="10 0 0 0"
+						DockPanel.Dock="Left"
+						Orientation="Horizontal"
+						HorizontalAlignment="Left"
+						Height="48">
+						<Button
+							HorizontalAlignment="Left"
+							Name="BtnHome"
+							Height="36"
+							Width="36"
+							Margin="0 0 0 0"
+							Background="Transparent"
+							BorderBrush="Transparent"
+							Command="{Binding GoHome}"
+							IsVisible="{Binding IsArtemisRunning}" >
+							<controls:SymbolIcon Symbol="Home" Width="16" Height="16"/>
+						</Button>
+						<Button HorizontalAlignment="Left"
+								Name="BtnWorkshop"
+								Height="36"
+								Width="36"
+								Margin="0 0 0 0"
+								Background="Transparent"
+								BorderBrush="Transparent"
+								Command="{Binding GoWorkshop}"
+								IsVisible="{Binding IsArtemisRunning}">
+							<controls:SymbolIcon Symbol="Share" Width="16" Height="16"/>
+						</Button>
+						<Button
+							Name="BtnShowSurfaceEditor"
+							HorizontalAlignment="Left"
+							Height="36"
+							Width="36"
+							Background="Transparent"
+							BorderBrush="Transparent"
+							Command="{Binding GoSurfaceEditor}"
+							IsVisible="{Binding IsArtemisRunning}">
+							<controls:SymbolIcon Symbol="Edit" Width="16" Height="16"/>
+						</Button>
+						<Button
+							Name="BtnShowSettings"
+							HorizontalAlignment="Left"
+							Height="36"
+							Width="36"
+							Background="Transparent"
+							BorderBrush="Transparent"
+							Command="{Binding GoSettings}"
+							IsVisible="{Binding IsArtemisRunning}">
+							<controls:SymbolIcon Symbol="Settings" Width="16" Height="16"/>
+						</Button>
+					</StackPanel>
+					<StackPanel
+								Margin="0 0 10 0"
+								DockPanel.Dock="Right"
+								Orientation="Horizontal"
+								HorizontalAlignment="Right">
+						<Button
+							Name="BtnShowDebugger"
+							HorizontalAlignment="Right"
+							Height="36"
+							Width="36"
+							Background="Transparent"
+							BorderBrush="Transparent"
+							Command="{Binding ShowDebugger}"
+							IsVisible="{Binding IsArtemisRunning}">
+							<controls:SymbolIcon Symbol="View" Width="16" Height="16"/>
+						</Button>
+						<Button HorizontalAlignment="Right"
+								Name="BtnRestart"
+								Height="36"
+								Width="36"
+								Background="Transparent"
+								Command="{Binding Restart}"
+								BorderBrush="Transparent">
+							<controls:SymbolIcon Symbol="RotateCounterClockwise" Width="16" Height="16"/>
+						</Button>
+					</StackPanel >
+				</DockPanel>
+			</Border>
+			<!-- Bottom command bar End -->
+		</Panel>
+	</Panel>
 </reactiveUi:ReactiveWindow>

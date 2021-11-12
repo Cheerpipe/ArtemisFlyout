@@ -96,7 +96,10 @@ namespace ArtemisFlyout.Screens
             if (!e.Pointer.IsPrimary) return;
 
             if (e.Source is Border)
-                if ((e.Source as Border).TemplatedParent is ComboBox)
+                if (((e.Source as Border).TemplatedParent is ComboBox) || ((e.Source as Border).TemplatedParent is ComboBoxItem))
+                    return;
+
+            if (e.Source is TextBlock)
                     return;
 
             isOnDrag = true;

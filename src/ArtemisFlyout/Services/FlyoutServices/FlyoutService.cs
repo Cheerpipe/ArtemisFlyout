@@ -14,13 +14,15 @@ namespace ArtemisFlyout.Services
     {
         public static FlyoutContainer FlyoutWindowInstance { get; private set; }
         private readonly IConfigurationService _configurationService;
+        private readonly IArtemisService _artemisService;
         private readonly IKernel _kernel;
         private bool _opening;
         private bool _closing;
 
-        public FlyoutService(IKernel kernel, IConfigurationService configurationService)
+        public FlyoutService(IKernel kernel, IConfigurationService configurationService, IArtemisService artemisService)
         {
             _configurationService = configurationService;
+            _artemisService = artemisService;
             _kernel = kernel;
         }
 
@@ -54,20 +56,26 @@ namespace ArtemisFlyout.Services
             FlyoutWindowInstance.SetWidth(newWidth);
         }
 
+        //TODO: Move ViewModel creation outside the Service
         private FlyoutContainer GetInstance()
         {
 
             FlyoutContainer flyoutInstance = _kernel.Get<FlyoutContainer>();
-            try
+            if (!_artemisService.IsRunning())
+            {
+                flyoutInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
+            }
+            else if (!_artemisService.IsJsonDatamodelPluginWorking() || !_artemisService.IsExtendedApiRestPluginWorking())
+
+            {
+                flyoutInstance.DataContext = Kernel.Get<ArtemisPluginPrerequisitesViewModel>();
+            }
+            else
             {
                 _configurationService.Load();
                 flyoutInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
             }
-            catch (ConnectException)
-            {
-
-                flyoutInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
-            }
+          
             return flyoutInstance;
         }
 
@@ -79,7 +87,7 @@ namespace ArtemisFlyout.Services
             await FlyoutWindowInstance.ShowAnimated();
             FlyoutWindowInstance.ViewModel?.GoCustomProfile();
             await Task.Run(() => { Task.Delay(300); });
-            FlyoutWindowInstance.ViewModel?.GoDevices();
+            FlyoutWindowInstance.ViewModel?.GoDevicesPage();
             await Task.Run(() => { Task.Delay(300); });
             await CloseAndRelease(false);
         }

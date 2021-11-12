@@ -57,6 +57,7 @@
 								<pages:ArtemisDeviceToggles />
 								<pages:ArtemisCustomProfile />
 								<pages:ArtemisLauncher />
+								<pages:ArtemisPluginPrerequisites />
 							</Carousel>
 						</Panel>
 						<!-- Flyout content End-->
@@ -144,7 +145,8 @@
 										Width="36"
 										Background="Transparent"
 										Command="{Binding Restart}"
-										BorderBrush="Transparent">
+										BorderBrush="Transparent"
+										IsVisible="{Binding IsArtemisRunning}">
 									<controls:SymbolIcon Symbol="RotateCounterClockwise" Width="16" Height="16"/>
 								</Button>
 							</StackPanel >

@@ -44,6 +44,9 @@
     <Compile Update="Pages\ArtemisDeviceToggles\ArtemisDeviceToggles.axaml.cs">
       <DependentUpon>ArtemisDeviceToggles.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Pages\ArtemisPluginPrerequisites\ArtemisPluginPrerequisites.axaml.cs">
+      <DependentUpon>ArtemisPluginPrerequisites.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Screens\FlyoutContainer\FlyoutContainer.axaml.cs">
       <DependentUpon>FlyoutContainer.axaml</DependentUpon>
     </Compile>

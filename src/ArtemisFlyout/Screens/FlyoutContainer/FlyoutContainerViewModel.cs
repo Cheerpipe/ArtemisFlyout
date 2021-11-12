@@ -39,11 +39,6 @@ namespace ArtemisFlyout.Screens
                     })
                     .DisposeWith(disposables);
             });
-
-            //Test artemis
-
-            if (!_artemisService.TestRestApi())
-                throw new ConnectException("Artemis REST API not available.");
         }
 
 
@@ -93,6 +88,13 @@ namespace ArtemisFlyout.Screens
             FlyoutWidth = 290;
         }
 
+        public void GoLaunchArtemisPage()
+        {
+            SetActivePageIndex(3);
+            FlyoutHeight = MainPageHeight;
+            FlyoutWidth = 290;
+        }
+
         public void GoCustomProfile()
         {
             SetActivePageIndex(2);
@@ -100,7 +102,7 @@ namespace ArtemisFlyout.Screens
             FlyoutWidth = 290;
         }
 
-        public void GoDevices()
+        public void GoDevicesPage()
         {
             SetActivePageIndex(1);
             FlyoutHeight = (46 * ArtemisDeviceTogglesViewModel.DeviceStates.Count) + 110;
@@ -110,31 +112,37 @@ namespace ArtemisFlyout.Screens
         public void Restart()
         {
             _artemisService.RestartArtemis();
+            _flyoutService.CloseAndRelease();
         }
 
         public void GoHome()
         {
             _artemisService.GoHome();
+            _flyoutService.CloseAndRelease();
         }
 
         public void GoWorkshop()
         {
             _artemisService.GoWorkshop();
+            _flyoutService.CloseAndRelease();
         }
 
         public void GoSurfaceEditor()
         {
             _artemisService.GoSurfaceEditor();
+            _flyoutService.CloseAndRelease();
         }
 
         public void ShowDebugger()
         {
             _artemisService.ShowDebugger();
+            _flyoutService.CloseAndRelease();
         }
 
         public void GoSettings()
         {
             _artemisService.GoSettings();
+            _flyoutService.CloseAndRelease();
         }
     }
 }

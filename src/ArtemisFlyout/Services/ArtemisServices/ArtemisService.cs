@@ -14,53 +14,41 @@ namespace ArtemisFlyout.Services
 {
     public class ArtemisService : IArtemisService
     {
-        private readonly IFlyoutService _flyoutService;
         private readonly IConfigurationService _configurationService;
         private readonly string _globalVariablesDatamodelName;
         private readonly IRestService _restService;
 
-        public ArtemisService(IFlyoutService flyoutService, IConfigurationService configurationService, IRestService restService)
+        public ArtemisService(IConfigurationService configurationService, IRestService restService)
         {
-            _flyoutService = flyoutService;
             _configurationService = configurationService;
             _globalVariablesDatamodelName = _configurationService.Get().DatamodelSettings.GlobalVariablesDatamodelName;
             _restService = restService;
         }
 
-        public bool TestRestApi()
-        {
-            return (_restService.Get("/profiles").IsSuccessful);
-        }
-
         public void GoHome()
         {
             _ = _restService.Post("/remote/bring-to-foreground");
-            _flyoutService.CloseAndRelease();
 
         }
 
         public void GoWorkshop()
         {
             _ = _restService.Post("/windows/show-workshop");
-            _flyoutService.CloseAndRelease();
         }
 
         public void GoSurfaceEditor()
         {
             _ = _restService.Post("/windows/show-surface-editor");
-            _flyoutService.CloseAndRelease();
         }
 
         public void ShowDebugger()
         {
             _ = _restService.Post("/windows/show-debugger");
-            _flyoutService.CloseAndRelease();
         }
 
         public void GoSettings()
         {
             _ = _restService.Post("/windows/show-settings");
-            _flyoutService.CloseAndRelease();
         }
 
         public async void RestartArtemis()
@@ -72,7 +60,6 @@ namespace ArtemisFlyout.Services
             if (result != ButtonResult.Yes)
                 return;
             _ = _restService.Post("/remote/restart");
-            await _flyoutService.CloseAndRelease();
         }
 
         public void SetBright(int value)
@@ -179,6 +166,38 @@ namespace ArtemisFlyout.Services
 
             return defaultColor;
         }
+
+        public bool IsRunning()
+        {
+            return Process.GetProcessesByName("Artemis.UI").Length > 0;
+        }
+
+        public bool IsExtendedApiRestPluginWorking()
+        {
+            try
+            {
+                var version = _restService.Get("/extended-rest-api/version").Content.Substring(2, 7);
+                return version == Constants.ExtendedRestApiPluginRequiredVersion;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool IsJsonDatamodelPluginWorking()
+        {
+            try
+            {
+                var version = _restService.Get("/json-datamodel/version").Content.Substring(2,7);
+                return version == Constants.JsonDataModelPluginRequiredVersion;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public event EventHandler<ProfileChangeEventArgs> ProfileChanged;
     }
 }

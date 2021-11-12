@@ -9,7 +9,9 @@ namespace ArtemisFlyout.Services
     //TODO: Split
     public interface IArtemisService
     {
-        bool TestRestApi();
+        bool IsExtendedApiRestPluginWorking();
+        bool IsJsonDatamodelPluginWorking();
+        bool IsRunning();
         void GoHome();
         void GoWorkshop();
         void GoSurfaceEditor();
@@ -28,8 +30,6 @@ namespace ArtemisFlyout.Services
         void Launch();
         void SetColor(string colorName, Color color);
         Color GetColor(string colorName, Color defaultColor);
-
-
         event EventHandler<ProfileChangeEventArgs> ProfileChanged;
     }
 }

@@ -28,6 +28,7 @@
 	<reactiveUi:ReactiveWindow.Resources>
 		<converters:SubtractionValueConverter x:Key="SubtractionConverter"/>
 	</reactiveUi:ReactiveWindow.Resources>
+
 	<Panel
 	  HorizontalAlignment="Left"
 	  Name="FlyoutPanelContainer"
@@ -139,9 +140,9 @@
 									BorderBrush="Transparent"
 									Command="{Binding ShowDebugger}"
 									IsVisible="{Binding IsArtemisRunning}">
-									<avalonia:MaterialIcon	
-										Kind="BugOutline"	
-										Width="16"	
+									<avalonia:MaterialIcon
+										Kind="BugOutline"
+										Width="16"
 										Height="16"/>
 								</Button>
 								<controls:Button HorizontalAlignment="Right"
@@ -153,8 +154,20 @@
 										IsVisible="{Binding IsArtemisRunning}">
 									<controls:SymbolIcon Symbol="RotateCounterClockwise" Width="16" Height="16"/>
 									<controls:Button.Flyout>
-										<controls:MenuFlyout Placement="TopEdgeAlignedLeft">
-											<controls:MenuFlyoutItem Text="Restart" Icon="Accept" Command="{Binding Restart}"/>
+										<controls:MenuFlyout Placement="TopEdgeAlignedRight" >
+											<controls:MenuFlyoutItem Text="Restart" Icon="Accept" Command="{Binding Restart}" Classes="CancelButton">
+												<controls:MenuFlyoutItem.Styles>
+													<Style Selector="controls|MenuFlyoutItem" >
+														<Setter Property="Background" Value="#FFFF0000"/>
+													</Style>
+													<Style Selector="controls|MenuFlyoutItem:pointerover /template/ Border#LayoutRoot" >
+														<Setter Property="Background" Value="#FFFF5050"/>
+													</Style>
+													<Style Selector="controls|MenuFlyoutItem:pressed /template/ Border#LayoutRoot" >
+														<Setter Property="Background" Value="#FCCF0000"/>
+													</Style>
+												</controls:MenuFlyoutItem.Styles>
+											</controls:MenuFlyoutItem>
 											<controls:MenuFlyoutItem Text="Cancel" Icon="Cancel" />
 										</controls:MenuFlyout>
 									</controls:Button.Flyout>

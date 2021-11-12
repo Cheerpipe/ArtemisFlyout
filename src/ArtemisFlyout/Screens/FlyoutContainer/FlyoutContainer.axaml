@@ -5,6 +5,7 @@
                                 xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:screens="clr-namespace:ArtemisFlyout.Screens"
+								xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
                                 xmlns:converters="clr-namespace:ArtemisFlyout.Converters"
                                 xmlns:pages="clr-namespace:ArtemisFlyout.Pages"
                                 mc:Ignorable="d" d:DesignWidth="290" d:DesignHeight="530"
@@ -138,19 +139,27 @@
 									BorderBrush="Transparent"
 									Command="{Binding ShowDebugger}"
 									IsVisible="{Binding IsArtemisRunning}">
-									<controls:SymbolIcon Symbol="View" Width="16" Height="16"/>
+									<avalonia:MaterialIcon	
+										Kind="BugOutline"	
+										Width="16"	
+										Height="16"/>
 								</Button>
-								<Button HorizontalAlignment="Right"
+								<controls:Button HorizontalAlignment="Right"
 										Name="BtnRestart"
 										Height="36"
 										Width="36"
 										Background="Transparent"
-										Command="{Binding Restart}"
 										BorderBrush="Transparent"
 										IsVisible="{Binding IsArtemisRunning}">
 									<controls:SymbolIcon Symbol="RotateCounterClockwise" Width="16" Height="16"/>
-								</Button>
-							</StackPanel >
+									<controls:Button.Flyout>
+										<controls:MenuFlyout Placement="TopEdgeAlignedLeft">
+											<controls:MenuFlyoutItem Text="Restart" Icon="Accept" Command="{Binding Restart}"/>
+											<controls:MenuFlyoutItem Text="Cancel" Icon="Cancel" />
+										</controls:MenuFlyout>
+									</controls:Button.Flyout>
+								</controls:Button>
+							</StackPanel>
 						</DockPanel>
 					</Border>
 					<!-- Bottom command bar End -->

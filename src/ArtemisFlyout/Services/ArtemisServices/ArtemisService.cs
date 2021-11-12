@@ -6,7 +6,6 @@ using ArtemisFlyout.Events;
 using ArtemisFlyout.Models;
 using ArtemisFlyout.Utiles;
 using Avalonia.Media;
-using MessageBox.Avalonia.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -53,12 +52,6 @@ namespace ArtemisFlyout.Services
 
         public async void RestartArtemis()
         {
-            var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow("Artemis", "Are you sure you want restart Artemis?", ButtonEnum.YesNo, Icon.Warning);
-            var result = await messageBoxStandardWindow.Show();
-
-            if (result != ButtonResult.Yes)
-                return;
             _ = _restService.Post("/remote/restart");
         }
 

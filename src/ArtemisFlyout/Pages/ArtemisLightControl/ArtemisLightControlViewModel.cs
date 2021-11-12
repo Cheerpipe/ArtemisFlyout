@@ -24,7 +24,7 @@ namespace ArtemisFlyout.Pages
             _devicesStatesDatamodelName = configurationService1.Get().DatamodelSettings.DevicesStatesDatamodelName;
             _globalVariablesDatamodelName= configurationService1.Get().DatamodelSettings.GlobalVariablesDatamodelName;
             _quickProfile = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", false);
-            _allDevices = _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", false);
+            _allDevices = _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", true);
 
             this.WhenActivated(disposables =>
             {
@@ -57,7 +57,7 @@ namespace ArtemisFlyout.Pages
         private bool _allDevices;
         public bool AllDevices
         {
-            get => _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", false);
+            get => _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", true);
             set
             {
                 _artemisService.SetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", value);
@@ -97,7 +97,7 @@ namespace ArtemisFlyout.Pages
 
         public int Speed
         {
-            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalSpeed", 0);
+            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalSpeed", 100);
             set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalSpeed", value);
         }
 

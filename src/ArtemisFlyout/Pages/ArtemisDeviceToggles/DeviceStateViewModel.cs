@@ -22,7 +22,7 @@ namespace ArtemisFlyout.Pages
 
         public bool Activated
         {
-            get => _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, Condition, false);
+            get => _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, Condition, true);
             set
             {
                 _artemisService.SetJsonDataModelValue(_devicesStatesDatamodelName, Condition, value);

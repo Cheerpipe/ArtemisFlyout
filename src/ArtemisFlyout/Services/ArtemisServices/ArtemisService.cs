@@ -69,7 +69,7 @@ namespace ArtemisFlyout.Services
 
         public int GetBright()
         {
-            return GetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalBrightness", 0);
+            return GetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalBrightness", 100);
         }
 
         public void SetSpeed(int value)

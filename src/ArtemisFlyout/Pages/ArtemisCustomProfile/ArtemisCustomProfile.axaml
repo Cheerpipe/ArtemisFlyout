@@ -11,7 +11,7 @@
   <StackPanel> 
     <Button
         Name="BtnBack"
-        Margin="0 10 0 0"
+        Margin="10 10 0 0"
         Width="36"
         Height="36"
         Background="Transparent"

@@ -22,17 +22,18 @@
                                 Background="Transparent"
                                 UseLayoutRounding="False"
                                 CornerRadius="10 10 10 10"
-                                Height="{Binding FlyoutHeight}"
-                                Width="{Binding FlyoutWidth}"
+                                Height="{Binding FlyoutWindowHeight}"
+                                Width="{Binding FlyoutWindowWidth}"
                                 x:Name="FlyoutWindow">
 	<reactiveUi:ReactiveWindow.Resources>
 		<converters:SubtractionValueConverter x:Key="SubtractionConverter"/>
 	</reactiveUi:ReactiveWindow.Resources>
-
 	<Panel
 	  HorizontalAlignment="Left"
+	  VerticalAlignment="Top"
 	  Name="FlyoutPanelContainer"
-	  Width="{Binding Path=Width, ElementName=FlyoutWindow, Converter={StaticResource SubtractionConverter}, ConverterParameter=12}">
+	  Width="{Binding FlyoutWidth}"
+	  Height="{Binding FlyoutHeight}">
 		<ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
 			<ExperimentalAcrylicBorder.Material>
 				<ExperimentalAcrylicMaterial
@@ -53,7 +54,7 @@
 						<Panel DockPanel.Dock="Top" Margin="0 0 0 0">
 							<Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
 								<Carousel.PageTransition>
-									<PageSlide Duration="0.15" Orientation="Horizontal" SlideInEasing="CircularEaseOut" SlideOutEasing="CircularEaseOut"/>
+									<PageSlide Duration="0.1" Orientation="Horizontal" />
 								</Carousel.PageTransition>
 								<pages:ArtemisLightControl />
 								<pages:ArtemisDeviceToggles />

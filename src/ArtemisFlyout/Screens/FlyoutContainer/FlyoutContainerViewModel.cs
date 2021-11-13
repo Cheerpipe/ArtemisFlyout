@@ -39,8 +39,10 @@ namespace ArtemisFlyout.Screens
                     })
                     .DisposeWith(disposables);
             });
-        }
 
+            FlyoutWindowWidth = MainPageWidth;
+            FlyoutWindowHeight = MainPageHeight;
+        }
 
         public ArtemisLightControlViewModel ArtemisLightControlViewModel { get; }
 
@@ -54,61 +56,87 @@ namespace ArtemisFlyout.Screens
             set => this.RaiseAndSetIfChanged(ref _activePageIndex, value);
         }
 
-        public bool CommandBarVisibleState => true;
-
-        private double _flyoutHeight = MainPageHeight;
-        public double FlyoutHeight
+        private double _flyoutWindowWidth;
+        public double FlyoutWindowWidth
         {
-            get => _flyoutHeight;
+            get => _flyoutWindowWidth;
             set
             {
-                _flyoutHeight = value;
-                _flyoutService.SetHeight(value);
+                _flyoutService.SetWidth(value);
+                _flyoutWindowWidth = value;
+                FlyoutWidth = _flyoutWindowWidth - FlyoutSpacing;
             }
         }
 
-        private double _flyoutWidth = MainPageWidth;
+        private double _flyoutWidth;
         public double FlyoutWidth
         {
             get => _flyoutWidth;
             set
             {
-                _flyoutWidth = value;
-                _flyoutService.SetWidth(value);
+                this.RaiseAndSetIfChanged(ref _flyoutWidth, value);
             }
         }
+
+
+        private double _flyoutWindowHeight;
+        public double FlyoutWindowHeight
+        {
+            get => _flyoutWindowHeight;
+            set
+            {
+                _flyoutService.SetHeight(value);
+                _flyoutWindowHeight = value;
+                FlyoutHeight = _flyoutWindowHeight - FlyoutSpacing;
+            }
+        }
+
+        private double _flyoutHeight;
+        public double FlyoutHeight
+        {
+            get => _flyoutHeight;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _flyoutHeight, value);
+            }
+        }
+
+        public bool CommandBarVisibleState => true;
+
 
         public void SetActivePageIndex(int newPageIndex)
         {
             ActivePageindex = newPageIndex;
         }
 
+        public int FlyoutSpacing => 12;
+
         public void GoMainPage()
         {
             SetActivePageIndex(0);
-            FlyoutHeight = MainPageHeight;
-            FlyoutWidth = 290;
+            FlyoutWindowHeight = MainPageHeight;
+            FlyoutWindowWidth = 290;
         }
 
         public void GoLaunchArtemisPage()
         {
             SetActivePageIndex(3);
-            FlyoutHeight = MainPageHeight;
-            FlyoutWidth = 290;
+            FlyoutWindowHeight = MainPageHeight;
+            FlyoutWindowWidth = 290;
         }
 
         public void GoCustomProfile()
         {
             SetActivePageIndex(2);
-            FlyoutHeight = (65 * ArtemisCustomProfileViewModel.Colors.Count) + 130;
-            FlyoutWidth = 290;
+            FlyoutWindowHeight = (65 * ArtemisCustomProfileViewModel.Colors.Count) + 130;
+            FlyoutWindowWidth = 290;
         }
 
         public void GoDevicesPage()
         {
             SetActivePageIndex(1);
-            FlyoutHeight = (46 * ArtemisDeviceTogglesViewModel.DeviceStates.Count) + 110;
-            FlyoutWidth = 330;
+            FlyoutWindowHeight = (46 * ArtemisDeviceTogglesViewModel.DeviceStates.Count) + 110;
+            FlyoutWindowWidth = 330;
         }
 
         public void Restart()

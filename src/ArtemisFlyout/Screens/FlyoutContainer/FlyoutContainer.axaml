@@ -14,7 +14,7 @@
                                 ShowInTaskbar="false"
                                 CanResize="False"
                                 Topmost="True"
-                                SystemDecorations="None"
+                                SystemDecorations="BorderOnly"
                                 TransparencyLevelHint="Transparent"
                                 ExtendClientAreaToDecorationsHint="True"
                                 ExtendClientAreaChromeHints="NoChrome"

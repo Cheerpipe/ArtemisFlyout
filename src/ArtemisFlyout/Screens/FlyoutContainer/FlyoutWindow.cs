@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Animation;
@@ -29,7 +30,7 @@ namespace ArtemisFlyout.Screens
             _screenHeight = Screens.Primary.WorkingArea.Height;
         }
 
-        public async Task ShowAnimated()
+        public async Task ShowAnimated(bool isPreload = false)
         {
 
 
@@ -41,6 +42,10 @@ namespace ArtemisFlyout.Screens
             PropertyChanged += FlyoutWindow_PropertyChanged;
 
             WindowStartupLocation = WindowStartupLocation.Manual;
+            if (isPreload)
+            {
+                HorizontalPosition = Screens.All.Sum(s => s.WorkingArea.Width);
+            }
 
             Show();
 
@@ -100,7 +105,7 @@ namespace ArtemisFlyout.Screens
                     return;
 
             if (e.Source is TextBlock)
-                    return;
+                return;
 
             isOnDrag = true;
         }

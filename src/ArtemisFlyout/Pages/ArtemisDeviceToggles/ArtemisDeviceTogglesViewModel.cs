@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reactive.Disposables;
 using ArtemisFlyout.Models.Configuration;
 using ArtemisFlyout.Services;
@@ -16,7 +17,6 @@ namespace ArtemisFlyout.Pages
         public ArtemisDeviceTogglesViewModel(IConfigurationService configurationService)
         {
              _devicesStatesSettings = configurationService.Get().DevicesStatesSettings;
-
             this.WhenActivated(disposables =>
             {
                 Disposable

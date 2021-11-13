@@ -75,20 +75,21 @@ namespace ArtemisFlyout.Services
                 _configurationService.Load();
                 flyoutInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
             }
-          
+
             return flyoutInstance;
         }
 
-        public async void Preload()
+        public async Task Preload()
         {
             if (FlyoutWindowInstance != null) return;
             FlyoutWindowInstance = GetInstance();
             FlyoutWindowInstance.WindowState = WindowState.Minimized;
-            await FlyoutWindowInstance.ShowAnimated();
+            await FlyoutWindowInstance?.ShowAnimated(true);
+            await Task.Delay(200);
             FlyoutWindowInstance.ViewModel?.GoCustomProfile();
-            await Task.Run(() => { Task.Delay(300); });
+            await Task.Delay(200);
             FlyoutWindowInstance.ViewModel?.GoDevicesPage();
-            await Task.Run(() => { Task.Delay(300); });
+            await Task.Delay(200);
             await CloseAndRelease(false);
         }
 
@@ -111,11 +112,11 @@ namespace ArtemisFlyout.Services
             _closing = true;
 
             if (animate)
-                await FlyoutWindowInstance.CloseAnimated();
+                await FlyoutWindowInstance?.CloseAnimated();
             else
-                FlyoutWindowInstance.Close();
+                FlyoutWindowInstance?.Close();
 
-            FlyoutWindowInstance.ViewModel?.GoMainPage();
+            FlyoutWindowInstance?.ViewModel?.GoMainPage();
 
             FlyoutWindowInstance = null;
             GC.Collect();

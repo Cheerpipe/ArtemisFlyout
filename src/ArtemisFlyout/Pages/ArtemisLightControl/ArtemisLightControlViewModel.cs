@@ -44,7 +44,7 @@ namespace ArtemisFlyout.Pages
         {
             get
             {
-                var currentProfileName = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Profile", "");
+                var currentProfileName = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Profile", "Default");
                 return _selectedProfile = _profiles.FirstOrDefault(p => p.Name == currentProfileName);
             }
             set

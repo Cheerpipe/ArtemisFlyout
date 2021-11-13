@@ -18,11 +18,12 @@ namespace ArtemisFlyout.Pages
             Condition = device.Condition;
             _artemisService = Kernel.Get<IArtemisService>();
             _devicesStatesDatamodelName = Kernel.Get<IConfigurationService>().Get().DatamodelSettings.DevicesStatesDatamodelName;
+            _activated= _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, Condition, true);
         }
 
         public bool Activated
         {
-            get => _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, Condition, true);
+            get => _activated;
             set
             {
                 _artemisService.SetJsonDataModelValue(_devicesStatesDatamodelName, Condition, value);

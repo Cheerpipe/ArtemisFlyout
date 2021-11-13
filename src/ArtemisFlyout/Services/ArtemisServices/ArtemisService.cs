@@ -112,6 +112,7 @@ namespace ArtemisFlyout.Services
             }
             catch (Exception)
             {
+                SetJsonDataModelValue<T>(dataModel, jsonPath, defaultValue);
                 return defaultValue;
             }
         }

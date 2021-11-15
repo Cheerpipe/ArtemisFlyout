@@ -50,7 +50,7 @@ namespace ArtemisFlyout.Services
             _ = _restService.Post("/windows/show-settings");
         }
 
-        public async void RestartArtemis()
+        public void RestartArtemis()
         {
             _ = _restService.Post("/remote/restart");
         }

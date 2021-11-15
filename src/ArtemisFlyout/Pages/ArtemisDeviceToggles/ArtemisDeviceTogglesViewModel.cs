@@ -74,10 +74,10 @@ namespace ArtemisFlyout.Pages
         {
             foreach (var dev in DeviceStates)
             {
-                if (!dev.Activated)
-                    return false;
+                if (dev.Activated)
+                    return true;
             }
-            return true;
+            return false;
         }
 
         public List<DeviceStateViewModel> DeviceStates

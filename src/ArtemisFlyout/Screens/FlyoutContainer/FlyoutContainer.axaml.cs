@@ -57,7 +57,7 @@ namespace ArtemisFlyout.Screens
             WindowStartupLocation = WindowStartupLocation.Manual;
             if (isPreload)
             {
-                HorizontalPosition = Screens.All.Sum(s => s.WorkingArea.Width);
+               HorizontalPosition = Screens.All.Sum(s => s.WorkingArea.Width);
             }
 
             Show();

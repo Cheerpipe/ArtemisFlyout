@@ -128,14 +128,14 @@ namespace ArtemisFlyout.Screens
         public void GoCustomProfile()
         {
             SetActivePageIndex(2);
-            FlyoutWindowHeight = (65 * ArtemisCustomProfileViewModel.Colors.Count) + 130;
+            FlyoutWindowHeight = ArtemisCustomProfileViewModel.CalculatedHeight;
             FlyoutWindowWidth = 290;
         }
 
         public void GoDevicesPage()
         {
             SetActivePageIndex(1);
-            FlyoutWindowHeight = (46 * ArtemisDeviceTogglesViewModel.DeviceStates.Count) + 110;
+            FlyoutWindowHeight = ArtemisDeviceTogglesViewModel.CalculatedHeight;
             FlyoutWindowWidth = 330;
         }
 

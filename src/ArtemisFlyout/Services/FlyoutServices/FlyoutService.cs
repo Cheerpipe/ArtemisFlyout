@@ -85,11 +85,11 @@ namespace ArtemisFlyout.Services
             FlyoutWindowInstance = GetInstance();
             FlyoutWindowInstance.WindowState = WindowState.Minimized;
             await FlyoutWindowInstance?.ShowAnimated(true);
-            await Task.Delay(200);
+            await Task.Delay(300);
             FlyoutWindowInstance.ViewModel?.GoCustomProfile();
-            await Task.Delay(200);
+            await Task.Delay(300);
             FlyoutWindowInstance.ViewModel?.GoDevicesPage();
-            await Task.Delay(200);
+            await Task.Delay(300);
             await CloseAndRelease(false);
         }
 

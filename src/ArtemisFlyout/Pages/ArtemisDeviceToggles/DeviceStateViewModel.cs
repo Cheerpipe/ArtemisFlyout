@@ -3,6 +3,7 @@ using ArtemisFlyout.Models.Configuration;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;
+using System;
 
 namespace ArtemisFlyout.Pages
 {
@@ -11,6 +12,8 @@ namespace ArtemisFlyout.Pages
         private readonly IArtemisService _artemisService;
         private readonly string _devicesStatesDatamodelName;
         private bool _activated;
+
+        public event EventHandler DeviceStateChanged;
 
         public DeviceStateViewModel(DeviceStateSetting device)
         {
@@ -28,6 +31,7 @@ namespace ArtemisFlyout.Pages
             {
                 _artemisService.SetJsonDataModelValue(_devicesStatesDatamodelName, Condition, value);
                 this.RaiseAndSetIfChanged(ref _activated, value);
+                DeviceStateChanged?.Invoke(this,new EventArgs());
             }
         }
         public string Name { get; set; }

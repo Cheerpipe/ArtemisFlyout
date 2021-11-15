@@ -29,5 +29,7 @@ namespace ArtemisFlyout.Pages
             });
         }
         public List<CustomProfileColorViewModel> Colors => _customProfileColors;
+
+        public double CalculatedHeight=> (65 * Colors.Count) + 130;
     }
 }

@@ -3,12 +3,14 @@
                                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                 xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-
                                 xmlns:controls="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:screens="clr-namespace:ArtemisFlyout.Screens"
                                 xmlns:customControls="clr-namespace:ArtemisFlyout.Controls"
                                 xmlns:models="clr-namespace:ArtemisFlyout.Models"
+								xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+								xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+								xmlns:ic="using:Avalonia.Behaviors"
                                 mc:Ignorable="d" d:DesignWidth="285" d:DesignHeight="480"
                                 x:Class="ArtemisFlyout.Pages.ArtemisLightControl"
                                 Background="Transparent"
@@ -129,6 +131,11 @@
 							Kind="Webcam"
 							Width="24"
 							Height="24"/>
+						<i:Interaction.Behaviors>
+							<ic:ButtonClickEventTriggerBehavior KeyModifiers="Shift">
+								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ForceWebcamSpecialMode}"/>
+							</ic:ButtonClickEventTriggerBehavior>
+						</i:Interaction.Behaviors>
 					</ToggleButton>
 					<TextBlock
 						HorizontalAlignment="Center"

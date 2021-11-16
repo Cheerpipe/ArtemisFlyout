@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using ArtemisFlyout.Models;
@@ -22,7 +21,7 @@ namespace ArtemisFlyout.Pages
             _artemisService = artemisService;
             var configurationService1 = configurationService;
             _devicesStatesDatamodelName = configurationService1.Get().DatamodelSettings.DevicesStatesDatamodelName;
-            _globalVariablesDatamodelName= configurationService1.Get().DatamodelSettings.GlobalVariablesDatamodelName;
+            _globalVariablesDatamodelName = configurationService1.Get().DatamodelSettings.GlobalVariablesDatamodelName;
             _quickProfile = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", false);
             _allDevices = _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", true);
 
@@ -54,6 +53,12 @@ namespace ArtemisFlyout.Pages
             }
         }
 
+        public void ForceWebcamSpecialMode()
+        {
+            bool state = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", true);
+            _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "WebcamForced", state);
+        }
+
         private bool _allDevices;
         public bool AllDevices
         {
@@ -65,10 +70,15 @@ namespace ArtemisFlyout.Pages
             }
         }
 
+
         public bool Webcam
         {
             get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", false);
-            set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", value);
+            set
+            {
+                _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", value);
+            }
+
         }
 
         private bool _quickProfile;

@@ -53,12 +53,6 @@ namespace ArtemisFlyout.Pages
             }
         }
 
-        public void ForceWebcamSpecialMode()
-        {
-            bool state = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", true);
-            _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "WebcamForced", state);
-        }
-
         private bool _allDevices;
         public bool AllDevices
         {
@@ -70,6 +64,12 @@ namespace ArtemisFlyout.Pages
             }
         }
 
+        public void ForceWebcamSpecialMode()
+        {
+            // Always disable forced mode if webcam mode if disabled
+            bool state = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", true);
+            _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "WebcamForced", state);
+        }
 
         public bool Webcam
         {
@@ -77,6 +77,10 @@ namespace ArtemisFlyout.Pages
             set
             {
                 _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", value);
+
+                // Always disable forced mode if webcam mode if disabled
+                if (!value)
+                    _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "WebcamForced", value);
             }
 
         }

@@ -83,6 +83,14 @@
 						Height="48"
 						HorizontalAlignment="Center"
 						IsChecked="{Binding ArtemisLightControlViewModel.AudioReactive}">
+						<i:Interaction.Behaviors>
+							<ic:PointerReleasedTriggerBehavior KeyModifiers="Shift">
+								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ToggleDeviceSettingsOverride}" CommandParameter="{Binding !$self.IsChecked}"/>
+							</ic:PointerReleasedTriggerBehavior>
+							<ic:PointerReleasedTriggerBehavior KeyModifiers="None">
+								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.DisableDeviceSettingsOverride}"/>
+							</ic:PointerReleasedTriggerBehavior>
+						</i:Interaction.Behaviors>
 						<avalonia:MaterialIcon
 							Kind="Equalizer"
 							Width="24"
@@ -105,6 +113,14 @@
 						Height="48"
 						HorizontalAlignment="Center"
 						IsChecked="{Binding ArtemisLightControlViewModel.Ambilight}">
+						<i:Interaction.Behaviors>
+							<ic:PointerReleasedTriggerBehavior KeyModifiers="Shift">
+								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ToggleDeviceSettingsOverride}" CommandParameter="{Binding !$self.IsChecked}"/>
+							</ic:PointerReleasedTriggerBehavior>
+							<ic:PointerReleasedTriggerBehavior KeyModifiers="None">
+								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.DisableDeviceSettingsOverride}"/>
+							</ic:PointerReleasedTriggerBehavior>
+						</i:Interaction.Behaviors>
 						<avalonia:MaterialIcon
 							Kind="MonitorMultiple"
 							Width="24"
@@ -126,15 +142,19 @@
 						Width="110"
 						Height="48"
 						HorizontalAlignment="Center"
-						IsChecked="{Binding ArtemisLightControlViewModel.Webcam}">
+						IsChecked="{Binding ArtemisLightControlViewModel.Webcam}"
+						Name="ButtonWebcam">
 						<avalonia:MaterialIcon
 							Kind="Webcam"
 							Width="24"
 							Height="24"/>
 						<i:Interaction.Behaviors>
-							<ic:ButtonClickEventTriggerBehavior KeyModifiers="Shift">
-								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ForceWebcamSpecialMode}"/>
-							</ic:ButtonClickEventTriggerBehavior>
+							<ic:PointerReleasedTriggerBehavior KeyModifiers="Shift">
+								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ToggleDeviceSettingsOverride}" CommandParameter="{Binding !$self.IsChecked}"/>
+							</ic:PointerReleasedTriggerBehavior>
+							<ic:PointerReleasedTriggerBehavior KeyModifiers="None">
+								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.DisableDeviceSettingsOverride}"/>
+							</ic:PointerReleasedTriggerBehavior>
 						</i:Interaction.Behaviors>
 					</ToggleButton>
 					<TextBlock

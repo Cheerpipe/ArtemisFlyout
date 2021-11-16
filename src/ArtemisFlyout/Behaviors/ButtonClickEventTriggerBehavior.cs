@@ -2,14 +2,14 @@
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactivity;
+using System.Diagnostics;
 
 namespace Avalonia.Behaviors
 {
-    public class ButtonClickEventTriggerBehavior : Trigger<Button>
+    public class PointerReleasedTriggerBehavior : Trigger<Button>
     {
-        private KeyModifiers _savedKeyModifiers = KeyModifiers.None;
         public static readonly StyledProperty<KeyModifiers> KeyModifiersProperty =
-            AvaloniaProperty.Register<ButtonClickEventTriggerBehavior, KeyModifiers>(nameof(KeyModifiers));
+            AvaloniaProperty.Register<PointerReleasedTriggerBehavior, KeyModifiers>(nameof(KeyModifiers));
 
 
         public KeyModifiers KeyModifiers
@@ -24,9 +24,16 @@ namespace Avalonia.Behaviors
 
             if (AssociatedObject is { })
             {
-                AssociatedObject.Click += AssociatedObject_OnClick;
-                AssociatedObject.AddHandler(InputElement.KeyDownEvent, Button_OnKeyDown, RoutingStrategies.Tunnel);
-                AssociatedObject.AddHandler(InputElement.KeyUpEvent, Button_OnKeyUp, RoutingStrategies.Tunnel);
+                AssociatedObject.AddHandler(InputElement.PointerPressedEvent, Button_PointerReleased, RoutingStrategies.Tunnel);
+            }
+        }
+
+
+        private void Button_PointerReleased(object sender, PointerPressedEventArgs e)
+        {
+            if (AssociatedObject is { } && KeyModifiers == e.KeyModifiers)
+            {
+                Interaction.ExecuteActions(AssociatedObject, Actions, e);
             }
         }
 
@@ -36,28 +43,8 @@ namespace Avalonia.Behaviors
 
             if (AssociatedObject is { })
             {
-                AssociatedObject.Click -= AssociatedObject_OnClick;
-                AssociatedObject.RemoveHandler(InputElement.KeyDownEvent, Button_OnKeyDown);
-                AssociatedObject.RemoveHandler(InputElement.KeyUpEvent, Button_OnKeyUp);
+                AssociatedObject.RemoveHandler(InputElement.PointerReleasedEvent, Button_PointerReleased);
             }
-        }
-
-        private void AssociatedObject_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (AssociatedObject is { } && KeyModifiers == _savedKeyModifiers)
-            {
-                Interaction.ExecuteActions(AssociatedObject, Actions, e);
-            }
-        }
-
-        private void Button_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            _savedKeyModifiers = e.KeyModifiers;
-        }
-
-        private void Button_OnKeyUp(object sender, KeyEventArgs e)
-        {
-            _savedKeyModifiers = KeyModifiers.None;
         }
     }
 }

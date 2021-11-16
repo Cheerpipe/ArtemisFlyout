@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using ArtemisFlyout.Models;
@@ -64,11 +65,15 @@ namespace ArtemisFlyout.Pages
             }
         }
 
-        public void ForceWebcamSpecialMode()
+        public async void ToggleDeviceSettingsOverride(bool state)
         {
-            // Always disable forced mode if webcam mode if disabled
-            bool state = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", true);
-            _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "WebcamForced", state);
+            await System.Threading.Tasks.Task.Delay(state ? 200 : 0); // Give time to the special profile to start up but disable override as son as the user click the button.
+            _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "DeviceSettingsOverride", state);
+        }
+
+        public void DisableDeviceSettingsOverride()
+        {
+            ToggleDeviceSettingsOverride(false);
         }
 
         public bool Webcam
@@ -77,10 +82,6 @@ namespace ArtemisFlyout.Pages
             set
             {
                 _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", value);
-
-                // Always disable forced mode if webcam mode if disabled
-                if (!value)
-                    _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "WebcamForced", value);
             }
 
         }

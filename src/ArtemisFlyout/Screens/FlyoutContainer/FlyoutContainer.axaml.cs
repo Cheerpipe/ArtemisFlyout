@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -57,7 +58,7 @@ namespace ArtemisFlyout.Screens
             WindowStartupLocation = WindowStartupLocation.Manual;
             if (isPreload)
             {
-               HorizontalPosition = Screens.All.Sum(s => s.WorkingArea.Width);
+                HorizontalPosition = Screens.All.Sum(s => s.WorkingArea.Width);
             }
 
             Show();
@@ -86,6 +87,7 @@ namespace ArtemisFlyout.Screens
         }
 
         double previousPosition = 0;
+        double currentPosition = 0;
         private void FlyoutPanelContainer_PointerMoved(object sender, PointerEventArgs e)
         {
             if (!isOnDrag)
@@ -96,7 +98,7 @@ namespace ArtemisFlyout.Screens
 
             if (e.Pointer.IsPrimary)
             {
-                double currentPosition = e.GetPosition(this).X;
+                currentPosition = e.GetPosition(this).X;
                 double delta = previousPosition - currentPosition;
                 previousPosition = currentPosition;
 
@@ -119,6 +121,7 @@ namespace ArtemisFlyout.Screens
             if (e.Source is TextBlock)
                 return;
 
+            previousPosition = e.GetPosition(this).X;
             isOnDrag = true;
         }
 

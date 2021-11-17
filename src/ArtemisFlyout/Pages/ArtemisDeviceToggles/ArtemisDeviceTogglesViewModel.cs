@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
-using ArtemisFlyout.Models.Configuration;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;
@@ -11,18 +11,16 @@ namespace ArtemisFlyout.Pages
 
     public class ArtemisDeviceTogglesViewModel : ViewModelBase
     {
-        private readonly List<DeviceStateSetting> _devicesStatesSettings;
         private List<DeviceStateViewModel> _devicesStates;
 
         public ArtemisDeviceTogglesViewModel(IConfigurationService configurationService)
         {
-            _devicesStatesSettings = configurationService.Get().DevicesStatesSettings;
+            var devicesStatesSettings = configurationService.Get().DevicesStatesSettings;
 
-            _devicesStates = new();
+            _devicesStates = new List<DeviceStateViewModel>();
 
-            foreach (var deviceState in _devicesStatesSettings)
+            foreach (var deviceStateVm in devicesStatesSettings.Select(deviceState => new DeviceStateViewModel(deviceState)))
             {
-                var deviceStateVm = new DeviceStateViewModel(deviceState);
                 deviceStateVm.DeviceStateChanged += DevStateVM_DeviceStateChanged;
                 _devicesStates.Add(deviceStateVm);
             }
@@ -40,7 +38,7 @@ namespace ArtemisFlyout.Pages
 
         private void DevStateVM_DeviceStateChanged(object sender, EventArgs e)
         {
-            this.RaisePropertyChanged("All");
+            this.RaisePropertyChanged(nameof(All));
         }
 
         public double CalculatedHeight => (46 * (DeviceStates.Count + 1)) + 150;
@@ -49,18 +47,13 @@ namespace ArtemisFlyout.Pages
 
         public bool All
         {
-            get
-            {
-                return GetAllTogglesState();
-            }
+            get => GetAllTogglesState();
             set
             {
                 SetAllTogglesStates(value);
                 AllStateChanged?.Invoke(this, new EventArgs());
             }
         }
-
-
 
         private void SetAllTogglesStates(bool state)
         {
@@ -72,20 +65,9 @@ namespace ArtemisFlyout.Pages
 
         private bool GetAllTogglesState()
         {
-            foreach (var dev in DeviceStates)
-            {
-                if (dev.Activated)
-                    return true;
-            }
-            return false;
+            return DeviceStates.Any(dev => dev.Activated);
         }
 
-        public List<DeviceStateViewModel> DeviceStates
-        {
-            get
-            {
-                return _devicesStates;
-            }
-        }
+        public List<DeviceStateViewModel> DeviceStates => _devicesStates;
     }
 }

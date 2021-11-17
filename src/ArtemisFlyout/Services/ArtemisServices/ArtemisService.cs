@@ -94,7 +94,7 @@ namespace ArtemisFlyout.Services
             // Create Root and Property
             if (string.IsNullOrEmpty(propertyJson))
             {
-                SetJsonDataModelValue<T>(dataModel, jsonPath, defaultValue);
+                SetJsonDataModelValue(dataModel, jsonPath, defaultValue);
                 return defaultValue;
             }
 
@@ -104,7 +104,7 @@ namespace ArtemisFlyout.Services
                 JToken token = responseObject.SelectToken(jsonPath);
                 if (token == null)
                 {
-                    SetJsonDataModelValue<T>(dataModel, jsonPath, defaultValue);
+                    SetJsonDataModelValue(dataModel, jsonPath, defaultValue);
                     return defaultValue;
                 }
 
@@ -112,7 +112,7 @@ namespace ArtemisFlyout.Services
             }
             catch (Exception)
             {
-                SetJsonDataModelValue<T>(dataModel, jsonPath, defaultValue);
+                SetJsonDataModelValue(dataModel, jsonPath, defaultValue);
                 return defaultValue;
             }
         }

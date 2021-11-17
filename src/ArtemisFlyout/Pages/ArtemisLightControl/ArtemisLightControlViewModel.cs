@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using ArtemisFlyout.Models;
@@ -76,12 +75,12 @@ namespace ArtemisFlyout.Pages
             ToggleDeviceSettingsOverride(false);
         }
 
-        public bool Webcam
+        public bool Meeting
         {
-            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", false);
+            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Meeting", false);
             set
             {
-                _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Webcam", value);
+                _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Meeting", value);
             }
 
         }

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using ArtemisFlyout.IoC;
 using ArtemisFlyout.Pages;
 using ArtemisFlyout.Screens;
 using Avalonia.Controls;
 using Ninject;
-using Tmds.DBus;
 
 namespace ArtemisFlyout.Services
 {
@@ -112,7 +110,7 @@ namespace ArtemisFlyout.Services
             _closing = true;
 
             if (animate)
-                await FlyoutWindowInstance?.CloseAnimated();
+                await FlyoutWindowInstance?.CloseAnimated()!;
             else
                 FlyoutWindowInstance?.Close();
 

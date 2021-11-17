@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
 using ArtemisFlyout.Services;
@@ -36,7 +35,7 @@ namespace ArtemisFlyout.Pages
 
         private void CustomProfileColorViewModel_ProfileColorChanged(object sender, System.EventArgs e)
         {
-            this.RaisePropertyChanged("PreviewColor");
+            this.RaisePropertyChanged(nameof(PreviewColor));
         }
 
         public List<CustomProfileColorViewModel> ProfileColors => _customProfileColors;

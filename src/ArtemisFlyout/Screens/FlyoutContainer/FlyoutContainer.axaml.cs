@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -39,19 +38,19 @@ namespace ArtemisFlyout.Screens
         private readonly int _screenHeight;
         private readonly int _screenWidth;
 
-        public int RevealAnimationDelay { get; set; } = 250;
-        public int ResizeAnimationDelay { get; set; } = 250;
+        public int RevealAnimationDelay { get; set; }
+        public int ResizeAnimationDelay { get; set; }
 
-        Panel FlyoutPanelContainer;
+        Panel _flyoutPanelContainer;
 
         public async Task ShowAnimated(bool isPreload = false)
         {
 
 
-            FlyoutPanelContainer = this.Find<Panel>("FlyoutPanelContainer");
-            FlyoutPanelContainer.PointerPressed += FlyoutPanelContainer_PointerPressed;
-            FlyoutPanelContainer.PointerReleased += FlyoutPanelContainer_PointerReleased;
-            FlyoutPanelContainer.PointerMoved += FlyoutPanelContainer_PointerMoved;
+            _flyoutPanelContainer = this.Find<Panel>("FlyoutPanelContainer");
+            _flyoutPanelContainer.PointerPressed += FlyoutPanelContainer_PointerPressed;
+            _flyoutPanelContainer.PointerReleased += FlyoutPanelContainer_PointerReleased;
+            _flyoutPanelContainer.PointerMoved += FlyoutPanelContainer_PointerMoved;
 
             PropertyChanged += FlyoutWindow_PropertyChanged;
 
@@ -78,51 +77,52 @@ namespace ArtemisFlyout.Screens
         #region Drag to move
         private async void FlyoutPanelContainer_PointerReleased(object sender, PointerReleasedEventArgs e)
         {
-            isOnDrag = false;
+            _isOnDrag = false;
 
-            if (HorizontalPosition >= (this.Width + ViewModel.FlyoutSpacing) / 2)
+            if (HorizontalPosition >= (this.Width + ViewModel!.FlyoutSpacing) / 2)
                 await CloseAnimated(RevealAnimationDelay * 0.25d);
             else
                 HorizontalPosition = 0;
         }
 
-        double previousPosition = 0;
-        double currentPosition = 0;
+        private double _previousPosition;
+        private double _currentPosition;
         private void FlyoutPanelContainer_PointerMoved(object sender, PointerEventArgs e)
         {
-            if (!isOnDrag)
+            if (!_isOnDrag)
             {
-                previousPosition = e.GetPosition(this).X;
+                _previousPosition = e.GetPosition(this).X;
                 return;
             }
 
             if (e.Pointer.IsPrimary)
             {
-                currentPosition = e.GetPosition(this).X;
-                double delta = previousPosition - currentPosition;
-                previousPosition = currentPosition;
+                _currentPosition = e.GetPosition(this).X;
+                double delta = _previousPosition - _currentPosition;
+                _previousPosition = _currentPosition;
 
-                if ((currentPosition < 0) || (HorizontalPosition <= 0 && delta > 0))
+                if ((_currentPosition < 0) || (HorizontalPosition <= 0 && delta > 0))
                     return;
                 HorizontalPosition = HorizontalPosition - (int)delta;
             }
 
         }
 
-        bool isOnDrag = false;
+        private bool _isOnDrag;
         private void FlyoutPanelContainer_PointerPressed(object sender, PointerPressedEventArgs e)
         {
             if (!e.Pointer.IsPrimary) return;
 
-            if (e.Source is Border)
-                if (((e.Source as Border).TemplatedParent is ComboBox) || ((e.Source as Border).TemplatedParent is ComboBoxItem))
+            switch (e.Source)
+            {
+                case Border border when (border.TemplatedParent is ComboBox) || (border.TemplatedParent is ComboBoxItem):
+                case TextBlock:
                     return;
-
-            if (e.Source is TextBlock)
-                return;
-
-            previousPosition = e.GetPosition(this).X;
-            isOnDrag = true;
+                default:
+                    _previousPosition = e.GetPosition(this).X;
+                    _isOnDrag = true;
+                    break;
+            }
         }
 
         #endregion

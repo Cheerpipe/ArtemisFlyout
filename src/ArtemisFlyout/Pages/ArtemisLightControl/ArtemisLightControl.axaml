@@ -178,8 +178,8 @@
 						Width="110"
 						Height="48"
 						HorizontalAlignment="Center"
-						IsChecked="{Binding ArtemisLightControlViewModel.Webcam}"
-						Name="ButtonWebcam">
+						IsChecked="{Binding ArtemisLightControlViewModel.Meeting}"
+						Name="ButtonMeeting">
 						<avalonia:MaterialIcon
 							Kind="Webcam"
 							Width="24"
@@ -197,7 +197,7 @@
 						HorizontalAlignment="Center"
 						Padding="0 5 0 0"
 						FontSize="12">
-						Webcam
+                        Meeting
 					</TextBlock>
 				</StackPanel>
 				<StackPanel

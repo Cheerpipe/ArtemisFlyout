@@ -3,7 +3,6 @@ using ArtemisFlyout.Pages;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
 using ReactiveUI;
-using Tmds.DBus;
 
 namespace ArtemisFlyout.Screens
 {

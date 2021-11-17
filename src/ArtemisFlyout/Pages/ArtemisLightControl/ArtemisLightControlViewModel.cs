@@ -11,9 +11,10 @@ namespace ArtemisFlyout.Pages
     public class ArtemisLightControlViewModel : ViewModelBase
     {
         private readonly IArtemisService _artemisService;
-        private List<Profile> _profiles;
         private readonly string _devicesStatesDatamodelName;
         private readonly string _globalVariablesDatamodelName;
+        private readonly string _ambientProfileCategoryName;
+        private List<Profile> _profiles;
         private Profile _selectedProfile;
 
         public ArtemisLightControlViewModel(IArtemisService artemisService, IConfigurationService configurationService)
@@ -22,6 +23,7 @@ namespace ArtemisFlyout.Pages
             var configurationService1 = configurationService;
             _devicesStatesDatamodelName = configurationService1.Get().DatamodelSettings.DevicesStatesDatamodelName;
             _globalVariablesDatamodelName = configurationService1.Get().DatamodelSettings.GlobalVariablesDatamodelName;
+            _ambientProfileCategoryName = configurationService1.Get().DatamodelSettings.AmbientProfileCategoryName;
             _quickProfile = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", false);
             _allDevices = _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", true);
 
@@ -37,7 +39,7 @@ namespace ArtemisFlyout.Pages
             set => _artemisService.SetBright(value);
         }
 
-        public List<Profile> Profiles => _profiles = _artemisService.GetProfiles("Ambient");
+        public List<Profile> Profiles => _profiles = _artemisService.GetProfiles(_ambientProfileCategoryName);
 
         public Profile SelectedProfile
         {

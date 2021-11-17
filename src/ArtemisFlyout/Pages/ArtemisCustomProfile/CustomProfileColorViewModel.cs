@@ -5,6 +5,7 @@ using ArtemisFlyout.Utiles;
 using ArtemisFlyout.ViewModels;
 using Avalonia.Media;
 using ReactiveUI;
+using System;
 
 namespace ArtemisFlyout.Pages
 {
@@ -14,11 +15,12 @@ namespace ArtemisFlyout.Pages
         private readonly string _customProfileColorsDatamodelName;
         private Color _color;
 
-        public CustomProfileColorViewModel(CustomProfileColorSetting device)
+        public CustomProfileColorViewModel(CustomProfileColorSetting profileColor)
         {
             _artemisService = Kernel.Get<IArtemisService>();
-            Name = device.Name;
-            Condition = device.Condition;
+            Name = profileColor.Name;
+            Condition = profileColor.Condition;
+            ShowInPreview = profileColor.ShowInPreview;
             _customProfileColorsDatamodelName = Kernel.Get<IConfigurationService>().Get().DatamodelSettings.CustomProfileColorsDatamodelName;
 
             var hexColor = _artemisService.GetJsonDataModelValue(_customProfileColorsDatamodelName, Condition, ColorUtiles.ToHexString(Colors.White));
@@ -37,14 +39,18 @@ namespace ArtemisFlyout.Pages
             }
             set
             {
-                _artemisService.SetJsonDataModelValue(_customProfileColorsDatamodelName, Condition,
-                    ColorUtiles.ToHexString(value));
+                _artemisService.SetJsonDataModelValue(_customProfileColorsDatamodelName, Condition, ColorUtiles.ToHexString(value));
                 this.RaiseAndSetIfChanged(ref _color, value);
+                ProfileColorChanged?.Invoke(this, new EventArgs());
             }
         }
 
         public string Name { get; set; }
         public string Condition { get; set; }
+
+        public bool ShowInPreview { get; set; }
+
+        public event EventHandler ProfileColorChanged;
 
     }
 }

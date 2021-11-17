@@ -50,19 +50,48 @@
 					Ambient profile
 				</TextBlock>
 				<DockPanel LastChildFill="True" HorizontalAlignment="Stretch">
-					<ComboBox
-						HorizontalAlignment="Stretch"
-						DockPanel.Dock="Left"
-						VerticalAlignment="Center"
-						Items="{Binding ArtemisLightControlViewModel.Profiles}"
-						SelectedItem="{Binding ArtemisLightControlViewModel.SelectedProfile}"
-						IsEnabled="{Binding !ArtemisLightControlViewModel.QuickProfile}">
-						<ComboBox.ItemTemplate>
-							<DataTemplate DataType="models:Profile">
-								<TextBlock Text="{Binding Name}"/>
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
+					<Panel>
+						<Border
+							ClipToBounds="True"
+							BorderBrush="#414141"
+							CornerRadius="5 5 5 5"
+							Background="{Binding ArtemisCustomProfileViewModel.PreviewColor}"
+							IsVisible="{Binding ArtemisLightControlViewModel.QuickProfile}">
+							<StackPanel
+									Orientation="Horizontal">
+								<avalonia:MaterialIcon
+								   Margin="5 0 5 0"
+								   Kind="LightningBolt"
+								   Width="16"
+								   Height="16"/>
+								<TextBlock
+									HorizontalAlignment="Stretch"
+									VerticalAlignment="Center"
+									Text="Using custom profile"
+									TextAlignment="Left"
+									Padding="0 5 0 0"
+									Height="32">
+								</TextBlock>
+
+							</StackPanel>
+							
+						</Border>
+						<ComboBox
+								HorizontalAlignment="Stretch"
+								DockPanel.Dock="Left"
+								VerticalAlignment="Center"
+								Items="{Binding ArtemisLightControlViewModel.Profiles}"
+								SelectedItem="{Binding ArtemisLightControlViewModel.SelectedProfile}"
+								IsEnabled="{Binding !ArtemisLightControlViewModel.QuickProfile}"
+								IsVisible="{Binding !ArtemisLightControlViewModel.QuickProfile}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate DataType="models:Profile">
+									<TextBlock Text="{Binding Name}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</Panel>
+
 				</DockPanel>
 			</StackPanel>
 			<!-- Ambiente profile selector End -->

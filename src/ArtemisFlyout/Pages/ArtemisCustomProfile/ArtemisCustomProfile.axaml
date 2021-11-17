@@ -7,47 +7,45 @@
              xmlns:pages="clr-namespace:ArtemisFlyout.Pages"
              x:Class="ArtemisFlyout.Pages.ArtemisCustomProfile">
 
-  <!-- Flyout content start-->
-  <StackPanel> 
-    <Button
-        Name="BtnBack"
-        Margin="10 10 0 0"
-        Width="36"
-        Height="36"
-        Background="Transparent"
-        BorderBrush="Transparent"
-        Command="{Binding GoMainPage}"
-        CommandParameter="0">
-      <controls:SymbolIcon Symbol="Back" Width="16" Height="16"/>
-    </Button>
-    <DockPanel>
-      <ItemsRepeater
-          Items="{Binding ArtemisCustomProfileViewModel.Colors}"
-          Margin="20 10 20 0">
-        <ItemsRepeater.ItemTemplate>
-          <DataTemplate DataType="pages:CustomProfileColorViewModel">
-            <StackPanel
-                Margin="5 3 5 3">
-              <StackPanel 
-              HorizontalAlignment="Left">
-                <TextBlock Text="{Binding Name}"/>
-                <controls:ColorPickerButton
-                    ShowAcceptDismissButtons="False"
-                    UseColorPalette="False"
-                    UseSpectrum="False"
-                    Color="{Binding Color}">
-                  <controls:ColorPickerButton.Styles>
-                    <StyleInclude Source="/Pages/ArtemisCustomProfile/ColorPickerStyles.axaml" />
-                  </controls:ColorPickerButton.Styles>
-                </controls:ColorPickerButton>
-              </StackPanel>
-            </StackPanel>
-          </DataTemplate>
-        </ItemsRepeater.ItemTemplate>
-      </ItemsRepeater>
-
-    </DockPanel>
-
-  </StackPanel>
-  <!-- Flyout content End-->
+	<!-- Flyout content start-->
+	<StackPanel>
+		<Button
+			Name="BtnBack"
+			Margin="10 10 0 0"
+			Width="36"
+			Height="36"
+			Background="Transparent"
+			BorderBrush="Transparent"
+			Command="{Binding GoMainPage}"
+			CommandParameter="0">
+			<controls:SymbolIcon Symbol="Back" Width="16" Height="16"/>
+		</Button>
+		<DockPanel>
+			<ItemsRepeater
+				Items="{Binding ArtemisCustomProfileViewModel.ProfileColors}"
+				Margin="20 10 20 0">
+				<ItemsRepeater.ItemTemplate>
+					<DataTemplate DataType="pages:CustomProfileColorViewModel">
+						<StackPanel
+							Margin="5 3 5 3">
+							<StackPanel
+							HorizontalAlignment="Left">
+								<TextBlock Text="{Binding Name}"/>
+								<controls:ColorPickerButton
+									ShowAcceptDismissButtons="False"
+									UseColorPalette="False"
+									UseSpectrum="False"
+									Color="{Binding Color}">
+									<controls:ColorPickerButton.Styles>
+										<StyleInclude Source="/Pages/ArtemisCustomProfile/ColorPickerStyles.axaml" />
+									</controls:ColorPickerButton.Styles>
+								</controls:ColorPickerButton>
+							</StackPanel>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsRepeater.ItemTemplate>
+			</ItemsRepeater>
+		</DockPanel>
+	</StackPanel>
+	<!-- Flyout content End-->
 </UserControl>

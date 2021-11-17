@@ -4,12 +4,12 @@ Artemis Flyout is a remote control for the best OpenSource RGB Control and Engin
 Artemis Flyout UI was created using https://avaloniaui.net/ as a base framework and https://github.com/amwx/FluentAvalonia for the Fluent lookd and feel. It also use other magnific projects like http://wieslawsoltes.github.io/AvaloniaBehaviors/ and https://restsharp.dev/.
 It is important to note that i am learning how to write MVVM and Avalonia so architecture may be a mess. Still... it works.
 
-For example:
+### For example:
 
  * Meeting button will toggle true and false Meeting value in the Global Variables Datamodel. User will be responsible to use that value to turn profiles/layers on and off. This will result in a more work at the beginning but ensures full control.
 * Bright slider is another control: You can create a full black layer as a overlay and bind GlobalGright value with layer opacity in an inverse way so when Bright is at value 100 black layer opacity will be 0 (or you can bind bright value to control a folder opacity directly).
 
-This project is a WIP so it will need some user effort and code reading to get it working. Here are some tips for you:
+### This project is a WIP so it will need some user effort and code reading to get it working. Here are some tips for you:
 
 * Device Toggles and custom profile color slots are configured in "appsettings.json" file. Each entry will create a Datamodel value in Device in Devices States and Custom profile colors datamodels.
 * Profiles combobox is filled with profile names from the Artemis Category "Ambient". You can query for a different category changing the value AmbientProfileCategoryName in "appsettings.json". Rememer that you have to create display conditions using the Profile Datamodel value.

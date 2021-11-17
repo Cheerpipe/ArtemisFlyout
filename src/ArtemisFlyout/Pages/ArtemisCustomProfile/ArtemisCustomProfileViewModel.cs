@@ -36,7 +36,7 @@ namespace ArtemisFlyout.Pages
 
         private void CustomProfileColorViewModel_ProfileColorChanged(object sender, System.EventArgs e)
         {
-            this.RaisePropertyChanged("MainColor");
+            this.RaisePropertyChanged("PreviewColor");
         }
 
         public List<CustomProfileColorViewModel> ProfileColors => _customProfileColors;

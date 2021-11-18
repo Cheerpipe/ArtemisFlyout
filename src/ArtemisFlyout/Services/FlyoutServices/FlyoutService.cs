@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ArtemisFlyout.IoC;
 using ArtemisFlyout.Pages;
 using ArtemisFlyout.Screens;
-using Avalonia.Controls;
 using Ninject;
 
 namespace ArtemisFlyout.Services
@@ -81,12 +80,11 @@ namespace ArtemisFlyout.Services
         {
             if (FlyoutWindowInstance != null) return;
             FlyoutWindowInstance = GetInstance();
-            FlyoutWindowInstance.WindowState = WindowState.Minimized;
-            await FlyoutWindowInstance?.ShowAnimated(true);
+            await FlyoutWindowInstance?.ShowAnimated(true)!;
             await Task.Delay(300);
-            FlyoutWindowInstance.ViewModel?.GoCustomProfile();
+            FlyoutWindowInstance?.ViewModel?.GoCustomProfile();
             await Task.Delay(300);
-            FlyoutWindowInstance.ViewModel?.GoDevicesPage();
+            FlyoutWindowInstance?.ViewModel?.GoDevicesPage();
             await Task.Delay(300);
             await CloseAndRelease(false);
         }

@@ -55,8 +55,10 @@ namespace ArtemisFlyout.Screens
             PropertyChanged += FlyoutWindow_PropertyChanged;
 
             WindowStartupLocation = WindowStartupLocation.Manual;
+
             if (isPreload)
             {
+                this.WindowState = WindowState.Minimized;
                 HorizontalPosition = Screens.All.Sum(s => s.WorkingArea.Width);
             }
 

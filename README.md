@@ -29,5 +29,9 @@ It is important to note that i am learning how to write MVVM and Avalonia so arc
 
 ## Demo video:
 
-https://user-images.githubusercontent.com/972765/142269836-f5f68be1-1c1e-43d4-b895-caf9d15298c1.mp4
+
+
+https://user-images.githubusercontent.com/972765/142475003-ddb757b0-7c38-4dbd-9553-33d851ca32d4.mp4
+
+
 

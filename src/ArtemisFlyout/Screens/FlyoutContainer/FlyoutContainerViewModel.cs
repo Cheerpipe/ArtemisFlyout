@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
-using System.Threading.Tasks;
-using System.Timers;
+using System.Threading;
 using ArtemisFlyout.Models.Configuration;
 using ArtemisFlyout.Pages;
 using ArtemisFlyout.Services;
@@ -20,9 +19,10 @@ namespace ArtemisFlyout.Screens
         private readonly IFlyoutService _flyoutService;
         private readonly List<LedColorPickerLed> _ledColorPickerLeds;
         private readonly Random _random = new();
-        private readonly byte _colorMaskpacity;
-        private readonly Timer _backgroundBrushRefreshTimer;
+        private readonly byte _colorMaskOpacity;
+        private Timer _backgroundBrushRefreshTimer;
         private int _activePageIndex;
+
         private const int MainPageHeight = 530;
         private const int MainPageWidth = 290;
 
@@ -47,8 +47,8 @@ namespace ArtemisFlyout.Screens
                     .Create(() =>
                     {
                         /* Handle deactivation */
-                        _backgroundBrushRefreshTimer?.Stop();
-                        _backgroundBrushRefreshTimer?.Dispose();
+                        _backgroundBrushRefreshTimer?.DisposeAsync();
+                        _backgroundBrushRefreshTimer = null;
                     })
                     .DisposeWith(disposables);
             });
@@ -56,33 +56,25 @@ namespace ArtemisFlyout.Screens
             FlyoutWindowWidth = MainPageWidth;
             FlyoutWindowHeight = MainPageHeight;
             _ledColorPickerLeds = configurationService.Get().LedColorPickerLedSettings.LedColorPickerLeds;
-            _colorMaskpacity = Math.Clamp(configurationService.Get().LedColorPickerLedSettings.ColorMaskOpacity, byte.MinValue, byte.MaxValue);
+            _colorMaskOpacity = Math.Clamp(configurationService.Get().LedColorPickerLedSettings.ColorMaskOpacity, byte.MinValue, byte.MaxValue);
 
             if (configurationService.Get().LedColorPickerLedSettings.KeepColorInSync)
             {
-                _backgroundBrushRefreshTimer = new Timer();
-                _backgroundBrushRefreshTimer.Interval = 2000;
-                _backgroundBrushRefreshTimer.Elapsed += _backgroundBrushRefreshTimer_Elapsed;
-                _backgroundBrushRefreshTimer.Start();
+                _backgroundBrushRefreshTimer = new Timer(_ => UpdateColorBrush(), null, 0, 3000);
             }
-
             _artemisService.JsonDataModelValueSent += _artemisService_JsonDataModelValueSent;
             BackgroundBrush = CreateBackgroundBrush(GetBackgroundBrushColor());
         }
 
-        private void _backgroundBrushRefreshTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void UpdateColorBrush()
         {
             Color color = GetBackgroundBrushColor();
             Dispatcher.UIThread.Post(() => { BackgroundBrush = CreateBackgroundBrush(color); });
         }
 
-        private async void _artemisService_JsonDataModelValueSent(object sender, Events.JsonDataModelValueSentArgs e)
+        private void _artemisService_JsonDataModelValueSent(object sender, Events.JsonDataModelValueSentArgs e)
         {
-            if (e.JsonPath == "GlobalBrightness")
-                return;
-
-            await Task.Delay(30);
-            BackgroundBrush = CreateBackgroundBrush(GetBackgroundBrushColor());
+            _backgroundBrushRefreshTimer?.Change(100, 3000);
         }
 
         private LinearGradientBrush CreateBackgroundBrush(Color color)
@@ -92,7 +84,7 @@ namespace ArtemisFlyout.Screens
                 StartPoint = new RelativePoint(0, 1, RelativeUnit.Relative),
                 EndPoint = new RelativePoint(0, 0, RelativeUnit.Relative)
             };
-            brush.GradientStops.Add(new GradientStop(Color.FromArgb(_colorMaskpacity, color.R, color.G, color.B), 0d));
+            brush.GradientStops.Add(new GradientStop(Color.FromArgb(_colorMaskOpacity, color.R, color.G, color.B), 0d));
             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0, 0, 0, 0), 1d));
             return brush;
         }

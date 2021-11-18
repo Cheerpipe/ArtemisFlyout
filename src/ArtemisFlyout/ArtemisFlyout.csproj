@@ -12,12 +12,12 @@
     <EmbeddedResource Remove="Win\**" />
     <None Remove="Win\**" />
     <AvaloniaResource Remove="Assets\Backglow.png" />
-    <AvaloniaResource Remove="Assets\flyout.ico" />
+    <AvaloniaResource Remove="Assets\Flyout.ico" />
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Backglow.png" />
-    <EmbeddedResource Include="Assets\flyout.ico" />
+    <EmbeddedResource Include="Assets\Flyout.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.10" />

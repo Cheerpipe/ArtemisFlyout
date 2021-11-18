@@ -17,7 +17,7 @@ namespace ArtemisFlyout.Services
             _flyoutService.Preload();
             _trayIcon = new AvaloniaTrayIcon();
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-            var icon = new WindowIcon(assets.Open(new Uri(@"resm:ArtemisFlyout.Assets.flyout.ico")));
+            var icon = new WindowIcon(assets.Open(new Uri(@"resm:ArtemisFlyout.Assets.Flyout.ico")));
             _trayIcon.Icon = icon;
             _trayIcon.Clicked += TrayIcon_Clicked;
         }

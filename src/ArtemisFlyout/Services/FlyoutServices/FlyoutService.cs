@@ -63,7 +63,7 @@ namespace ArtemisFlyout.Services
             {
                 flyoutInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
             }
-            else if (!_artemisService.IsJsonDatamodelPluginWorking() || !_artemisService.IsExtendedApiRestPluginWorking())
+            else if (!_artemisService.CheckJsonDatamodelPluginPlugin().VersionIsOk || !_artemisService.CheckExtendedApiRestPlugin().VersionIsOk)
 
             {
                 flyoutInstance.DataContext = Kernel.Get<ArtemisPluginPrerequisitesViewModel>();

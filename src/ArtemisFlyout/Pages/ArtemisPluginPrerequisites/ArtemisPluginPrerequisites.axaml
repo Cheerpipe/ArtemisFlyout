@@ -36,19 +36,19 @@
 			<StackPanel Margin="20 15 20 0" HorizontalAlignment="Center"> 
 				<TextBlock  TextWrapping="Wrap" Margin="0 15 0 20" Classes="h2">In order to work, Artemis Flyout requires the following plugins to be installed and enabled in Artemis:</TextBlock>
 				<StackPanel Orientation="Horizontal" Margin="0 15 0 0"  HorizontalAlignment="Center">
-					<TextBlock Width="340" Classes="h3" Text="{Binding JsonDatamodelPluginState.StateText}"/>
-					<ui:InfoBadge Classes="Success Icon" HorizontalAlignment="Right" Margin="5 0 5 0"  IsVisible="{Binding JsonDatamodelPluginState.State}"/>
-					<ui:InfoBadge Classes="Critical Icon" HorizontalAlignment="Right" Margin="5 0 5 0" IsVisible="{Binding !JsonDatamodelPluginState.State}" />
+					<ui:InfoBadge Classes="Success Icon" HorizontalAlignment="Right" Margin="0 0 10 0"  IsVisible="{Binding JsonDatamodelPluginState.State}"/>
+					<ui:InfoBadge Classes="Critical Icon" HorizontalAlignment="Right" Margin="0 0 10 0" IsVisible="{Binding !JsonDatamodelPluginState.State}" />
+                    <TextBlock Width="460" Classes="h3" Text="{Binding JsonDatamodelPluginState.StateText}"/>
 				</StackPanel>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-					<TextBlock Width="340" Classes="h3" Text="{Binding ExtendedRestApiPluginState.StateText}"/>
-					<ui:InfoBadge Classes="Success Icon" HorizontalAlignment="Right" Margin="5 0 5 0"  IsVisible="{Binding ExtendedRestApiPluginState.State}"/>
-					<ui:InfoBadge Classes="Critical Icon" HorizontalAlignment="Right" Margin="5 0 5 0" IsVisible="{Binding !ExtendedRestApiPluginState.State}" />
+					<ui:InfoBadge Classes="Success Icon" HorizontalAlignment="Right" Margin="0 0 10 0"  IsVisible="{Binding ExtendedRestApiPluginState.State}"/>
+					<ui:InfoBadge Classes="Critical Icon" HorizontalAlignment="Right" Margin="0 0 10 0" IsVisible="{Binding !ExtendedRestApiPluginState.State}" />
+                    <TextBlock Width="460" Classes="h3" Text="{Binding ExtendedRestApiPluginState.StateText}"/>
 				</StackPanel>
 				<ui:HyperlinkButton
 				  HorizontalAlignment="Center"
 				  Foreground="LightGray"
-				  Margin="0 30 0 0"
+				  Margin="0 30 0 15"
 				  Command="{Binding GoToDownloads}">
 					Download plugins from Git Hub
 				</ui:HyperlinkButton>

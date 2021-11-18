@@ -23,7 +23,7 @@ namespace ArtemisFlyout.Services
         {
             _configurationService = configurationService;
             _globalVariablesDatamodelName = _configurationService.Get().DatamodelSettings.GlobalVariablesDatamodelName;
-            _keyColorPickerDefaultColorHex = _configurationService.Get().KeyColorPicker.DefaultColor;
+            _keyColorPickerDefaultColorHex = _configurationService.Get().LedColorPickerLedSettings.DefaultColor;
             _restService = restService;
         }
 
@@ -183,38 +183,80 @@ namespace ArtemisFlyout.Services
             return defaultColor;
         }
 
+        public PluginCheckResult CheckExtendedApiRestPlugin()
+        {
+            // TODO: Create a more generic plugin checker
+            try
+            {
+                var version = _restService.Get("/extended-rest-api/version").Content.Substring(2, 7);
+                return new PluginCheckResult
+                {
+                    Installed = true,
+                    Responding = true,
+                    VersionIsOk = version == Constants.ExtendedRestApiPluginRequiredVersion,
+                    RequiredVersion = Constants.ExtendedRestApiPluginRequiredVersion,
+                    CurrentVersion = version
+                };
+            }
+            catch
+            {
+                return new PluginCheckResult
+                {
+                    Installed = false,
+                    Responding = false,
+                    VersionIsOk = false,
+                    RequiredVersion = Constants.ExtendedRestApiPluginRequiredVersion,
+                    CurrentVersion = "0.0.0.0"
+                };
+            }
+        }
+
+        public PluginCheckResult CheckJsonDatamodelPluginPlugin()
+        {
+            try
+            {
+                var version = _restService.Get("/json-datamodel/version").Content.Substring(2, 7);
+                return new PluginCheckResult
+                {
+                    Installed = true,
+                    Responding = true,
+                    VersionIsOk = version == Constants.JsonDataModelPluginRequiredVersion,
+                    RequiredVersion = Constants.JsonDataModelPluginRequiredVersion,
+                    CurrentVersion = version
+                };
+            }
+            catch
+            {
+                return new PluginCheckResult
+                {
+                    Installed = false,
+                    Responding = false,
+                    VersionIsOk = false,
+                    RequiredVersion = Constants.JsonDataModelPluginRequiredVersion,
+                    CurrentVersion = "0.0.0.0"
+                };
+            }
+        }
+
         public bool IsRunning()
         {
             return Process.GetProcessesByName("Artemis.UI").Length > 0;
         }
 
-        public bool IsExtendedApiRestPluginWorking()
-        {
-            try
-            {
-                var version = _restService.Get("/extended-rest-api/version").Content.Substring(2, 7);
-                return version == Constants.ExtendedRestApiPluginRequiredVersion;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public bool IsJsonDatamodelPluginWorking()
-        {
-            try
-            {
-                var version = _restService.Get("/json-datamodel/version").Content.Substring(2, 7);
-                return version == Constants.JsonDataModelPluginRequiredVersion;
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
         public event EventHandler<ProfileChangeEventArgs> ProfileChanged;
         public event EventHandler<JsonDataModelValueSentArgs> JsonDataModelValueSent;
     }
+
+    // Todo: Move all check logics to a service
+    public class PluginCheckResult
+    {
+
+        public bool Installed { get; init; }
+        public bool Responding { get; init; }
+        public bool VersionIsOk { get; init; }
+        public string RequiredVersion { get; init; }
+        public string CurrentVersion { get; init; }
+    }
+
 }

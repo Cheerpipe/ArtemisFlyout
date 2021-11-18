@@ -30,8 +30,8 @@ namespace ArtemisFlyout.Pages
             _flyoutService.CloseAndRelease();
         }
 
-        public double FlyoutHeight => 300;
-        public double FlyoutWidth => 300;
+        public double FlyoutWindowHeight => 300;
+        public double FlyoutWindowWidth => 300;
         public bool CommandBarVisibleState => false;
         public bool IsArtemisRunning => false;
     }

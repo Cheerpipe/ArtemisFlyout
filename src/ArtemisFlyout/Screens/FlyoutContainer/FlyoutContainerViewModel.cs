@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using System.Timers;
+using ArtemisFlyout.Models.Configuration;
 using ArtemisFlyout.Pages;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
@@ -16,8 +18,8 @@ namespace ArtemisFlyout.Screens
     {
         private readonly IArtemisService _artemisService;
         private readonly IFlyoutService _flyoutService;
-        private readonly string _colorPickerDeviceTypeName;
-        private readonly string _colorPickerLedIdName;
+        private readonly List<LedColorPickerLed> _ledColorPickerLeds;
+        private readonly Random _random = new Random();
         private readonly Timer _backgroundBrushRefreshTimer;
         private int _activePageIndex;
         private const int MainPageHeight = 530;
@@ -52,9 +54,9 @@ namespace ArtemisFlyout.Screens
 
             FlyoutWindowWidth = MainPageWidth;
             FlyoutWindowHeight = MainPageHeight;
-            _colorPickerDeviceTypeName = configurationService.Get().KeyColorPicker.DeviceType;
-            _colorPickerLedIdName = configurationService.Get().KeyColorPicker.LedId;
-            if (configurationService.Get().KeyColorPicker.KeepColorInSync)
+            _ledColorPickerLeds = configurationService.Get().LedColorPickerLedSettings.LedColorPickerLeds;
+
+            if (configurationService.Get().LedColorPickerLedSettings.KeepColorInSync)
             {
                 _backgroundBrushRefreshTimer = new Timer();
                 _backgroundBrushRefreshTimer.Interval = 1000;
@@ -90,7 +92,9 @@ namespace ArtemisFlyout.Screens
 
         private Color GetBackgroundBrushColor()
         {
-            return _artemisService.GetLedColor(_colorPickerDeviceTypeName, _colorPickerLedIdName);
+            return _artemisService.GetLedColor(
+                _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].DeviceType,
+                _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].LedId);
         }
 
         public ArtemisLightControlViewModel ArtemisLightControlViewModel { get; }

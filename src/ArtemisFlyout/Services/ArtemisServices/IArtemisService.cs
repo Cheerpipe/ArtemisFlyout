@@ -8,8 +8,8 @@ namespace ArtemisFlyout.Services
 {
     public interface IArtemisService
     {
-        bool IsExtendedApiRestPluginWorking();
-        bool IsJsonDatamodelPluginWorking();
+        PluginCheckResult CheckExtendedApiRestPlugin();
+        PluginCheckResult CheckJsonDatamodelPluginPlugin();
         bool IsRunning();
         void GoHome();
         void GoWorkshop();

@@ -12,18 +12,37 @@ namespace ArtemisFlyout.Pages
             _artemisService = artemisService;
         }
 
-        public double FlyoutHeight => 280;
-        public double FlyoutWidth => 420;
+        public double FlyoutWindowHeight => 280;
+        public double FlyoutWindowWidth => 550;
+        
+        public double FlyoutWidth => FlyoutWindowWidth - 12;
+        public double FlyoutHeight => FlyoutWindowHeight - 12;
         public int ActivePageindex { get; } = 4;
         public PluginStateViewModel JsonDatamodelPluginState
         {
             get
             {
-                bool state = _artemisService.IsJsonDatamodelPluginWorking();
+                PluginCheckResult state = _artemisService.CheckJsonDatamodelPluginPlugin();
+
+                bool responding = state.Responding;
+                bool versionOk = state.VersionIsOk;
+                string stateMessage;
+
+                if (versionOk)
+                    stateMessage = "Json plugin installed and running";
+                else if (responding && !versionOk)
+                {
+                    stateMessage = $"Json plugin version {state.RequiredVersion} is required but {state.CurrentVersion} is installed";
+                }
+                else
+                {
+                    stateMessage = $"Json plugin not running or not installed";
+                }
+
                 return new PluginStateViewModel()
                 {
-                    State = state,
-                    StateText = state ? "Json plugin installed and running" : "Json plugin not running"
+                    State = versionOk,
+                    StateText = stateMessage
                 };
             }
         }
@@ -32,11 +51,27 @@ namespace ArtemisFlyout.Pages
         {
             get
             {
-                bool state = _artemisService.IsExtendedApiRestPluginWorking();
+                PluginCheckResult state = _artemisService.CheckExtendedApiRestPlugin();
+
+                bool responding = state.Responding;
+                bool versionOk = state.VersionIsOk;
+                string stateMessage;
+
+                if (versionOk)
+                    stateMessage = "Extended REST Api plugin installed and running";
+                else if (responding && !versionOk)
+                {
+                    stateMessage = $"Extended REST Api plugin version {state.RequiredVersion} is required but {state.CurrentVersion} is installed";
+                }
+                else
+                {
+                    stateMessage = $"Extended REST Api plugin not running or not installed";
+                }
+
                 return new PluginStateViewModel()
                 {
-                    State = state,
-                    StateText = state ? "Extended Web API plugin installed and running" : "Extended Web API plugin not installed or not running"
+                    State = versionOk,
+                    StateText = stateMessage
                 };
             }
         }

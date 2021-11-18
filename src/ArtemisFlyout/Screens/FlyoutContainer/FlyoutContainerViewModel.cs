@@ -78,6 +78,9 @@ namespace ArtemisFlyout.Screens
 
         private async void _artemisService_JsonDataModelValueSent(object sender, Events.JsonDataModelValueSentArgs e)
         {
+            if (e.JsonPath == "GlobalBrightness")
+                return;
+
             await Task.Delay(30);
             BackgroundBrush = CreateBackgroundBrush(GetBackgroundBrushColor());
         }

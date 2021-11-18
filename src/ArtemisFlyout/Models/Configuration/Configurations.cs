@@ -11,5 +11,8 @@ namespace ArtemisFlyout.Models.Configuration
         public RestApiSettings RestApiSettings { get; set; }
        public List<DeviceStateSetting> DevicesStatesSettings { get; set; }
        public List<CustomProfileColorSetting> CustomProfilesColorSettings { get; set; }
+       public List<QuickAction> QuickActions { get; set; }
+
+        
     }
 }

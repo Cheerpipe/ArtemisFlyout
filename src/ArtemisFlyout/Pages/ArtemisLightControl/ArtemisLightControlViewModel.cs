@@ -14,18 +14,32 @@ namespace ArtemisFlyout.Pages
         private readonly string _devicesStatesDatamodelName;
         private readonly string _globalVariablesDatamodelName;
         private readonly string _ambientProfileCategoryName;
+        private readonly List<QuickActionViewModel> _quickAcionsViewModels;
         private List<Profile> _profiles;
         private Profile _selectedProfile;
 
-        public ArtemisLightControlViewModel(IArtemisService artemisService, IConfigurationService configurationService)
+        public ArtemisLightControlViewModel(IArtemisService artemisService, IConfigurationService configurationService, List<QuickActionViewModel> quickAcionsViewModels)
         {
             _artemisService = artemisService;
+            _quickAcionsViewModels = quickAcionsViewModels;
             var configurationService1 = configurationService;
             _devicesStatesDatamodelName = configurationService1.Get().DatamodelSettings.DevicesStatesDatamodelName;
+            var quickActions = configurationService1.Get().QuickActions;
             _globalVariablesDatamodelName = configurationService1.Get().DatamodelSettings.GlobalVariablesDatamodelName;
             _ambientProfileCategoryName = configurationService1.Get().DatamodelSettings.AmbientProfileCategoryName;
             _quickProfile = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", false);
             _allDevices = _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", true);
+
+            foreach (var qa in quickActions)
+            {
+                _quickAcionsViewModels.Add(
+                    new QuickActionViewModelBuilder().
+                        WithName(qa.Name)
+                        .WithCondition(qa.Condition)
+                        .WithIcon(qa.Icon)
+                        .Build()
+                    );
+            }
 
             this.WhenActivated(disposables =>
             {
@@ -38,6 +52,8 @@ namespace ArtemisFlyout.Pages
             get => _artemisService.GetBright();
             set => _artemisService.SetBright(value);
         }
+
+        public List<QuickActionViewModel> QuickActionsVms => _quickAcionsViewModels;
 
         public List<Profile> Profiles => _profiles = _artemisService.GetProfiles(_ambientProfileCategoryName);
 
@@ -77,16 +93,6 @@ namespace ArtemisFlyout.Pages
             ToggleDeviceSettingsOverride(false);
         }
 
-        public bool Meeting
-        {
-            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Meeting", false);
-            set
-            {
-                _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Meeting", value);
-            }
-
-        }
-
         private bool _quickProfile;
         public bool QuickProfile
         {
@@ -97,19 +103,6 @@ namespace ArtemisFlyout.Pages
                 this.RaiseAndSetIfChanged(ref _quickProfile, value);
             }
         }
-
-        public bool Ambilight
-        {
-            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "Ambilight", false);
-            set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "Ambilight", value);
-        }
-
-        public bool AudioReactive
-        {
-            get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "AudioReactive", false);
-            set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "AudioReactive", value);
-        }
-
 
         public int Speed
         {

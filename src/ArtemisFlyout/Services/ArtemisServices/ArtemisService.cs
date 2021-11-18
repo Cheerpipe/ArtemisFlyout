@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Timers;
 using ArtemisFlyout.Events;
 using ArtemisFlyout.Models;
 using ArtemisFlyout.Utiles;
@@ -15,19 +16,25 @@ namespace ArtemisFlyout.Services
     {
         private readonly IConfigurationService _configurationService;
         private readonly string _globalVariablesDatamodelName;
+        private readonly string _keyColorPickerDefaultColorHex;
         private readonly IRestService _restService;
 
         public ArtemisService(IConfigurationService configurationService, IRestService restService)
         {
             _configurationService = configurationService;
             _globalVariablesDatamodelName = _configurationService.Get().DatamodelSettings.GlobalVariablesDatamodelName;
+            _keyColorPickerDefaultColorHex = _configurationService.Get().KeyColorPicker.DefaultColor;
             _restService = restService;
+        }
+
+        private void _backgroundBrushRefreshTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void GoHome()
         {
             _ = _restService.Post("/remote/bring-to-foreground");
-
         }
 
         public void GoWorkshop()
@@ -65,6 +72,20 @@ namespace ArtemisFlyout.Services
             return GetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalBrightness", 100);
         }
 
+        public Color GetLedColor(string deviceType, string ledId)
+        {
+            try
+            {
+                return Color.Parse(_restService.Get($"/extended-rest-api/get-led-color/{deviceType}/{ledId}").Content);
+            }
+            catch (Exception)
+            {
+                if (Color.TryParse(_keyColorPickerDefaultColorHex, out Color defaultColor))
+                    return defaultColor;
+                return Colors.Transparent;
+            }
+        }
+
         public void SetSpeed(int value)
         {
             SetJsonDataModelValue(_globalVariablesDatamodelName, "GlobalSpeed", value);
@@ -85,6 +106,7 @@ namespace ArtemisFlyout.Services
             };
 
             _ = _restService.Put($"/json-datamodel/{dataModel}", content, "application/json").Content;
+            JsonDataModelValueSent?.Invoke(this, new JsonDataModelValueSentArgs(dataModel, jsonPath, value));
         }
 
         public T GetJsonDataModelValue<T>(string dataModel, string jsonPath, T defaultValue)
@@ -183,7 +205,7 @@ namespace ArtemisFlyout.Services
         {
             try
             {
-                var version = _restService.Get("/json-datamodel/version").Content.Substring(2,7);
+                var version = _restService.Get("/json-datamodel/version").Content.Substring(2, 7);
                 return version == Constants.JsonDataModelPluginRequiredVersion;
             }
             catch
@@ -193,5 +215,6 @@ namespace ArtemisFlyout.Services
         }
 
         public event EventHandler<ProfileChangeEventArgs> ProfileChanged;
+        public event EventHandler<JsonDataModelValueSentArgs> JsonDataModelValueSent;
     }
 }

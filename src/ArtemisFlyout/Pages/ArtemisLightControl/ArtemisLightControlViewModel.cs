@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -57,6 +58,7 @@ namespace ArtemisFlyout.Pages
 
         public List<Profile> Profiles => _profiles = _artemisService.GetProfiles(_ambientProfileCategoryName);
 
+        public event EventHandler SelectedProfileChanged;
         public Profile SelectedProfile
         {
             get
@@ -68,6 +70,7 @@ namespace ArtemisFlyout.Pages
             {
                 _artemisService.SetActiveProfile(value.Name);
                 this.RaiseAndSetIfChanged(ref _selectedProfile, value);
+                SelectedProfileChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

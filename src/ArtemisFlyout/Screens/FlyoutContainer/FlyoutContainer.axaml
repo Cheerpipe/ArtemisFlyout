@@ -24,7 +24,7 @@
                                 Height="{Binding FlyoutWindowHeight}"
                                 Width="{Binding FlyoutWindowWidth}"
                                 x:Name="FlyoutWindow">
-	<Panel
+    <Panel
 	  HorizontalAlignment="Left"
 	  VerticalAlignment="Top"
 	  Name="FlyoutPanelContainer"
@@ -42,8 +42,13 @@
 					BorderBrush="#414141"
 					BorderThickness="1"
 					ClipToBounds="False"
-					Background="Transparent"
+					Background="{Binding BackgroundBrush}"
 					BoxShadow="3 4 0 0 #64000000">
+				<Border.Transitions>
+					<Transitions>
+						<BrushTransition  Property="Background" Duration="0:0:1"/>
+					</Transitions>
+				</Border.Transitions>
 				<Panel>
 					<DockPanel>
 						<!-- Flyout content Start -->

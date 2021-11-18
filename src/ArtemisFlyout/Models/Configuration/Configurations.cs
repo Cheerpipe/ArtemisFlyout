@@ -12,7 +12,6 @@ namespace ArtemisFlyout.Models.Configuration
        public List<DeviceStateSetting> DevicesStatesSettings { get; set; }
        public List<CustomProfileColorSetting> CustomProfilesColorSettings { get; set; }
        public List<QuickAction> QuickActions { get; set; }
-
-        
+       public KeyColorPicker KeyColorPicker { get; set; }
     }
 }

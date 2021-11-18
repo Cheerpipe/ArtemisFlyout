@@ -19,6 +19,7 @@ namespace ArtemisFlyout.Services
         void RestartArtemis();
         void SetBright(int value);
         int GetBright();
+        Color GetLedColor(string deviceType, string ledId);
         void SetSpeed(int value);
         int GetSpeed();
         public void SetJsonDataModelValue<T>(string dataModel, string jsonPath, T value);
@@ -30,5 +31,6 @@ namespace ArtemisFlyout.Services
         void SetColor(string colorName, Color color);
         Color GetColor(string colorName, Color defaultColor);
         event EventHandler<ProfileChangeEventArgs> ProfileChanged;
+        event EventHandler<JsonDataModelValueSentArgs> JsonDataModelValueSent;
     }
 }

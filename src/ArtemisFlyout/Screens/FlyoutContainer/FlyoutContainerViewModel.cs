@@ -1,7 +1,13 @@
-﻿using System.Reactive.Disposables;
+﻿using System;
+using System.Reactive.Disposables;
+using System.Threading.Tasks;
+using System.Timers;
 using ArtemisFlyout.Pages;
 using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
+using Avalonia;
+using Avalonia.Media;
+using Avalonia.Threading;
 using ReactiveUI;
 
 namespace ArtemisFlyout.Screens
@@ -10,16 +16,20 @@ namespace ArtemisFlyout.Screens
     {
         private readonly IArtemisService _artemisService;
         private readonly IFlyoutService _flyoutService;
+        private readonly string _colorPickerDeviceTypeName;
+        private readonly string _colorPickerLedIdName;
+        private readonly Timer _backgroundBrushRefreshTimer;
         private int _activePageIndex;
         private const int MainPageHeight = 530;
         private const int MainPageWidth = 290;
 
         public FlyoutContainerViewModel(
             IArtemisService artemisService,
+            IConfigurationService configurationService,
+            IFlyoutService flyoutService,
             ArtemisDeviceTogglesViewModel artemisDeviceTogglesViewModel,
             ArtemisLightControlViewModel artemisMainControlViewModel,
-            ArtemisCustomProfileViewModel artemisCustomProfileViewModel,
-            IFlyoutService flyoutService)
+            ArtemisCustomProfileViewModel artemisCustomProfileViewModel)
         {
             _artemisService = artemisService;
             ArtemisLightControlViewModel = artemisMainControlViewModel;
@@ -34,13 +44,53 @@ namespace ArtemisFlyout.Screens
                     .Create(() =>
                     {
                         /* Handle deactivation */
-
+                        _backgroundBrushRefreshTimer?.Stop();
+                        _backgroundBrushRefreshTimer?.Dispose();
                     })
                     .DisposeWith(disposables);
             });
 
             FlyoutWindowWidth = MainPageWidth;
             FlyoutWindowHeight = MainPageHeight;
+            _colorPickerDeviceTypeName = configurationService.Get().KeyColorPicker.DeviceType;
+            _colorPickerLedIdName = configurationService.Get().KeyColorPicker.LedId;
+            if (configurationService.Get().KeyColorPicker.KeepColorInSync)
+            {
+                _backgroundBrushRefreshTimer = new Timer();
+                _backgroundBrushRefreshTimer.Interval = 1000;
+                _backgroundBrushRefreshTimer.Elapsed += _backgroundBrushRefreshTimer_Elapsed;
+                _backgroundBrushRefreshTimer.Start();
+            }
+
+            _artemisService.JsonDataModelValueSent += _artemisService_JsonDataModelValueSent;
+            BackgroundBrush = CreateBackgroundBrush(GetBackgroundBrushColor());
+        }
+
+        private void _backgroundBrushRefreshTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Color color = GetBackgroundBrushColor();
+            Dispatcher.UIThread.Post(() => { BackgroundBrush = CreateBackgroundBrush(color); });
+        }
+
+        private async void _artemisService_JsonDataModelValueSent(object sender, Events.JsonDataModelValueSentArgs e)
+        {
+            await Task.Delay(30);
+            BackgroundBrush = CreateBackgroundBrush(GetBackgroundBrushColor());
+        }
+
+        private LinearGradientBrush CreateBackgroundBrush(Color color)
+        {
+            LinearGradientBrush brush = new LinearGradientBrush();
+            brush.StartPoint = new RelativePoint(0, 1, RelativeUnit.Relative);
+            brush.EndPoint = new RelativePoint(0, 0, RelativeUnit.Relative);
+            brush.GradientStops.Add(new GradientStop(Color.FromArgb(50, color.R, color.G, color.B), 0d));
+            brush.GradientStops.Add(new GradientStop(Color.FromArgb(0, 0, 0, 0), 1d));
+            return brush;
+        }
+
+        private Color GetBackgroundBrushColor()
+        {
+            return _artemisService.GetLedColor(_colorPickerDeviceTypeName, _colorPickerLedIdName);
         }
 
         public ArtemisLightControlViewModel ArtemisLightControlViewModel { get; }
@@ -66,6 +116,20 @@ namespace ArtemisFlyout.Screens
                 FlyoutWidth = _flyoutWindowWidth - FlyoutSpacing;
             }
         }
+
+
+        private LinearGradientBrush _backgroundBrush;
+        public LinearGradientBrush BackgroundBrush
+        {
+            get => _backgroundBrush;
+            set
+            {
+                _backgroundBrush = value;
+                this.RaisePropertyChanged(nameof(BackgroundBrush));
+            }
+        }
+
+
 
         private double _flyoutWidth;
         public double FlyoutWidth

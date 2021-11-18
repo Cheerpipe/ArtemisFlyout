@@ -24,24 +24,18 @@ namespace ArtemisFlyout.Pages
             _customProfileColorsDatamodelName = Kernel.Get<IConfigurationService>().Get().DatamodelSettings.CustomProfileColorsDatamodelName;
 
             var hexColor = _artemisService.GetJsonDataModelValue(_customProfileColorsDatamodelName, Condition, ColorUtiles.ToHexString(Colors.White));
-            if (Color.TryParse(hexColor, out Color parsedColor))
-                _color = parsedColor;
-            else
-                _color = Colors.White;
+            _color = Color.TryParse(hexColor, out Color parsedColor) ? parsedColor : Colors.White;
 
         }
 
         public Color Color
         {
-            get
-            {
-                return _color;
-            }
+            get => _color;
             set
             {
                 _artemisService.SetJsonDataModelValue(_customProfileColorsDatamodelName, Condition, ColorUtiles.ToHexString(value));
                 this.RaiseAndSetIfChanged(ref _color, value);
-                ProfileColorChanged?.Invoke(this, new EventArgs());
+                ProfileColorChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

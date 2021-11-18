@@ -31,7 +31,7 @@ namespace ArtemisFlyout.Pages
             {
                 _artemisService.SetJsonDataModelValue(_devicesStatesDatamodelName, Condition, value);
                 this.RaiseAndSetIfChanged(ref _activated, value);
-                DeviceStateChanged?.Invoke(this,new EventArgs());
+                DeviceStateChanged?.Invoke(this,EventArgs.Empty);
             }
         }
         public string Name { get; set; }

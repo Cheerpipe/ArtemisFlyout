@@ -3,8 +3,8 @@
              xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
 			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
 			 xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
-			 xmlns:ic="using:Avalonia.Behaviors"
-             x:Class="ArtemisFlyout.Controls.CustomToggleSplitButton"
+			 xmlns:behaviors="clr-namespace:ArtemisFlyout.Behaviors"
+			 x:Class="ArtemisFlyout.Controls.CustomToggleSplitButton"
              UseLayoutRounding="False">
   <StackPanel>
     <StackPanel Orientation="Horizontal">
@@ -16,12 +16,12 @@
           IsChecked="{Binding ArtemisLightControlViewModel.QuickProfile}"
           Name="ButtonCustomProfile">
 		  <i:Interaction.Behaviors>
-			  <ic:PointerReleasedTriggerBehavior KeyModifiers="Shift">
+			  <behaviors:PointerReleasedTriggerBehavior KeyModifiers="Shift">
 				  <ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ToggleDeviceSettingsOverride}" CommandParameter="{Binding !$self.IsChecked}"/>
-			  </ic:PointerReleasedTriggerBehavior>
-			  <ic:PointerReleasedTriggerBehavior KeyModifiers="None">
+			  </behaviors:PointerReleasedTriggerBehavior>
+			  <behaviors:PointerReleasedTriggerBehavior KeyModifiers="None">
 				  <ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.DisableDeviceSettingsOverride}"/>
-			  </ic:PointerReleasedTriggerBehavior>
+			  </behaviors:PointerReleasedTriggerBehavior>
 		  </i:Interaction.Behaviors>
         <avalonia:MaterialIcon
             Kind="LightningBolt"

@@ -6,7 +6,6 @@ using Avalonia.Media;
 
 namespace ArtemisFlyout.Services
 {
-    //TODO: Split
     public interface IArtemisService
     {
         bool IsExtendedApiRestPluginWorking();

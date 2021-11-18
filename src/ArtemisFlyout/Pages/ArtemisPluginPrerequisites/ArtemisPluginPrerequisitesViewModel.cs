@@ -28,7 +28,6 @@ namespace ArtemisFlyout.Pages
             }
         }
 
-
         public PluginStateViewModel ExtendedRestApiPluginState
         {
             get
@@ -36,7 +35,6 @@ namespace ArtemisFlyout.Pages
                 bool state = _artemisService.IsExtendedApiRestPluginWorking();
                 return new PluginStateViewModel()
                 {
-
                     State = state,
                     StateText = state ? "Extended Web API plugin installed and running" : "Extended Web API plugin not installed or not running"
                 };

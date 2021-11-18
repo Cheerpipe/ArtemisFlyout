@@ -5,6 +5,7 @@ using Avalonia.Threading;
 using EmbedIO;
 using EmbedIO.Routing;
 using EmbedIO.WebApi;
+// ReSharper disable UnusedMember.Global
 
 namespace ArtemisFlyout.Controllers
 {

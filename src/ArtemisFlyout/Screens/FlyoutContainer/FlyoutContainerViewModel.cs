@@ -71,10 +71,7 @@ namespace ArtemisFlyout.Screens
         public double FlyoutWidth
         {
             get => _flyoutWidth;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _flyoutWidth, value);
-            }
+            set => this.RaiseAndSetIfChanged(ref _flyoutWidth, value);
         }
 
 
@@ -94,14 +91,10 @@ namespace ArtemisFlyout.Screens
         public double FlyoutHeight
         {
             get => _flyoutHeight;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _flyoutHeight, value);
-            }
+            set => this.RaiseAndSetIfChanged(ref _flyoutHeight, value);
         }
 
         public bool CommandBarVisibleState => true;
-
 
         public void SetActivePageIndex(int newPageIndex)
         {

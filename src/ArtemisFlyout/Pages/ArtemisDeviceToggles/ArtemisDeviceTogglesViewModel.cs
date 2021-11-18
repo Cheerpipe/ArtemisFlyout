@@ -11,7 +11,7 @@ namespace ArtemisFlyout.Pages
 
     public class ArtemisDeviceTogglesViewModel : ViewModelBase
     {
-        private List<DeviceStateViewModel> _devicesStates;
+        private readonly List<DeviceStateViewModel> _devicesStates;
 
         public ArtemisDeviceTogglesViewModel(IConfigurationService configurationService)
         {
@@ -51,7 +51,7 @@ namespace ArtemisFlyout.Pages
             set
             {
                 SetAllTogglesStates(value);
-                AllStateChanged?.Invoke(this, new EventArgs());
+                AllStateChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

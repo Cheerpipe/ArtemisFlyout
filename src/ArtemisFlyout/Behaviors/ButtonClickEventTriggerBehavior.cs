@@ -1,10 +1,10 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactivity;
-using System.Diagnostics;
 
-namespace Avalonia.Behaviors
+namespace ArtemisFlyout.Behaviors
 {
     public class PointerReleasedTriggerBehavior : Trigger<Button>
     {

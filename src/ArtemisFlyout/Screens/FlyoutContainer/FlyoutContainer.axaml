@@ -6,7 +6,6 @@
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:screens="clr-namespace:ArtemisFlyout.Screens"
 								xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-                                xmlns:converters="clr-namespace:ArtemisFlyout.Converters"
                                 xmlns:pages="clr-namespace:ArtemisFlyout.Pages"
                                 mc:Ignorable="d" d:DesignWidth="290" d:DesignHeight="530"
                                 x:Class="ArtemisFlyout.Screens.FlyoutContainer"
@@ -25,9 +24,6 @@
                                 Height="{Binding FlyoutWindowHeight}"
                                 Width="{Binding FlyoutWindowWidth}"
                                 x:Name="FlyoutWindow">
-	<reactiveUi:ReactiveWindow.Resources>
-		<converters:SubtractionValueConverter x:Key="SubtractionConverter"/>
-	</reactiveUi:ReactiveWindow.Resources>
 	<Panel
 	  HorizontalAlignment="Left"
 	  VerticalAlignment="Top"
@@ -156,7 +152,7 @@
 									<controls:SymbolIcon Symbol="RotateCounterClockwise" Width="16" Height="16"/>
 									<controls:Button.Flyout>
 										<controls:MenuFlyout Placement="TopEdgeAlignedRight" >
-											<controls:MenuFlyoutItem Text="Restart" Icon="Accept" Command="{Binding Restart}" Classes="CancelButton">
+											<controls:MenuFlyoutItem Text="Restart" Icon="Accept" Command="{Binding Restart}">
 												<controls:MenuFlyoutItem.Styles>
 													<Style Selector="controls|MenuFlyoutItem" >
 														<Setter Property="Background" Value="#FFFF0000"/>

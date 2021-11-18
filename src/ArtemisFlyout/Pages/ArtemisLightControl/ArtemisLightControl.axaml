@@ -10,9 +10,9 @@
                                 xmlns:models="clr-namespace:ArtemisFlyout.Models"
 								xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
 								xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
-								xmlns:ic="using:Avalonia.Behaviors"
-								xmlns:converters="clr-namespace:ArtemisFlyout.Converters"
-								mc:Ignorable="d" d:DesignWidth="285" d:DesignHeight="480"
+                                xmlns:converters="clr-namespace:ArtemisFlyout.Converters"
+                                xmlns:behaviors="clr-namespace:ArtemisFlyout.Behaviors"
+                                mc:Ignorable="d" d:DesignWidth="285" d:DesignHeight="480"
                                 x:Class="ArtemisFlyout.Pages.ArtemisLightControl"
                                 Background="Transparent"
                                 UseLayoutRounding="False">
@@ -128,12 +128,12 @@
                             Width="24"
                             Height="24"/>
 						<i:Interaction.Behaviors>
-							<ic:PointerReleasedTriggerBehavior KeyModifiers="Shift">
+							<behaviors:PointerReleasedTriggerBehavior KeyModifiers="Shift">
 								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ToggleDeviceSettingsOverride}" CommandParameter="{Binding !$self.IsChecked}"/>
-							</ic:PointerReleasedTriggerBehavior>
-							<ic:PointerReleasedTriggerBehavior KeyModifiers="None">
+							</behaviors:PointerReleasedTriggerBehavior>
+							<behaviors:PointerReleasedTriggerBehavior KeyModifiers="None">
 								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.DisableDeviceSettingsOverride}"/>
-							</ic:PointerReleasedTriggerBehavior>
+							</behaviors:PointerReleasedTriggerBehavior>
 						</i:Interaction.Behaviors>
 					</ToggleButton>
 					<TextBlock
@@ -157,12 +157,12 @@
                             Width="24"
                             Height="24"/>
 						<i:Interaction.Behaviors>
-							<ic:PointerReleasedTriggerBehavior KeyModifiers="Shift">
+							<behaviors:PointerReleasedTriggerBehavior KeyModifiers="Shift">
 								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ToggleDeviceSettingsOverride}" CommandParameter="{Binding !$self.IsChecked}"/>
-							</ic:PointerReleasedTriggerBehavior>
-							<ic:PointerReleasedTriggerBehavior KeyModifiers="None">
+							</behaviors:PointerReleasedTriggerBehavior>
+							<behaviors:PointerReleasedTriggerBehavior KeyModifiers="None">
 								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.DisableDeviceSettingsOverride}"/>
-							</ic:PointerReleasedTriggerBehavior>
+							</behaviors:PointerReleasedTriggerBehavior>
 						</i:Interaction.Behaviors>
 					</ToggleButton>
 					<TextBlock
@@ -186,12 +186,12 @@
                             Width="24"
                             Height="24"/>
 						<i:Interaction.Behaviors>
-							<ic:PointerReleasedTriggerBehavior KeyModifiers="Shift">
+							<behaviors:PointerReleasedTriggerBehavior KeyModifiers="Shift">
 								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.ToggleDeviceSettingsOverride}" CommandParameter="{Binding !$self.IsChecked}"/>
-							</ic:PointerReleasedTriggerBehavior>
-							<ic:PointerReleasedTriggerBehavior KeyModifiers="None">
+							</behaviors:PointerReleasedTriggerBehavior>
+							<behaviors:PointerReleasedTriggerBehavior KeyModifiers="None">
 								<ia:InvokeCommandAction Command="{Binding ArtemisLightControlViewModel.DisableDeviceSettingsOverride}"/>
-							</ic:PointerReleasedTriggerBehavior>
+							</behaviors:PointerReleasedTriggerBehavior>
 						</i:Interaction.Behaviors>
 					</ToggleButton>
 					<TextBlock

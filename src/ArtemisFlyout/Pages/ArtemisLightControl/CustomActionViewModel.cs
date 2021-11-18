@@ -28,7 +28,7 @@ namespace ArtemisFlyout.Pages
     }
     public class QuickActionViewModelBuilder
     {
-        private QuickActionViewModel _customActionViewModel = Kernel.Get<QuickActionViewModel>();
+        private readonly QuickActionViewModel _customActionViewModel = Kernel.Get<QuickActionViewModel>();
 
         public QuickActionViewModelBuilder WithName(string name)
         {

@@ -59,7 +59,7 @@ namespace ArtemisFlyout.Screens
             if (configurationService.Get().LedColorPickerLedSettings.KeepColorInSync)
             {
                 _backgroundBrushRefreshTimer = new Timer();
-                _backgroundBrushRefreshTimer.Interval = 1000;
+                _backgroundBrushRefreshTimer.Interval = 2000;
                 _backgroundBrushRefreshTimer.Elapsed += _backgroundBrushRefreshTimer_Elapsed;
                 _backgroundBrushRefreshTimer.Start();
             }

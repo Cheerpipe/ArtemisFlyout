@@ -12,18 +12,19 @@ It is important to note that i am learning how to write MVVM and Avalonia so arc
 ### This project is a WIP so it will need some user effort and code reading to get it working. Here are some tips for you:
 
 * Device Toggles and custom profile color slots are configured in "appsettings.json" file. Each entry will create a Datamodel value in Device in Devices States and Custom profile colors datamodels.
-* Profiles combobox is filled with profile names from the Artemis Category "Ambient". You can query for a different category changing the value AmbientProfileCategoryName in "appsettings.json". Rememer that you have to create display conditions using the Profile Datamodel value.
+* Profiles combobox is filled with profile names from the Artemis Category "Ambient". You can query for a different category changing the value AmbientProfileCategoryName in "appsettings.json". Remember that you must create display conditions using the Profile Datamodel value.
+* Quick actions (first three big buttons of the main page) are configurable using "appsettings.json" QuickAction entries. Just consider that condition must be written using camel notation without spaces nor dots and icon name should be a valid Material icon name from here https://materialdesignicons.com/. Icon names must be written using camel too. For example, if you want to use "help-circle" you must use "HelpCircle" as icon.
 
 ## ArtemisFlyout for use with Artemis RGB. Must be used with the following plugins:
 
- * JSON Plugin : https://github.com/Cheerpipe/Artemis.Plugins.Public/tree/master/src/Modules/Artemis.Plugins.Modules.Json
- * Extended REST API : https://github.com/Cheerpipe/Artemis.Plugins.Public/tree/master/src/Collections/Artemis.Plugins.ExtendedWebAPI
+ * JSON Plugin: https://github.com/Cheerpipe/Artemis.Plugins.Public/tree/master/src/Modules/Artemis.Plugins.Modules.Json
+ * Extended REST API: https://github.com/Cheerpipe/Artemis.Plugins.Public/tree/master/src/Collections/Artemis.Plugins.ExtendedWebAPI
 
 ## Download links:
 
 * Plugin download links: https://nightly.link/Cheerpipe/Artemis.Plugins.Public/workflows/plugins/master
 
-* Artemis Flyout download link: You have to build it yourself until it is finished :(
+* Artemis Flyout download link: You must build it yourself until it is finished :(
 
 
 ## Demo video:

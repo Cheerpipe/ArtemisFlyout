@@ -22,7 +22,6 @@
 				CommandParameter="0">
 				<controls:SymbolIcon Symbol="Back" Width="16" Height="16"/>
 			</Button>
-
 		</DockPanel>
 		<DockPanel Margin="20 0 20 20" LastChildFill="True">
 			<Border
@@ -38,7 +37,7 @@
 						HorizontalAlignment="Left"
 						VerticalAlignment="Center"
 						Margin="0 0 10 0"
-						Text="All"
+						Text="Toggle all"
 						FontWeight="Bold">
 					</TextBlock>
 					<ToggleSwitch

@@ -46,7 +46,7 @@
 					BoxShadow="3 4 0 0 #64000000">
 				<Border.Transitions>
 					<Transitions>
-						<BrushTransition  Property="Background" Duration="0:0:2"/>
+						<BrushTransition  Property="Background" Duration="0:0:3"/>
 					</Transitions>
 				</Border.Transitions>
 				<Panel>

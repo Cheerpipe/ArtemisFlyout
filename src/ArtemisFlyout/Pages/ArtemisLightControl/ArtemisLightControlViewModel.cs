@@ -31,6 +31,10 @@ namespace ArtemisFlyout.Pages
             _quickProfile = _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, "QuickProfile", false);
             _allDevices = _artemisService.GetJsonDataModelValue(_devicesStatesDatamodelName, "AllDevices", true);
 
+            // TODO: Better DAL
+            // Workaround for initialize this valua that is the only one not being readed by the UI.
+            _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, "DeviceSettingsOverride", false);
+
             foreach (var qa in quickActions)
             {
                 _quickAcionsViewModels.Add(

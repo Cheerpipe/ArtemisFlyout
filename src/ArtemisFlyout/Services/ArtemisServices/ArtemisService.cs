@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Timers;
 using ArtemisFlyout.Events;
 using ArtemisFlyout.Models;
 using ArtemisFlyout.Utiles;
@@ -25,11 +24,6 @@ namespace ArtemisFlyout.Services
             _globalVariablesDatamodelName = _configurationService.Get().DatamodelSettings.GlobalVariablesDatamodelName;
             _keyColorPickerDefaultColorHex = _configurationService.Get().LedColorPickerLedSettings.DefaultColor;
             _restService = restService;
-        }
-
-        private void _backgroundBrushRefreshTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         public void GoHome()

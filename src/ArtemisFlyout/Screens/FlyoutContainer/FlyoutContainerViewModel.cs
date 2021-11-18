@@ -19,7 +19,7 @@ namespace ArtemisFlyout.Screens
         private readonly IArtemisService _artemisService;
         private readonly IFlyoutService _flyoutService;
         private readonly List<LedColorPickerLed> _ledColorPickerLeds;
-        private readonly Random _random = new Random();
+        private readonly Random _random = new();
         private readonly byte _colorMaskpacity;
         private readonly Timer _backgroundBrushRefreshTimer;
         private int _activePageIndex;
@@ -56,7 +56,7 @@ namespace ArtemisFlyout.Screens
             FlyoutWindowWidth = MainPageWidth;
             FlyoutWindowHeight = MainPageHeight;
             _ledColorPickerLeds = configurationService.Get().LedColorPickerLedSettings.LedColorPickerLeds;
-            _colorMaskpacity = (byte)Math.Clamp(configurationService.Get().LedColorPickerLedSettings.ColorMaskOpacity, byte.MinValue, byte.MaxValue);
+            _colorMaskpacity = Math.Clamp(configurationService.Get().LedColorPickerLedSettings.ColorMaskOpacity, byte.MinValue, byte.MaxValue);
 
             if (configurationService.Get().LedColorPickerLedSettings.KeepColorInSync)
             {
@@ -84,9 +84,11 @@ namespace ArtemisFlyout.Screens
 
         private LinearGradientBrush CreateBackgroundBrush(Color color)
         {
-            LinearGradientBrush brush = new LinearGradientBrush();
-            brush.StartPoint = new RelativePoint(0, 1, RelativeUnit.Relative);
-            brush.EndPoint = new RelativePoint(0, 0, RelativeUnit.Relative);
+            LinearGradientBrush brush = new LinearGradientBrush
+            {
+                StartPoint = new RelativePoint(0, 1, RelativeUnit.Relative),
+                EndPoint = new RelativePoint(0, 0, RelativeUnit.Relative)
+            };
             brush.GradientStops.Add(new GradientStop(Color.FromArgb(_colorMaskpacity, color.R, color.G, color.B), 0d));
             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0, 0, 0, 0), 1d));
             return brush;

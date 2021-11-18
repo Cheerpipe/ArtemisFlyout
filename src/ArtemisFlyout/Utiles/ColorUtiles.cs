@@ -13,6 +13,5 @@ namespace ArtemisFlyout.Utiles
 
             return $"#{a:x2}{r:x2}{g:x2}{b:x2}";
         }
-
     }
 }

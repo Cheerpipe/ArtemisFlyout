@@ -1,6 +1,6 @@
-﻿using ArtemisFlyout.Services;
+﻿using System.Diagnostics;
+using ArtemisFlyout.Services;
 using ArtemisFlyout.ViewModels;
-using System.Diagnostics;
 
 namespace ArtemisFlyout.Pages
 {
@@ -14,7 +14,7 @@ namespace ArtemisFlyout.Pages
 
         public double FlyoutWindowHeight => 280;
         public double FlyoutWindowWidth => 550;
-        
+
         public double FlyoutWidth => FlyoutWindowWidth - 12;
         public double FlyoutHeight => FlyoutWindowHeight - 12;
         public int ActivePageindex { get; } = 4;
@@ -30,16 +30,12 @@ namespace ArtemisFlyout.Pages
 
                 if (versionOk)
                     stateMessage = "Json plugin installed and running";
-                else if (responding && !versionOk)
-                {
+                else if (responding)
                     stateMessage = $"Json plugin version {state.RequiredVersion} is required but {state.CurrentVersion} is installed";
-                }
                 else
-                {
-                    stateMessage = $"Json plugin not running or not installed";
-                }
+                    stateMessage = "Json plugin not running or not installed";
 
-                return new PluginStateViewModel()
+                return new PluginStateViewModel
                 {
                     State = versionOk,
                     StateText = stateMessage
@@ -59,16 +55,16 @@ namespace ArtemisFlyout.Pages
 
                 if (versionOk)
                     stateMessage = "Extended REST Api plugin installed and running";
-                else if (responding && !versionOk)
+                else if (responding)
                 {
                     stateMessage = $"Extended REST Api plugin version {state.RequiredVersion} is required but {state.CurrentVersion} is installed";
                 }
                 else
                 {
-                    stateMessage = $"Extended REST Api plugin not running or not installed";
+                    stateMessage = "Extended REST Api plugin not running or not installed";
                 }
 
-                return new PluginStateViewModel()
+                return new PluginStateViewModel
                 {
                     State = versionOk,
                     StateText = stateMessage

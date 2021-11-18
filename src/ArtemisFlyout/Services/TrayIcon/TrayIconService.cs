@@ -37,7 +37,6 @@ namespace ArtemisFlyout.Services
 
         private void ExitMenu_Click(object sender, EventArgs e)
         {
-            //TODO: DI
             Program.RunCancellationTokenSource.Cancel();
         }
 

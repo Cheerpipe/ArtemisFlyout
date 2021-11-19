@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using ArtemisFlyout.Events;
 using ArtemisFlyout.Models;
 using ArtemisFlyout.Utiles;
 using Avalonia.Media;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RestSharp;
 
 namespace ArtemisFlyout.Services
 {
@@ -182,11 +184,12 @@ namespace ArtemisFlyout.Services
             // TODO: Create a more generic plugin checker
             try
             {
-                var version = _restService.Get("/extended-rest-api/version").Content.Substring(2, 7);
+                var response = _restService.Get("/extended-rest-api/version");
+                var version = response.Content.Substring(2, 7);
                 return new PluginCheckResult
                 {
                     Installed = true,
-                    Responding = true,
+                    Responding = response.StatusCode == HttpStatusCode.OK,
                     VersionIsOk = version == Constants.ExtendedRestApiPluginRequiredVersion,
                     RequiredVersion = Constants.ExtendedRestApiPluginRequiredVersion,
                     CurrentVersion = version
@@ -209,11 +212,12 @@ namespace ArtemisFlyout.Services
         {
             try
             {
-                var version = _restService.Get("/json-datamodel/version").Content.Substring(2, 7);
+                var response = _restService.Get("/json-datamodel/version");
+                var version = response.Content.Substring(2, 7);
                 return new PluginCheckResult
                 {
                     Installed = true,
-                    Responding = true,
+                    Responding = response.StatusCode == HttpStatusCode.OK,
                     VersionIsOk = version == Constants.JsonDataModelPluginRequiredVersion,
                     RequiredVersion = Constants.JsonDataModelPluginRequiredVersion,
                     CurrentVersion = version

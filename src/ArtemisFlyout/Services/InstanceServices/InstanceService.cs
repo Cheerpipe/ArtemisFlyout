@@ -1,8 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace ArtemisFlyout.Services
 {
-    public class InstanceService : IInstanceService
+    public class InstanceService : IInstanceService, IDisposable
     {
         private readonly IConfigurationService _configurationService;
         private readonly IRestService _restService;
@@ -27,6 +28,11 @@ namespace ArtemisFlyout.Services
                 "http://127.0.0.1",
                 _configurationService.Get().RestApiSettings.Port,
                 "/flyout/show");
+        }
+
+        public void Dispose()
+        {
+            InstanceMutex?.Dispose();
         }
     }
 }

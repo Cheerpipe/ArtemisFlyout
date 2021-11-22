@@ -7,7 +7,7 @@ using Ninject;
 
 namespace ArtemisFlyout.Services
 {
-    public class FlyoutService : IFlyoutService
+    public class FlyoutService : IFlyoutService, IDisposable
     {
         public static FlyoutContainer FlyoutWindowInstance { get; private set; }
         private readonly IConfigurationService _configurationService;
@@ -119,6 +119,11 @@ namespace ArtemisFlyout.Services
             GC.WaitForPendingFinalizers();
             GC.Collect();
             _closing = false;
+        }
+
+        public void Dispose()
+        {
+            _kernel?.Dispose();
         }
     }
 }

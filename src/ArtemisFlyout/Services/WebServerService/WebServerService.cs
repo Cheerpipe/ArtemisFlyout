@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace ArtemisFlyout.Services
 {
-    public class WebServerService : IWebServerService
+    public class WebServerService : IWebServerService, IDisposable
     {
         private readonly IConfigurationService _configurationService;
         private readonly List<WebApiControllerRegistration> _controllers = new();
@@ -60,6 +60,11 @@ namespace ArtemisFlyout.Services
             await using TextWriter writer = context.OpenResponseText();
             string json = JsonConvert.SerializeObject(data, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
             await writer.WriteAsync(json);
+        }
+
+        public void Dispose()
+        {
+            Server?.Dispose();
         }
     }
 }

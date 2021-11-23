@@ -131,6 +131,7 @@ namespace ArtemisFlyout.Screens
             }
         }
 
+        public Color InvertedBackgroundColor => Color.FromUInt32(BackgroundColor.ToUint32() ^ 0xFFFFFFFF);
 
         private LinearGradientBrush _backgroundBrush;
         public LinearGradientBrush BackgroundBrush

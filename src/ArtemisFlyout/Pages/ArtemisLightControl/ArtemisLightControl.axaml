@@ -28,7 +28,7 @@
 			<controls:HyperlinkButton
 			  VerticalAlignment="Center"
 			  FontSize="12"
-			  Foreground="LightGray"
+			  Foreground="{Binding InvertedBackgroundColor}"
 			  Margin="0 0 0 0"
 			  Command="{Binding GoDevicesPage}">
 				Devices settings

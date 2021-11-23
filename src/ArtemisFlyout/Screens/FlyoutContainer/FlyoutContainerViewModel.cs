@@ -9,6 +9,7 @@ using ArtemisFlyout.ViewModels;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Threading;
+using FluentAvalonia.Styling;
 using ReactiveUI;
 
 namespace ArtemisFlyout.Screens
@@ -117,6 +118,16 @@ namespace ArtemisFlyout.Screens
                 _flyoutService.SetWidth(value);
                 _flyoutWindowWidth = value;
                 FlyoutWidth = _flyoutWindowWidth - FlyoutSpacing;
+            }
+        }
+
+        public Color BackgroundColor
+        {
+            get
+            {
+                //Workaround
+                var thm = AvaloniaLocator.Current.GetService<FluentAvaloniaTheme>();
+                return thm.RequestedTheme == "Light" ? Colors.White : Colors.Black;
             }
         }
 

@@ -27,7 +27,7 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.10" />
     <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.10.3" />
     <PackageReference Include="EmbedIO" Version="3.4.3" />
-    <PackageReference Include="FluentAvaloniaUI" Version="1.1.5" />
+    <PackageReference Include="FluentAvaloniaUI" Version="1.1.6" />
     <PackageReference Include="Material.Icons.Avalonia" Version="1.0.2" />
     <PackageReference Include="Ninject" Version="3.3.4" />
     <PackageReference Include="RestSharp" Version="106.13.0" />

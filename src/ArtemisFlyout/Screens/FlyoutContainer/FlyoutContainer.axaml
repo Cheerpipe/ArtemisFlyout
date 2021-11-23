@@ -24,7 +24,7 @@
                                 Height="{Binding FlyoutWindowHeight}"
                                 Width="{Binding FlyoutWindowWidth}"
                                 x:Name="FlyoutWindow">
-    <Panel
+	<Panel
 	  HorizontalAlignment="Left"
 	  VerticalAlignment="Top"
 	  Name="FlyoutPanelContainer"
@@ -34,7 +34,7 @@
 			<ExperimentalAcrylicBorder.Material>
 				<ExperimentalAcrylicMaterial
 					BackgroundSource="Digger"
-					TintColor="Black"
+					TintColor="{Binding BackgroundColor}"
 					TintOpacity="0.8"
 					MaterialOpacity="0.85"/>
 			</ExperimentalAcrylicBorder.Material>

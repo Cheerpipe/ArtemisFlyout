@@ -40,18 +40,12 @@ namespace ArtemisFlyout.Screens
         public int ResizeAnimationDelay { get; set; } = 200;
         public int FlyoutSpacing { get; set; } = 12;
 
-        Panel _flyoutPanelContainer;
 
         public async Task ShowAnimated(bool isPreload = false)
         {
-
-
-            _flyoutPanelContainer = this.Find<Panel>("FlyoutPanelContainer");
-            _flyoutPanelContainer.PointerPressed += FlyoutPanelContainer_PointerPressed;
-            _flyoutPanelContainer.PointerReleased += FlyoutPanelContainer_PointerReleased;
-            _flyoutPanelContainer.PointerMoved += FlyoutPanelContainer_PointerMoved;
-
-            PropertyChanged += FlyoutWindow_PropertyChanged;
+            PointerPressed += FlyoutPanelContainer_PointerPressed;
+            PointerReleased += FlyoutPanelContainer_PointerReleased;
+            PointerMoved += FlyoutPanelContainer_PointerMoved;
 
             WindowStartupLocation = WindowStartupLocation.Manual;
 
@@ -75,7 +69,7 @@ namespace ArtemisFlyout.Screens
                 Easing = new CircularEaseOut()
             };
 
-            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, (_screenHeight - (int)(Height + FlyoutSpacing)));
+            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
             await Task.Delay(ShowAnimationDelay);
         }
 
@@ -83,35 +77,41 @@ namespace ArtemisFlyout.Screens
         private async void FlyoutPanelContainer_PointerReleased(object sender, PointerReleasedEventArgs e)
         {
             _isOnDrag = false;
-
-            if (HorizontalPosition >= (this.Width) / 2)
+            if (VerticalPosition >= GetTargetVerticalPosition() + GetTargetVerticalPosition() * 0.1f)
                 await CloseAnimated(CloseAnimationDelay);
             else
-                HorizontalPosition = 0;
+                VerticalPosition = GetTargetVerticalPosition();
         }
 
+        MouseDevice mouseDevice = new MouseDevice();
         private double _previousPosition;
         private double _currentPosition;
         private void FlyoutPanelContainer_PointerMoved(object sender, PointerEventArgs e)
         {
             if (!_isOnDrag)
             {
-                _previousPosition = e.GetPosition(this).X;
+                _previousPosition = e.GetPosition(this).Y;
                 return;
             }
 
             if (e.Pointer.IsPrimary)
             {
-                _currentPosition = e.GetPosition(this).X;
+                _currentPosition = this.PointToScreen(e.GetPosition(this)).Y;
                 double delta = _previousPosition - _currentPosition;
                 _previousPosition = _currentPosition;
 
-                if ((_currentPosition < 0) || (HorizontalPosition <= 0 && delta > 0))
+                if (VerticalPosition <= GetTargetVerticalPosition() && delta > 0)
+                {
+                    VerticalPosition = GetTargetVerticalPosition();
                     return;
-                HorizontalPosition = HorizontalPosition - (int)delta;
-            }
+                }
 
+
+                VerticalPosition = VerticalPosition - (int)delta;
+            }
         }
+
+        public int GetTargetVerticalPosition() => _screenHeight - (int)(Height + FlyoutSpacing);
 
         private bool _isOnDrag;
         private void FlyoutPanelContainer_PointerPressed(object sender, PointerPressedEventArgs e)
@@ -124,7 +124,7 @@ namespace ArtemisFlyout.Screens
                 case TextBlock:
                     return;
                 default:
-                    _previousPosition = e.GetPosition(this).X;
+                    _previousPosition = this.PointToScreen(e.GetPosition(this)).Y; ;
                     _isOnDrag = true;
                     break;
             }
@@ -141,7 +141,7 @@ namespace ArtemisFlyout.Screens
                 Easing = new CircularEaseIn(),
             };
 
-            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight - (int)(Height + FlyoutSpacing), _screenHeight);
+            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, VerticalPosition, _screenHeight);
             await Task.Delay(CloseAnimationDelay);
             Close();
         }
@@ -175,13 +175,6 @@ namespace ArtemisFlyout.Screens
             widthTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, Width, newWidth);
         }
 
-        private void FlyoutWindow_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
-        {
-            if (e.Property.Name == "Height" || e.Property.Name == "Width" || e.Property.Name == "HorizontalPosition")
-            {
-                Position = new PixelPoint(_screenWidth + (-(int)Width), _screenHeight + (-(int)Height));
-            }
-        }
         public static readonly AttachedProperty<int> HorizontalPositionProperty = AvaloniaProperty.RegisterAttached<FlyoutContainer, Control, int>(nameof(HorizontalPosition));
 
         public int HorizontalPosition

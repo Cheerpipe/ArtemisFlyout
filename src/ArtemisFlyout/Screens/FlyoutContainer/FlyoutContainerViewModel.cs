@@ -92,8 +92,6 @@ namespace ArtemisFlyout.Screens
 
         private Color GetBackgroundBrushColor()
         {
-            return Colors.Black;
-            //TODO: Setting. For now disabled
 
             return _artemisService.GetLedColor(
                 _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].DeviceType,

@@ -24,7 +24,7 @@ namespace ArtemisFlyout.Screens
         private Timer _backgroundBrushRefreshTimer;
         private int _activePageIndex;
 
-        private const int MainPageHeight = 530;
+        private const int MainPageHeight = 600;
         private const int MainPageWidth = 290;
 
         public FlyoutContainerViewModel(
@@ -92,6 +92,9 @@ namespace ArtemisFlyout.Screens
 
         private Color GetBackgroundBrushColor()
         {
+            return Colors.Black;
+            //TODO: Setting. For now disabled
+
             return _artemisService.GetLedColor(
                 _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].DeviceType,
                 _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].LedId);
@@ -117,7 +120,7 @@ namespace ArtemisFlyout.Screens
             {
                 _flyoutService.SetWidth(value);
                 _flyoutWindowWidth = value;
-                FlyoutWidth = _flyoutWindowWidth - FlyoutSpacing;
+                FlyoutWidth = _flyoutWindowWidth ;
             }
         }
 
@@ -162,7 +165,7 @@ namespace ArtemisFlyout.Screens
             {
                 _flyoutService.SetHeight(value);
                 _flyoutWindowHeight = value;
-                FlyoutHeight = _flyoutWindowHeight - FlyoutSpacing;
+                FlyoutHeight = _flyoutWindowHeight;
             }
         }
 
@@ -179,8 +182,6 @@ namespace ArtemisFlyout.Screens
         {
             ActivePageindex = newPageIndex;
         }
-
-        public int FlyoutSpacing => 12;
 
         public void GoMainPage()
         {

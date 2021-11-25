@@ -12,9 +12,9 @@
                                 Title="Artemis Flyout"
                                 ShowInTaskbar="false"
                                 CanResize="False"
-                                Topmost="True"
+                                Topmost="False"
                                 SystemDecorations="BorderOnly"
-                                TransparencyLevelHint="Transparent"
+                                TransparencyLevelHint="AcrylicBlur"
                                 ExtendClientAreaToDecorationsHint="True"
                                 ExtendClientAreaChromeHints="NoChrome"
                                 ExtendClientAreaTitleBarHeightHint="-1"
@@ -35,8 +35,8 @@
 				<ExperimentalAcrylicMaterial
 					BackgroundSource="Digger"
 					TintColor="{Binding BackgroundColor}"
-					TintOpacity="0.8"
-					MaterialOpacity="0.85"/>
+					TintOpacity="0.65"
+					MaterialOpacity="0.65"/>
 			</ExperimentalAcrylicBorder.Material>
 			<Border CornerRadius="10 10 10 10"
 					BorderBrush="#414141"

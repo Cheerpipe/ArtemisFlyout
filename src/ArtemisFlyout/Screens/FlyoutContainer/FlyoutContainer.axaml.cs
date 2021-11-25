@@ -74,11 +74,13 @@ namespace ArtemisFlyout.Screens
         #region Drag to move
         private async void FlyoutPanelContainer_PointerReleased(object sender, PointerReleasedEventArgs e)
         {
+
             _isOnDrag = false;
-            if (VerticalPosition >= GetTargetVerticalPosition() + GetTargetVerticalPosition() * 0.1f)
+            if (VerticalPosition >= GetTargetVerticalPosition() * 1.1f)
                 await CloseAnimated(CloseAnimationDelay);
             else
                 VerticalPosition = GetTargetVerticalPosition();
+            Debug.WriteLine($"VerticalPosition {Position.Y} - GetTargetVerticalPosition() {GetTargetVerticalPosition()}");
         }
 
         private double _previousPosition;
@@ -87,7 +89,7 @@ namespace ArtemisFlyout.Screens
         {
             if (!_isOnDrag)
             {
-                _previousPosition = e.GetPosition(this).Y;
+                _previousPosition = this.PointToScreen(e.GetPosition(this)).Y;
                 return;
             }
 
@@ -205,11 +207,12 @@ namespace ArtemisFlyout.Screens
             switch (e.Property.Name)
             {
                 case "Width":
-                    Position = Position.WithX(_screenWidth - ((int) Width + FlyoutSpacing));
+                    Position = Position.WithX(_screenWidth - ((int)Width + FlyoutSpacing));
+                    _isOnDrag = false;
                     break;
                 case "Height":
-                    Position = Position.WithY(_screenHeight - ((int)Height + FlyoutSpacing));
-                    Debug.WriteLine(Height);
+                    VerticalPosition =_screenHeight - ((int)Height + FlyoutSpacing);
+                    _isOnDrag = false;
                     break;
             }
         }

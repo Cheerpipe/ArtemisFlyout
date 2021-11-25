@@ -45,12 +45,12 @@ namespace ArtemisFlyout.Services
 
         public void SetHeight(double newHeight)
         {
-            FlyoutWindowInstance?.SetHeight(newHeight);
+            FlyoutWindowInstance?.SetHeight(newHeight+1);
         }
 
         public void SetWidth(double newWidth)
         {
-            FlyoutWindowInstance?.SetWidth(newWidth);
+            FlyoutWindowInstance?.SetWidth(newWidth+1);
         }
 
         //TODO: Move ViewModel creation outside the Service

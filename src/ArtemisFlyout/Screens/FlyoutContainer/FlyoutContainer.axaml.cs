@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Animation;
@@ -36,7 +37,7 @@ namespace ArtemisFlyout.Screens
 
         public int ShowAnimationDelay { get; set; } = 250;
         public int CloseAnimationDelay { get; set; } = 200;
-        public int ResizeAnimationDelay { get; set; } = 200;
+        public int ResizeAnimationDelay { get; set; } = 150;
         public int FlyoutSpacing { get; set; } = 12;
 
 
@@ -45,6 +46,7 @@ namespace ArtemisFlyout.Screens
             PointerPressed += FlyoutPanelContainer_PointerPressed;
             PointerReleased += FlyoutPanelContainer_PointerReleased;
             PointerMoved += FlyoutPanelContainer_PointerMoved;
+            PropertyChanged += FlyoutWindow_PropertyChanged;
 
             WindowStartupLocation = WindowStartupLocation.Manual;
 
@@ -100,7 +102,6 @@ namespace ArtemisFlyout.Screens
                     VerticalPosition = GetTargetVerticalPosition();
                     return;
                 }
-
 
                 VerticalPosition -= (int)delta;
             }
@@ -197,6 +198,20 @@ namespace ArtemisFlyout.Screens
         {
             HorizontalPositionProperty.Changed.Subscribe(HorizontalPositionChanged);
             VerticalPositionProperty.Changed.Subscribe(VerticalPositionChanged);
+        }
+
+        private void FlyoutWindow_PropertyChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            switch (e.Property.Name)
+            {
+                case "Width":
+                    Position = Position.WithX(_screenWidth - ((int) Width + FlyoutSpacing));
+                    break;
+                case "Height":
+                    Position = Position.WithY(_screenHeight - ((int)Height + FlyoutSpacing));
+                    Debug.WriteLine(Height);
+                    break;
+            }
         }
 
         private static void HorizontalPositionChanged(AvaloniaPropertyChangedEventArgs e)

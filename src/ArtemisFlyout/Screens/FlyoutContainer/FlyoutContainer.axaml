@@ -38,12 +38,12 @@
 					TintOpacity="0.65"
 					MaterialOpacity="0.65"/>
 			</ExperimentalAcrylicBorder.Material>
-			<Border CornerRadius="10 10 10 10"
-					BorderBrush="#414141"
+			<Border CornerRadius="10 8 8 8"
+					BorderBrush="#313131"
 					BorderThickness="1"
 					ClipToBounds="False"
                     Background="{Binding BackgroundBrush}"
-					BoxShadow="3 4 0 0 #64000000">
+					BoxShadow="3 4 1 1 #64000000">
 				<Border.Transitions>
 					<Transitions>
 						<BrushTransition  Property="Background" Duration="0:0:1"/>
@@ -68,8 +68,7 @@
 					</DockPanel>
 					<!-- Bottom command bar Start -->
 					<Border CornerRadius="0 0 10 10"
-							BorderBrush="#414141"
-							BorderThickness="0"
+
 							ClipToBounds="True"
 							Background="Transparent"
 							VerticalAlignment="Bottom"

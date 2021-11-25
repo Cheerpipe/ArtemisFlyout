@@ -49,15 +49,9 @@ namespace ArtemisFlyout.Screens
 
             WindowStartupLocation = WindowStartupLocation.Manual;
 
-            if (isPreload)
-            {
-                this.WindowState = WindowState.Minimized;
-                HorizontalPosition = Screens.All.Sum(s => s.WorkingArea.Width);
-            }
-            else
-            {
-                Position = new PixelPoint(_screenWidth - (int)(Width + 12), Position.Y);
-            }
+            if (isPreload) WindowState = WindowState.Minimized;
+
+            Position = new PixelPoint(_screenWidth - (int)(Width + 12), Position.Y);
 
             Show();
 
@@ -69,8 +63,11 @@ namespace ArtemisFlyout.Screens
                 Easing = new CircularEaseOut()
             };
 
-            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
-            await Task.Delay(ShowAnimationDelay);
+            if (!isPreload)
+            {
+                showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
+                await Task.Delay(ShowAnimationDelay);
+            }
         }
 
         #region Drag to move
@@ -83,7 +80,6 @@ namespace ArtemisFlyout.Screens
                 VerticalPosition = GetTargetVerticalPosition();
         }
 
-        MouseDevice mouseDevice = new MouseDevice();
         private double _previousPosition;
         private double _currentPosition;
         private void FlyoutPanelContainer_PointerMoved(object sender, PointerEventArgs e)
@@ -107,7 +103,7 @@ namespace ArtemisFlyout.Screens
                 }
 
 
-                VerticalPosition = VerticalPosition - (int)delta;
+                VerticalPosition -= (int)delta;
             }
         }
 
@@ -124,7 +120,7 @@ namespace ArtemisFlyout.Screens
                 case TextBlock:
                     return;
                 default:
-                    _previousPosition = this.PointToScreen(e.GetPosition(this)).Y; ;
+                    _previousPosition = this.PointToScreen(e.GetPosition(this)).Y;
                     _isOnDrag = true;
                     break;
             }
@@ -195,7 +191,7 @@ namespace ArtemisFlyout.Screens
             set
             {
                 SetValue(VerticalPositionProperty, value);
-                Position = new PixelPoint(Position.X, value);
+                Position = Position.WithY(value);
             }
         }
         static FlyoutContainer()

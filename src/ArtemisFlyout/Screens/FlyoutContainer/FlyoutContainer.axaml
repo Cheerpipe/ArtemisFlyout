@@ -42,7 +42,7 @@
 					BorderBrush="#414141"
 					BorderThickness="1"
 					ClipToBounds="False"
-					Background="{Binding BackgroundBrush}"
+                    Background="{Binding BackgroundBrush}"
 					BoxShadow="3 4 0 0 #64000000">
 				<Border.Transitions>
 					<Transitions>

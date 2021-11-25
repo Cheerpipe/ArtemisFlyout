@@ -128,7 +128,7 @@ namespace ArtemisFlyout.Screens
             {
                 //Workaround
                 var thm = AvaloniaLocator.Current.GetService<FluentAvaloniaTheme>();
-                return thm.RequestedTheme == "Light" ? Colors.White : Colors.Black;
+                return thm.RequestedTheme == "Light" ? Colors.White :Color.Parse("#99000000");
             }
         }
 

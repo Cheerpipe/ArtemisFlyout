@@ -20,10 +20,11 @@ namespace ArtemisFlyout
             var builder = AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .UseReactiveUI()
+                .UseSkia()
                 .With(new Win32PlatformOptions()
             {
                 UseWindowsUIComposition = true,
-                CompositionBackdropCornerRadius = 10f,
+                CompositionBackdropCornerRadius = 8f,
             });
             return builder;
         }

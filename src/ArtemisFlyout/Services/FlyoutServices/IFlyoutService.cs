@@ -8,7 +8,7 @@ namespace ArtemisFlyout.Services
         Task CloseAndRelease(bool animate = true);
         void SetHeight(double newHeight);
         void SetWidth(double newWidth);
-        Task Preload();
+        Task PreLoad();
         void Toggle();
     }
 }

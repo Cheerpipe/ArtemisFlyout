@@ -78,6 +78,8 @@ namespace ArtemisFlyout.Screens
             _backgroundBrushRefreshTimer?.Change(100, 3000);
         }
 
+        public string XXX => "0:0:1";
+
         private LinearGradientBrush CreateBackgroundBrush(Color color)
         {
             LinearGradientBrush brush = new LinearGradientBrush
@@ -118,7 +120,7 @@ namespace ArtemisFlyout.Screens
             {
                 _flyoutService.SetWidth(value);
                 _flyoutWindowWidth = value;
-                FlyoutWidth = _flyoutWindowWidth ;
+                FlyoutWidth = _flyoutWindowWidth;
             }
         }
 
@@ -128,7 +130,7 @@ namespace ArtemisFlyout.Screens
             {
                 //Workaround
                 var thm = AvaloniaLocator.Current.GetService<FluentAvaloniaTheme>();
-                return thm.RequestedTheme == "Light" ? Colors.White :Color.Parse("#99000000");
+                return thm.RequestedTheme == "Light" ? Colors.White : Color.Parse("#99000000");
             }
         }
 

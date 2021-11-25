@@ -35,8 +35,8 @@ namespace ArtemisFlyout.Screens
         private readonly int _screenHeight;
         private readonly int _screenWidth;
 
-        public int ShowAnimationDelay { get; set; } = 250;
-        public int CloseAnimationDelay { get; set; } = 200;
+        public int ShowAnimationDelay { get; set; } = 300;
+        public int CloseAnimationDelay { get; set; } = 150;
         public int ResizeAnimationDelay { get; set; } = 150;
         public int FlyoutSpacing { get; set; } = 12;
 
@@ -52,7 +52,7 @@ namespace ArtemisFlyout.Screens
 
             if (isPreload) WindowState = WindowState.Minimized;
 
-            Position = new PixelPoint(_screenWidth - (int)(Width + 12), Position.Y);
+            Position = new PixelPoint(_screenWidth - (int)(Width + FlyoutSpacing), Position.Y);
 
             Show();
 

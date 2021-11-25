@@ -76,16 +76,12 @@ namespace ArtemisFlyout.Services
             return flyoutInstance;
         }
 
-        public async Task Preload()
+        public async Task PreLoad()
         {
             if (FlyoutWindowInstance != null) return;
             FlyoutWindowInstance = GetInstance();
             await FlyoutWindowInstance?.ShowAnimated(true)!;
-            await Task.Delay(300);
-            FlyoutWindowInstance?.ViewModel?.GoCustomProfile();
-            await Task.Delay(300);
-            FlyoutWindowInstance?.ViewModel?.GoDevicesPage();
-            await Task.Delay(300);
+            await Task.Delay(500);
             await CloseAndRelease(false);
         }
 

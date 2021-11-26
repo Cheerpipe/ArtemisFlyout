@@ -20,7 +20,7 @@
                                 ExtendClientAreaTitleBarHeightHint="-1"
                                 Background="Transparent"
                                 UseLayoutRounding="False"
-                                CornerRadius="10 10 10 10"
+                                CornerRadius="8 8 8 8"
                                 Height="{Binding FlyoutWindowHeight}"
                                 Width="{Binding FlyoutWindowWidth}"
                                 x:Name="FlyoutWindow">
@@ -30,7 +30,7 @@
 	  Name="FlyoutPanelContainer"
 	  Width="{Binding FlyoutWidth}"
 	  Height="{Binding FlyoutHeight}">
-		<ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="10">
+		<ExperimentalAcrylicBorder IsHitTestVisible="True" CornerRadius="8">
 			<ExperimentalAcrylicBorder.Material>
 				<ExperimentalAcrylicMaterial
 					BackgroundSource="Digger"
@@ -38,14 +38,14 @@
 					TintOpacity="0.65"
 					MaterialOpacity="0.65"/>
 			</ExperimentalAcrylicBorder.Material>
-			<Border CornerRadius="10 8 8 8"
+			<Border CornerRadius="8 8 8 8"
 					BorderBrush="#313131"
 					BorderThickness="1"
-					ClipToBounds="False"
-					BoxShadow="3 4 1 1 #64000000">
-				<Panel
+					ClipToBounds="True"
+					BoxShadow="3 4 1 1 #64000000"
                     Background="{Binding BackgroundBrush}"
-                    Name="MainContainerPanel">
+                    Name="ContainerBorder">
+				<Panel>
 					<DockPanel>
 						<!-- Flyout content Start -->
 						<Panel DockPanel.Dock="Top" Margin="0 0 0 0">
@@ -63,8 +63,7 @@
 						<!-- Flyout content End-->
 					</DockPanel>
 					<!-- Bottom command bar Start -->
-					<Border CornerRadius="0 0 10 10"
-
+					<Border CornerRadius="0 0 8 8"
 							ClipToBounds="True"
 							Background="Transparent"
 							VerticalAlignment="Bottom"

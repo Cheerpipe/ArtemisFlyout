@@ -29,12 +29,12 @@ namespace ArtemisFlyout.Screens
 
             _screenWidth = Screens.Primary.WorkingArea.Width;
             _screenHeight = Screens.Primary.WorkingArea.Height;
-            _mainContainerPanel = this.Find<Panel>("MainContainerPanel");
+            _containerBorder = this.Find<Border>("ContainerBorder");
         }
 
         private readonly int _screenHeight;
         private readonly int _screenWidth;
-        private readonly Panel _mainContainerPanel;
+        private readonly Border _containerBorder;
 
         public int ShowAnimationDelay { get; set; } = 300;
         public int CloseAnimationDelay { get; set; } = 150;
@@ -72,16 +72,16 @@ namespace ArtemisFlyout.Screens
             }
 
             //Workaround to activate animation after flyout is showed because duration property can't be binded
-            if (_mainContainerPanel is not null)
+            if (_containerBorder is not null)
             {
                 BrushTransition backgroundTransition = new BrushTransition()
                 {
-                    Property = Panel.BackgroundProperty,
+                    Property = Border.BackgroundProperty,
                     Duration = TimeSpan.FromMilliseconds(500)
                 };
 
-                _mainContainerPanel.Transitions = new Transitions();
-                _mainContainerPanel.Transitions.Add(backgroundTransition);
+                _containerBorder.Transitions = new Transitions();
+                _containerBorder.Transitions.Add(backgroundTransition);
             }
         }
 

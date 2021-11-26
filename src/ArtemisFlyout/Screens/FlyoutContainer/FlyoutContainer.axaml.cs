@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Animation;
@@ -30,10 +29,12 @@ namespace ArtemisFlyout.Screens
 
             _screenWidth = Screens.Primary.WorkingArea.Width;
             _screenHeight = Screens.Primary.WorkingArea.Height;
+            _mainContainerPanel = this.Find<Panel>("MainContainerPanel");
         }
 
         private readonly int _screenHeight;
         private readonly int _screenWidth;
+        private readonly Panel _mainContainerPanel;
 
         public int ShowAnimationDelay { get; set; } = 300;
         public int CloseAnimationDelay { get; set; } = 150;
@@ -69,6 +70,19 @@ namespace ArtemisFlyout.Screens
                 showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
                 await Task.Delay(ShowAnimationDelay);
             }
+
+            //Workaround to activate animation after flyout is showed because duration property can't be binded
+            if (_mainContainerPanel is not null)
+            {
+                BrushTransition backgroundTransition = new BrushTransition()
+                {
+                    Property = Panel.BackgroundProperty,
+                    Duration = TimeSpan.FromMilliseconds(500)
+                };
+
+                _mainContainerPanel.Transitions = new Transitions();
+                _mainContainerPanel.Transitions.Add(backgroundTransition);
+            }
         }
 
         #region Drag to move
@@ -80,7 +94,6 @@ namespace ArtemisFlyout.Screens
                 await CloseAnimated(CloseAnimationDelay);
             else
                 VerticalPosition = GetTargetVerticalPosition();
-            Debug.WriteLine($"VerticalPosition {Position.Y} - GetTargetVerticalPosition() {GetTargetVerticalPosition()}");
         }
 
         private double _previousPosition;
@@ -211,7 +224,7 @@ namespace ArtemisFlyout.Screens
                     _isOnDrag = false;
                     break;
                 case "Height":
-                    VerticalPosition =_screenHeight - ((int)Height + FlyoutSpacing);
+                    VerticalPosition = _screenHeight - ((int)Height + FlyoutSpacing);
                     _isOnDrag = false;
                     break;
             }

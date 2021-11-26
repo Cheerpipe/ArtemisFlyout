@@ -43,12 +43,9 @@
 					BorderThickness="1"
 					ClipToBounds="False"
 					BoxShadow="3 4 1 1 #64000000">
-				<Border.Transitions>
-					<Transitions>
-						<BrushTransition  Property="Background" Duration="0:0:1"  Delay="0:0:0.25"/>
-					</Transitions>
-				</Border.Transitions>
-				<Panel>
+				<Panel
+                    Background="{Binding BackgroundBrush}"
+                    Name="MainContainerPanel">
 					<DockPanel>
 						<!-- Flyout content Start -->
 						<Panel DockPanel.Dock="Top" Margin="0 0 0 0">

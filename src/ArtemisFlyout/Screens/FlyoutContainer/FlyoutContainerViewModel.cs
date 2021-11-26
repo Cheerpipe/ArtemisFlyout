@@ -21,6 +21,7 @@ namespace ArtemisFlyout.Screens
         private readonly List<LedColorPickerLed> _ledColorPickerLeds;
         private readonly Random _random = new();
         private readonly byte _colorMaskOpacity;
+        private readonly bool _ledColorPickerEnabled;
         private Timer _backgroundBrushRefreshTimer;
         private int _activePageIndex;
 
@@ -57,9 +58,10 @@ namespace ArtemisFlyout.Screens
             FlyoutWindowWidth = MainPageWidth;
             FlyoutWindowHeight = MainPageHeight;
             _ledColorPickerLeds = configurationService.Get().LedColorPickerLedSettings.LedColorPickerLeds;
+            _ledColorPickerEnabled = configurationService.Get().LedColorPickerLedSettings.Enabled;
             _colorMaskOpacity = Math.Clamp(configurationService.Get().LedColorPickerLedSettings.ColorMaskOpacity, byte.MinValue, byte.MaxValue);
 
-            if (configurationService.Get().LedColorPickerLedSettings.KeepColorInSync)
+            if (configurationService.Get().LedColorPickerLedSettings.KeepColorInSync && _ledColorPickerEnabled)
             {
                 _backgroundBrushRefreshTimer = new Timer(_ => UpdateColorBrush(), null, 0, 3000);
             }
@@ -78,8 +80,6 @@ namespace ArtemisFlyout.Screens
             _backgroundBrushRefreshTimer?.Change(100, 3000);
         }
 
-        public string XXX => "0:0:1";
-
         private LinearGradientBrush CreateBackgroundBrush(Color color)
         {
             LinearGradientBrush brush = new LinearGradientBrush
@@ -94,7 +94,8 @@ namespace ArtemisFlyout.Screens
 
         private Color GetBackgroundBrushColor()
         {
-
+            if (!_ledColorPickerEnabled)
+                return Color.Parse("#00000000");
             return _artemisService.GetLedColor(
                 _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].DeviceType,
                 _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].LedId);
@@ -146,7 +147,6 @@ namespace ArtemisFlyout.Screens
                 this.RaisePropertyChanged(nameof(BackgroundBrush));
             }
         }
-
 
 
         private double _flyoutWidth;

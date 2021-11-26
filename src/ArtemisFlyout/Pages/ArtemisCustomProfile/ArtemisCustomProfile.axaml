@@ -23,8 +23,7 @@
 		<DockPanel>
 			<ItemsRepeater
 				Items="{Binding ArtemisCustomProfileViewModel.ProfileColors}"
-				Margin="20 10 20 0"
-                Background="">
+				Margin="20 10 20 0">
 				<ItemsRepeater.ItemTemplate>
 					<DataTemplate DataType="pages:CustomProfileColorViewModel">
 						<StackPanel

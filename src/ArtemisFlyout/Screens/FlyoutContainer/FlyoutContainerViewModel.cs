@@ -24,7 +24,7 @@ namespace ArtemisFlyout.Screens
         private Timer _backgroundBrushRefreshTimer;
         private int _activePageIndex;
 
-        private const int MainPageHeight = 530;
+        private const int MainPageHeight = 520;
         private const int MainPageWidth = 290;
 
         public FlyoutContainerViewModel(

@@ -36,10 +36,12 @@ namespace ArtemisFlyout.Services
             {
                 _ = CloseAndRelease();
             };
+
             if (animate)
                 await FlyoutWindowInstance.ShowAnimated();
             else
                 FlyoutWindowInstance.Show();
+
             _opening = false;
         }
 
@@ -104,11 +106,11 @@ namespace ArtemisFlyout.Services
             _closing = true;
 
             if (animate)
-                await FlyoutWindowInstance?.CloseAnimated()!;
+                await FlyoutWindowInstance.CloseAnimated()!;
             else
-                FlyoutWindowInstance?.Close();
+                FlyoutWindowInstance.Close();
 
-            FlyoutWindowInstance?.ViewModel?.GoMainPage();
+            FlyoutWindowInstance.ViewModel!.GoMainPage();
 
             FlyoutWindowInstance = null;
             GC.Collect();

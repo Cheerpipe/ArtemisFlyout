@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
+using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -36,12 +37,12 @@ namespace ArtemisFlyout.Screens
         private readonly int _screenWidth;
         private readonly Border _containerBorder;
 
-        public int ShowAnimationDelay { get; set; } = 300;
-        public int CloseAnimationDelay { get; set; } = 150;
+        public int ShowAnimationDelay { get; set; } = 250;
+        public int CloseAnimationDelay { get; set; } = 250;
         public int ResizeAnimationDelay { get; set; } = 150;
         public int FlyoutSpacing { get; set; } = 12;
 
-
+        private IntegerTransition _showTransition;
         public async Task ShowAnimated(bool isPreload = false)
         {
             PointerPressed += FlyoutPanelContainer_PointerPressed;
@@ -58,16 +59,16 @@ namespace ArtemisFlyout.Screens
             Show();
 
             Clock = Avalonia.Animation.Clock.GlobalClock;
-            var showTransition = new IntegerTransition()
+            _showTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.VerticalPositionProperty,
                 Duration = TimeSpan.FromMilliseconds(ShowAnimationDelay),
-                Easing = new CircularEaseOut()
+                Easing = new ExponentialEaseOut()
             };
 
             if (!isPreload)
             {
-                showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
+                _showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
                 await Task.Delay(ShowAnimationDelay);
             }
 
@@ -84,6 +85,30 @@ namespace ArtemisFlyout.Screens
                 _containerBorder.Transitions.Add(backgroundTransition);
             }
         }
+
+
+        public async Task CloseAnimated(double animationDuration)
+        {
+            if (_showTransition != null)
+            {
+            }
+            var closeTransition = new IntegerTransition()
+            {
+                Property = FlyoutContainer.VerticalPositionProperty,
+                Duration = TimeSpan.FromMilliseconds(animationDuration),
+                Easing = new ExponentialEaseIn(),
+            };
+
+            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, VerticalPosition, _screenHeight);
+            await Task.Delay(CloseAnimationDelay);
+            Close();
+        }
+
+        public async Task CloseAnimated()
+        {
+            await CloseAnimated(CloseAnimationDelay);
+        }
+
 
         #region Drag to move
         private async void FlyoutPanelContainer_PointerReleased(object sender, PointerReleasedEventArgs e)
@@ -142,25 +167,6 @@ namespace ArtemisFlyout.Screens
         }
 
         #endregion
-
-        public async Task CloseAnimated(double animationDuration)
-        {
-            var closeTransition = new IntegerTransition()
-            {
-                Property = FlyoutContainer.VerticalPositionProperty,
-                Duration = TimeSpan.FromMilliseconds(animationDuration),
-                Easing = new CircularEaseIn(),
-            };
-
-            closeTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, VerticalPosition, _screenHeight);
-            await Task.Delay(CloseAnimationDelay);
-            Close();
-        }
-
-        public async Task CloseAnimated()
-        {
-            await CloseAnimated(CloseAnimationDelay);
-        }
 
         public void SetHeight(double newHeight)
         {

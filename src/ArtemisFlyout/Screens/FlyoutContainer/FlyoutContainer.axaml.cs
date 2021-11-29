@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
-using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -42,7 +41,6 @@ namespace ArtemisFlyout.Screens
         public int ResizeAnimationDelay { get; set; } = 150;
         public int FlyoutSpacing { get; set; } = 12;
 
-        private IntegerTransition _showTransition;
         public async Task ShowAnimated(bool isPreload = false)
         {
             PointerPressed += FlyoutPanelContainer_PointerPressed;
@@ -59,7 +57,7 @@ namespace ArtemisFlyout.Screens
             Show();
 
             Clock = Avalonia.Animation.Clock.GlobalClock;
-            _showTransition = new IntegerTransition()
+            IntegerTransition showTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.VerticalPositionProperty,
                 Duration = TimeSpan.FromMilliseconds(ShowAnimationDelay),
@@ -68,7 +66,7 @@ namespace ArtemisFlyout.Screens
 
             if (!isPreload)
             {
-                _showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
+                showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
                 await Task.Delay(ShowAnimationDelay);
             }
 
@@ -89,10 +87,7 @@ namespace ArtemisFlyout.Screens
 
         public async Task CloseAnimated(double animationDuration)
         {
-            if (_showTransition != null)
-            {
-            }
-            var closeTransition = new IntegerTransition()
+            IntegerTransition closeTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.VerticalPositionProperty,
                 Duration = TimeSpan.FromMilliseconds(animationDuration),

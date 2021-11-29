@@ -82,7 +82,7 @@ namespace ArtemisFlyout.Services
         {
             if (FlyoutWindowInstance != null) return;
             FlyoutWindowInstance = GetInstance();
-            await FlyoutWindowInstance?.ShowAnimated(true)!;
+            await FlyoutWindowInstance.ShowAnimated(true);
             await Task.Delay(500);
             await CloseAndRelease(false);
         }
@@ -106,13 +106,14 @@ namespace ArtemisFlyout.Services
             _closing = true;
 
             if (animate)
-                await FlyoutWindowInstance.CloseAnimated()!;
+                await FlyoutWindowInstance.CloseAnimated();
             else
                 FlyoutWindowInstance.Close();
 
+            FlyoutWindowInstance = null;
+
             _closing = false;
 
-            FlyoutWindowInstance = null;
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();

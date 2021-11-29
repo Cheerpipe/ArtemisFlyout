@@ -110,13 +110,12 @@ namespace ArtemisFlyout.Services
             else
                 FlyoutWindowInstance.Close();
 
-            FlyoutWindowInstance.ViewModel!.GoMainPage();
+            _closing = false;
 
             FlyoutWindowInstance = null;
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
-            _closing = false;
         }
     }
 }

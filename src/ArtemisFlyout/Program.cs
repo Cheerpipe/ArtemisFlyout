@@ -2,6 +2,8 @@ using Avalonia;
 using System.Threading;
 using ArtemisFlyout.Controllers;
 using ArtemisFlyout.IoC;
+using ArtemisFlyout.Pages;
+using ArtemisFlyout.Screens;
 using ArtemisFlyout.Services;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
@@ -22,10 +24,10 @@ namespace ArtemisFlyout
                 .UseReactiveUI()
                 .UseSkia()
                 .With(new Win32PlatformOptions()
-            {
-                UseWindowsUIComposition = true,
-                CompositionBackdropCornerRadius = 8f,
-            });
+                {
+                    UseWindowsUIComposition = true,
+                    CompositionBackdropCornerRadius = 8f,
+                });
             return builder;
         }
 
@@ -55,6 +57,27 @@ namespace ArtemisFlyout
             webServerService.AddController<FlyoutRestController>();
             webServerService.Start();
 
+            IArtemisService artemisService = Kernel.Get<IArtemisService>();
+            IConfigurationService configurationService = Kernel.Get<IConfigurationService>();
+            IFlyoutService flyoutService = Kernel.Get<IFlyoutService>();
+            flyoutService.SetPopulateViewModelFunc(() =>
+            {
+                if (!artemisService.IsRunning())
+                {
+                    return Kernel.Get<ArtemisLauncherViewModel>();
+                }
+                else if (!artemisService.CheckJsonDatamodelPluginPlugin().VersionIsOk || !artemisService.CheckExtendedApiRestPlugin().VersionIsOk)
+
+                {
+                    return Kernel.Get<ArtemisPluginPrerequisitesViewModel>();
+                }
+                else
+                {
+                    configurationService.Load();
+                    return Kernel.Get<FlyoutContainerViewModel>();
+                }
+            });
+
             var trayIconService = Kernel.Get<ITrayIconService>();
             trayIconService.Show();
 
@@ -65,5 +88,7 @@ namespace ArtemisFlyout
             webServerService.Stop();
             trayIconService.Hide();
         }
+
+       
     }
 }

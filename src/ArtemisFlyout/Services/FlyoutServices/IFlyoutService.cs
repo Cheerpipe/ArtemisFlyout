@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using ArtemisFlyout.ViewModels;
 
 namespace ArtemisFlyout.Services
 {
@@ -10,5 +12,7 @@ namespace ArtemisFlyout.Services
         void SetWidth(double newWidth);
         Task PreLoad();
         void Toggle();
+
+        void SetPopulateViewModelFunc(Func<ViewModelBase> populateViewModelFunc);
     }
 }

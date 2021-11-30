@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ArtemisFlyout.IoC;
-using ArtemisFlyout.Pages;
 using ArtemisFlyout.Screens;
+using ArtemisFlyout.ViewModels;
 using Ninject;
 
 namespace ArtemisFlyout.Services
@@ -10,16 +9,13 @@ namespace ArtemisFlyout.Services
     public class FlyoutService : IFlyoutService
     {
         public static FlyoutContainer FlyoutWindowInstance { get; private set; }
-        private readonly IConfigurationService _configurationService;
-        private readonly IArtemisService _artemisService;
         private readonly IKernel _kernel;
+        private Func<ViewModelBase> _populateViewModelFunc;
         private bool _opening;
         private bool _closing;
 
-        public FlyoutService(IKernel kernel, IConfigurationService configurationService, IArtemisService artemisService)
+        public FlyoutService(IKernel kernel)
         {
-            _configurationService = configurationService;
-            _artemisService = artemisService;
             _kernel = kernel;
         }
 
@@ -30,7 +26,7 @@ namespace ArtemisFlyout.Services
             _opening = true;
 
             if (FlyoutWindowInstance != null) return;
-            FlyoutWindowInstance = GetInstance();
+            FlyoutWindowInstance = CreateInstance();
 
             FlyoutWindowInstance.Deactivated += (_, _) =>
             {
@@ -42,46 +38,36 @@ namespace ArtemisFlyout.Services
             else
                 FlyoutWindowInstance.Show();
 
+            FlyoutWindowInstance?.Activate();
+
             _opening = false;
         }
 
         public void SetHeight(double newHeight)
         {
-            FlyoutWindowInstance?.SetHeight(newHeight+1);
+            FlyoutWindowInstance?.SetHeight(newHeight + 1);
         }
 
         public void SetWidth(double newWidth)
         {
-            FlyoutWindowInstance?.SetWidth(newWidth+1);
+            FlyoutWindowInstance?.SetWidth(newWidth + 1);
         }
 
         //TODO: Move ViewModel creation outside the Service
-        private FlyoutContainer GetInstance()
+        private FlyoutContainer CreateInstance()
         {
+            if (_populateViewModelFunc == null)
+                throw new Exception("PopulateViewModelFunc delegate must be seted using SetPopulateViewModelFunc() before using a Flyout");
 
             FlyoutContainer flyoutInstance = _kernel.Get<FlyoutContainer>();
-            if (!_artemisService.IsRunning())
-            {
-                flyoutInstance.DataContext = Kernel.Get<ArtemisLauncherViewModel>();
-            }
-            else if (!_artemisService.CheckJsonDatamodelPluginPlugin().VersionIsOk || !_artemisService.CheckExtendedApiRestPlugin().VersionIsOk)
-
-            {
-                flyoutInstance.DataContext = Kernel.Get<ArtemisPluginPrerequisitesViewModel>();
-            }
-            else
-            {
-                _configurationService.Load();
-                flyoutInstance.DataContext = Kernel.Get<FlyoutContainerViewModel>();
-            }
-
+            flyoutInstance.DataContext = _populateViewModelFunc();
             return flyoutInstance;
         }
 
         public async Task PreLoad()
         {
             if (FlyoutWindowInstance != null) return;
-            FlyoutWindowInstance = GetInstance();
+            FlyoutWindowInstance = CreateInstance();
             await FlyoutWindowInstance.ShowAnimated(true);
             await Task.Delay(500);
             await CloseAndRelease(false);
@@ -99,10 +85,16 @@ namespace ArtemisFlyout.Services
             }
         }
 
+        public void SetPopulateViewModelFunc(Func<ViewModelBase> populateViewModelFunc)
+        {
+            _populateViewModelFunc = populateViewModelFunc;
+        }
+
         public async Task CloseAndRelease(bool animate = true)
         {
             if (_closing)
                 return;
+
             _closing = true;
 
             if (animate)

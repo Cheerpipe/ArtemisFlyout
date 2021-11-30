@@ -2,7 +2,7 @@
 {
     public class LedColorPickerLed
     {
-        public string DeviceType { get; set; }
+        public string DeviceName { get; set; }
         public string LedId { get; set; }
     }
 }

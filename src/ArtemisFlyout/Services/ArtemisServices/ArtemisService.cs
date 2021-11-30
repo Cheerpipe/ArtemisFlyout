@@ -74,7 +74,7 @@ namespace ArtemisFlyout.Services
             {
                 return Color.Parse(_restService.Get($"/extended-rest-api/get-led-color/{deviceType}/{ledId}").Content);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 if (Color.TryParse(_keyColorPickerDefaultColorHex, out Color defaultColor))
                     return defaultColor;

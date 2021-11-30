@@ -50,11 +50,14 @@ namespace ArtemisFlyout.Screens
 
             WindowStartupLocation = WindowStartupLocation.Manual;
 
-            if (isPreload) WindowState = WindowState.Minimized;
+            if (isPreload) 
+                WindowState = WindowState.Minimized;
 
             Position = new PixelPoint(_screenWidth - (int)(Width + FlyoutSpacing), Position.Y);
 
             Show();
+            Activate();
+
 
             Clock = Avalonia.Animation.Clock.GlobalClock;
             IntegerTransition showTransition = new IntegerTransition()
@@ -64,11 +67,10 @@ namespace ArtemisFlyout.Screens
                 Easing = new ExponentialEaseOut()
             };
 
-            if (!isPreload)
-            {
+            if (!isPreload) 
                 showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
-                await Task.Delay(ShowAnimationDelay);
-            }
+
+            await Task.Delay(ShowAnimationDelay);
 
             //Workaround to activate animation after flyout is showed because duration property can't be binded
             if (_containerBorder is not null)
@@ -82,6 +84,7 @@ namespace ArtemisFlyout.Screens
                 _containerBorder.Transitions = new Transitions();
                 _containerBorder.Transitions.Add(backgroundTransition);
             }
+            Activate();
         }
 
 

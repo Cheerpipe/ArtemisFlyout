@@ -96,9 +96,17 @@ namespace ArtemisFlyout.Screens
         {
             if (!_ledColorPickerEnabled)
                 return Color.Parse("#00000000");
-            return _artemisService.GetLedColor(
-                _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].DeviceType,
-                _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].LedId);
+
+            for (int intent = 0; intent < 5; intent++)
+            {
+                Color pickedColor = _artemisService.GetLedColor(
+                    _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].DeviceName,
+                    _ledColorPickerLeds[_random.Next(_ledColorPickerLeds.Count - 1)].LedId);
+                if (pickedColor != Colors.Black)
+                    return pickedColor;
+            }
+
+            return Color.Parse("#00000000");
         }
 
         public ArtemisLightControlViewModel ArtemisLightControlViewModel { get; }

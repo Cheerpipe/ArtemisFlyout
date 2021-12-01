@@ -46,7 +46,7 @@
                     Background="{Binding BackgroundBrush}"
                     Name="ContainerBorder">
 				<Panel Margin="0 0 0 0">
-					<Panel Name="MainContainerPanel" Margin="0 0 0 0">
+					<Panel Name="MainContainerPanel">
 						<!-- Pages Start -->
 						<DockPanel>
 							<!-- Flyout content Start -->

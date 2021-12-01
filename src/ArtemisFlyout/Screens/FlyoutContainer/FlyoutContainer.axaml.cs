@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Media.Transformation;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 // ReSharper disable UnusedParameter.Local
@@ -37,6 +38,7 @@ namespace ArtemisFlyout.Screens
         private readonly Border _containerBorder;
 
         public int ShowAnimationDelay { get; set; } = 250;
+        public int ContentRevealAnimationDelay { get; set; } = 1000;
         public int CloseAnimationDelay { get; set; } = 250;
         public int ResizeAnimationDelay { get; set; } = 150;
         public int FlyoutSpacing { get; set; } = 12;
@@ -50,7 +52,7 @@ namespace ArtemisFlyout.Screens
 
             WindowStartupLocation = WindowStartupLocation.Manual;
 
-            if (isPreload) 
+            if (isPreload)
                 WindowState = WindowState.Minimized;
 
             Position = new PixelPoint(_screenWidth - (int)(Width + FlyoutSpacing), Position.Y);
@@ -67,8 +69,18 @@ namespace ArtemisFlyout.Screens
                 Easing = new ExponentialEaseOut()
             };
 
-            if (!isPreload) 
+            if (!isPreload)
                 showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
+
+            Panel mainContainerPanel = this.Find<Panel>("MainContainerPanel");
+
+            TransformOperationsTransition marginTransition = new TransformOperationsTransition()
+            {
+                Property = FlyoutContainer.RenderTransformProperty,
+                Duration = TimeSpan.FromMilliseconds(ContentRevealAnimationDelay),
+                Easing = new ExponentialEaseOut()
+            };
+            marginTransition.Apply(mainContainerPanel, Avalonia.Animation.Clock.GlobalClock, TransformOperations.Parse("translate(20px)"), TransformOperations.Parse("translate(0px)"));
 
             await Task.Delay(ShowAnimationDelay);
 
@@ -86,7 +98,6 @@ namespace ArtemisFlyout.Screens
             }
             Activate();
         }
-
 
         public async Task CloseAnimated(double animationDuration)
         {

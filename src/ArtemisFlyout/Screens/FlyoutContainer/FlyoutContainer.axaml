@@ -45,31 +45,31 @@
 					BoxShadow="3 4 1 1 #64000000"
                     Background="{Binding BackgroundBrush}"
                     Name="ContainerBorder">
-				<Panel>
-					<DockPanel>
-						<!-- Flyout content Start -->
-						<Panel DockPanel.Dock="Top" Margin="0 0 0 0">
-							<Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
-								<Carousel.PageTransition>
-									<PageSlide Duration="0.1" Orientation="Horizontal" />
-								</Carousel.PageTransition>
-								<pages:ArtemisLightControl />
-								<pages:ArtemisDeviceToggles />
-								<pages:ArtemisCustomProfile />
-								<pages:ArtemisLauncher />
-								<pages:ArtemisPluginPrerequisites />
-							</Carousel>
-						</Panel>
-						<!-- Flyout content End-->
-					</DockPanel>
-					<!-- Bottom command bar Start -->
-					<Border CornerRadius="0 0 8 8"
-							ClipToBounds="True"
-							Background="Transparent"
-							VerticalAlignment="Bottom"
-							DockPanel.Dock="Bottom"
-							IsVisible="{Binding CommandBarVisibleState}">
-						<DockPanel Background="#40000000" Height="48">
+				<Panel Margin="0 0 0 0">
+					<Panel Name="MainContainerPanel" Margin="0 0 0 0">
+						<!-- Pages Start -->
+						<DockPanel>
+							<!-- Flyout content Start -->
+							<Panel DockPanel.Dock="Top">
+								<Carousel Name="CarouselContentContainer" SelectedIndex="{Binding ActivePageindex}">
+									<Carousel.PageTransition>
+										<PageSlide Duration="0.1" Orientation="Horizontal" />
+									</Carousel.PageTransition>
+									<pages:ArtemisLightControl />
+									<pages:ArtemisDeviceToggles />
+									<pages:ArtemisCustomProfile />
+									<pages:ArtemisLauncher />
+									<pages:ArtemisPluginPrerequisites />
+								</Carousel>
+							</Panel>
+							<!-- Flyout content End-->
+						</DockPanel>
+						<!-- Pages End -->
+						<!-- Bottom command bar Start -->
+						<DockPanel 
+                                Height="48"
+                                VerticalAlignment="Bottom"
+                                DockPanel.Dock="Bottom">
 							<StackPanel
 								Margin="10 0 0 0"
 								DockPanel.Dock="Left"
@@ -170,8 +170,17 @@
 								</controls:Button>
 							</StackPanel>
 						</DockPanel>
-					</Border>
-					<!-- Bottom command bar End -->
+						<!-- Bottom command bar End -->
+					</Panel>
+					<DockPanel>
+                        <Border CornerRadius="0 0 8 8"
+                                Height="48"
+                                ClipToBounds="True"
+                                Background="#40000000"
+                                VerticalAlignment="Bottom"
+                                DockPanel.Dock="Bottom"
+                                IsVisible="{Binding CommandBarVisibleState}"/>
+					</DockPanel>
 				</Panel>
 			</Border>
 		</ExperimentalAcrylicBorder>

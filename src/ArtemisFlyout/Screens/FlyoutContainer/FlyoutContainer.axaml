@@ -46,6 +46,15 @@
                     Background="{Binding BackgroundBrush}"
                     Name="ContainerBorder">
 				<Panel Margin="0 0 0 0">
+                    <DockPanel>
+                        <Border CornerRadius="0 0 8 8"
+                                Height="48"
+                                ClipToBounds="True"
+                                Background="#40000000"
+                                VerticalAlignment="Bottom"
+                                DockPanel.Dock="Bottom"
+                                IsVisible="{Binding CommandBarVisibleState}"/>
+                    </DockPanel>
 					<Panel Name="MainContainerPanel">
 						<!-- Pages Start -->
 						<DockPanel>
@@ -172,15 +181,6 @@
 						</DockPanel>
 						<!-- Bottom command bar End -->
 					</Panel>
-					<DockPanel>
-                        <Border CornerRadius="0 0 8 8"
-                                Height="48"
-                                ClipToBounds="True"
-                                Background="#40000000"
-                                VerticalAlignment="Bottom"
-                                DockPanel.Dock="Bottom"
-                                IsVisible="{Binding CommandBarVisibleState}"/>
-					</DockPanel>
 				</Panel>
 			</Border>
 		</ExperimentalAcrylicBorder>

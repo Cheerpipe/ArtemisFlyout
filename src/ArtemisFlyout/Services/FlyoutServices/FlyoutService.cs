@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ArtemisFlyout.Screens;
 using ArtemisFlyout.ViewModels;
+using Avalonia.Input;
 using Ninject;
 
 namespace ArtemisFlyout.Services
@@ -31,6 +32,12 @@ namespace ArtemisFlyout.Services
             FlyoutWindowInstance.Deactivated += (_, _) =>
             {
                 _ = CloseAndRelease();
+            };
+
+            FlyoutWindowInstance.KeyDown += (_, e) =>
+            {
+                if (e.Key == Key.Escape)
+                    _ = CloseAndRelease();
             };
 
             if (animate)

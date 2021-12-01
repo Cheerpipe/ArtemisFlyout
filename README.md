@@ -31,7 +31,9 @@ It is important to note that i am learning how to write MVVM and Avalonia so arc
 
 
 
-https://user-images.githubusercontent.com/972765/143487819-81638120-6934-44ed-b215-a893a5c3569f.mp4
+
+https://user-images.githubusercontent.com/972765/144322706-f2072363-4368-45c4-a947-db1ce0b2c44c.mp4
+
 
 
 

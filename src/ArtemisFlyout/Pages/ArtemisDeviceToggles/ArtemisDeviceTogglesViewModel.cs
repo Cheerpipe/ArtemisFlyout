@@ -30,7 +30,10 @@ namespace ArtemisFlyout.Pages
                 Disposable
                     .Create(() =>
                     {
-
+                        foreach (var deviceStateVm in devicesStatesSettings.Select(deviceState => new DeviceStateViewModel(deviceState)))
+                        {
+                            deviceStateVm.DeviceStateChanged -= DevStateVM_DeviceStateChanged;
+                        }
                     })
                     .DisposeWith(disposables);
             });

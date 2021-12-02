@@ -45,10 +45,18 @@ namespace ArtemisFlyout.Screens
             this.WhenActivated(disposables =>
             {
                 /* Handle activation */
+                artemisDeviceTogglesViewModel.Activator.Activate();
+                artemisDeviceTogglesViewModel.Activator.Activate();
+                artemisCustomProfileViewModel.Activator.Activate();
                 Disposable
                     .Create(() =>
                     {
                         /* Handle deactivation */
+
+                        artemisDeviceTogglesViewModel.Activator.Deactivate();
+                        artemisDeviceTogglesViewModel.Activator.Deactivate();
+                        artemisCustomProfileViewModel.Activator.Deactivate();
+
                         _backgroundBrushRefreshTimer?.DisposeAsync();
                         _backgroundBrushRefreshTimer = null;
                     })

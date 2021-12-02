@@ -16,9 +16,8 @@ namespace ArtemisFlyout.Pages
             var customProfileColorsSetting = configurationService.Get().CustomProfilesColorSettings;
 
             _customProfileColors = new();
-            foreach (var customProfileColor in customProfileColorsSetting)
+            foreach (var customProfileColorViewModel in customProfileColorsSetting.Select(customProfileColor => new CustomProfileColorViewModel(customProfileColor)))
             {
-                CustomProfileColorViewModel customProfileColorViewModel = new CustomProfileColorViewModel(customProfileColor);
                 _customProfileColors.Add(customProfileColorViewModel);
                 customProfileColorViewModel.ProfileColorChanged += CustomProfileColorViewModel_ProfileColorChanged;
             }
@@ -28,6 +27,10 @@ namespace ArtemisFlyout.Pages
                 Disposable
                     .Create(() =>
                     {
+                        foreach (var customProfileColorViewModel in customProfileColorsSetting.Select(customProfileColor => new CustomProfileColorViewModel(customProfileColor)))
+                        {
+                            customProfileColorViewModel.ProfileColorChanged -= CustomProfileColorViewModel_ProfileColorChanged;
+                        }
                     })
                     .DisposeWith(disposables);
             });

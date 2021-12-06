@@ -20,7 +20,7 @@
 		<converters:MaterialIconEnumConverter x:Key="MaterialIconEnumConverter"/>
 	</reactiveUi:ReactiveUserControl.Resources>
 	<!-- Flyout content start-->
-	<StackPanel>
+	<StackPanel Name="ContentPanel">
 		<!-- Global toggle Start -->
 
 		<!-- Workaround for toggle switch width -->

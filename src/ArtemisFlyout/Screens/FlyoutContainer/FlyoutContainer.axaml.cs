@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using ArtemisFlyout.Pages;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
@@ -257,5 +258,6 @@ namespace ArtemisFlyout.Screens
             var newPositionValue = (int)e.NewValue!;
             flyoutContainer.VerticalPosition = newPositionValue;
         }
+
     }
 }

@@ -8,7 +8,7 @@
              x:Class="ArtemisFlyout.Pages.ArtemisCustomProfile">
 
 	<!-- Flyout content start-->
-	<StackPanel>
+	<StackPanel Name="ContentPanel">
 		<Button
 			Name="BtnBack"
 			Margin="10 10 0 0"

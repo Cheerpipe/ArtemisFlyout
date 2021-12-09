@@ -7,7 +7,7 @@ namespace ArtemisFlyout.IoC
     {
         public override void Load()
         {
-            Bind<ITrayIconService>().To<TrayIconService>().InSingletonScope();
+            Bind<ITrayIconService>().To<WindowsTrayIconService>().InSingletonScope();
             Bind<IFlyoutService>().To<FlyoutService>().InSingletonScope();
             Bind<IArtemisService>().To<ArtemisService>().InSingletonScope();
             Bind<IConfigurationService>().To<ConfigurationService>().InSingletonScope();

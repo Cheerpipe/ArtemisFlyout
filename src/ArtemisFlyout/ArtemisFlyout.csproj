@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <ApplicationIcon>Main.ico</ApplicationIcon>
     <StartupObject>ArtemisFlyout.Program</StartupObject>
   </PropertyGroup>

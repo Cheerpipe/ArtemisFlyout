@@ -1,5 +1,7 @@
 ﻿using ArtemisFlyout.Services;
 using Ninject.Modules;
+using Serilog;
+using Serilog.Core;
 
 namespace ArtemisFlyout.IoC
 {
@@ -14,6 +16,7 @@ namespace ArtemisFlyout.IoC
             Bind<IRestService>().To<RestService>().InSingletonScope();
             Bind<IWebServerService>().To<WebServerService>().InSingletonScope();
             Bind<IInstanceService>().To<InstanceService>().InSingletonScope();
+            Bind<ILogger>().To<Logger>().InSingletonScope();
         }
     }
 }

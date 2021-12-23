@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using ArtemisFlyout.Screens;
 using ArtemisFlyout.ViewModels;
@@ -101,13 +102,22 @@ namespace ArtemisFlyout.Services
         {
             if (_closing)
                 return;
-
+            Debug.WriteLine(animate);
             _closing = true;
 
             if (animate)
+            {
+                Debug.WriteLine("before CloseAnimated");
                 await FlyoutWindowInstance.CloseAnimated();
+                Debug.WriteLine("after CloseAnimated");
+            }
             else
+            {
+                Debug.WriteLine("before close");
                 FlyoutWindowInstance.Close();
+                Debug.WriteLine("after close");
+            }
+
 
             FlyoutWindowInstance = null;
 

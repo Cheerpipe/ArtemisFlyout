@@ -101,6 +101,7 @@ namespace ArtemisFlyout.Screens
 
         public async Task CloseAnimated(double animationDuration)
         {
+            Activate();
             IntegerTransition closeTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.VerticalPositionProperty,

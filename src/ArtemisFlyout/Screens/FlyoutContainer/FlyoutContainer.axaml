@@ -13,7 +13,7 @@
                                 ShowInTaskbar="false"
                                 CanResize="False"
                                 Topmost="False"
-                                SystemDecorations="BorderOnly"
+                                SystemDecorations="None"
                                 TransparencyLevelHint="AcrylicBlur"
                                 ExtendClientAreaToDecorationsHint="True"
                                 ExtendClientAreaChromeHints="NoChrome"

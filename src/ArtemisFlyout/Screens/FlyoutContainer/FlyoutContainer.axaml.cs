@@ -1,10 +1,13 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using ArtemisFlyout.Platform.Windows;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives.PopupPositioning;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -240,10 +243,16 @@ namespace ArtemisFlyout.Screens
             get => GetValue(VerticalPositionProperty);
             set
             {
+                if (PlatformImpl != null)
+                {
+                    NativeMethods.SetWindowRgn(PlatformImpl.Handle.Handle, NativeMethods.CreateRectRgn(0, 0, (int)Width, _screenHeight - value), true);
+                }
+
                 SetValue(VerticalPositionProperty, value);
                 Position = Position.WithY(value);
             }
         }
+
         static FlyoutContainer()
         {
             HorizontalPositionProperty.Changed.Subscribe(HorizontalPositionChanged);

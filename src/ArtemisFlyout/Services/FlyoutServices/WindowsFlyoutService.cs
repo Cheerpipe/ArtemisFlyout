@@ -42,6 +42,11 @@ namespace ArtemisFlyout.Services
                     _ = CloseAndRelease();
             };
 
+            FlyoutWindowInstance.Topmost = true;
+            uint currentChildLong = NativeMethods.GetWindowLong(FlyoutWindowInstance.PlatformImpl.Handle.Handle, (int)WindowLongParam.GWL_EXSTYLE);
+            NativeMethods.SetWindowLong(FlyoutWindowInstance.PlatformImpl.Handle.Handle, (int)WindowLongParam.GWL_EXSTYLE,
+                currentChildLong | (uint)WindowStyles.WS_POPUPWINDOW);
+
             if (animate)
                 await FlyoutWindowInstance.ShowAnimated();
             else

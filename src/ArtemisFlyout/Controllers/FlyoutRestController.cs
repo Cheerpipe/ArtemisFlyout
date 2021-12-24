@@ -12,7 +12,7 @@ namespace ArtemisFlyout.Controllers
     public class FlyoutRestController : WebApiController
     {
         private readonly IFlyoutService _flyoutService;
-        public FlyoutRestController(FlyoutService flyoutService)
+        public FlyoutRestController(WindowsFlyoutService flyoutService)
         {
             _flyoutService = flyoutService;
         }

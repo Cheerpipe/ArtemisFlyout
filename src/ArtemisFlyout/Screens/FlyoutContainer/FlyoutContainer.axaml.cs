@@ -1,6 +1,6 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using ArtemisFlyout.Pages;
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
@@ -17,6 +17,31 @@ namespace ArtemisFlyout.Screens
 {
     public class FlyoutContainer : ReactiveWindow<FlyoutContainerViewModel>
     {
+        [Flags]
+        public enum SetWindowPosFlags : uint
+        {
+            SWP_ASYNCWINDOWPOS = 0x4000,
+            SWP_DEFERERASE = 0x2000,
+            SWP_DRAWFRAME = 0x0020,
+            SWP_FRAMECHANGED = 0x0020,
+            SWP_HIDEWINDOW = 0x0080,
+            SWP_NOACTIVATE = 0x0010,
+            SWP_NOCOPYBITS = 0x0100,
+            SWP_NOMOVE = 0x0002,
+            SWP_NOOWNERZORDER = 0x0200,
+            SWP_NOREDRAW = 0x0008,
+            SWP_NOREPOSITION = 0x0200,
+            SWP_NOSENDCHANGING = 0x0400,
+            SWP_NOSIZE = 0x0001,
+            SWP_NOZORDER = 0x0004,
+            SWP_SHOWWINDOW = 0x0040,
+
+            SWP_RESIZE = SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER
+        }
+
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SetWindowPosFlags uFlags);
+
         public FlyoutContainer()
         {
             this.WhenActivated(disposables =>
@@ -44,7 +69,7 @@ namespace ArtemisFlyout.Screens
         public int ResizeAnimationDelay { get; set; } = 150;
         public int FlyoutSpacing { get; set; } = 12;
 
-        public async Task ShowAnimated(bool isPreload = false)
+        public async Task ShowAnimated()
         {
             PointerPressed += FlyoutPanelContainer_PointerPressed;
             PointerReleased += FlyoutPanelContainer_PointerReleased;
@@ -53,14 +78,10 @@ namespace ArtemisFlyout.Screens
 
             WindowStartupLocation = WindowStartupLocation.Manual;
 
-            if (isPreload)
-                WindowState = WindowState.Minimized;
-
             Position = new PixelPoint(_screenWidth - (int)(Width + FlyoutSpacing), Position.Y);
 
             Show();
             Activate();
-
 
             Clock = Avalonia.Animation.Clock.GlobalClock;
             IntegerTransition showTransition = new IntegerTransition()
@@ -70,8 +91,7 @@ namespace ArtemisFlyout.Screens
                 Easing = new ExponentialEaseOut()
             };
 
-            if (!isPreload)
-                showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
+            showTransition.Apply(this, Avalonia.Animation.Clock.GlobalClock, _screenHeight, GetTargetVerticalPosition());
 
             Panel mainContainerPanel = this.Find<Panel>("MainContainerPanel");
             TransformOperationsTransition marginTransition = new TransformOperationsTransition()
@@ -101,7 +121,6 @@ namespace ArtemisFlyout.Screens
 
         public async Task CloseAnimated(double animationDuration)
         {
-            Activate();
             IntegerTransition closeTransition = new IntegerTransition()
             {
                 Property = FlyoutContainer.VerticalPositionProperty,

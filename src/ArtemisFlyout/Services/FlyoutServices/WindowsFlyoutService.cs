@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using ArtemisFlyout.Platform.Windows;
 using ArtemisFlyout.Screens;
 using ArtemisFlyout.ViewModels;
 using Avalonia.Input;
@@ -8,7 +9,7 @@ using Ninject;
 
 namespace ArtemisFlyout.Services
 {
-    public class FlyoutService : IFlyoutService
+    public class WindowsFlyoutService : IFlyoutService
     {
         public static FlyoutContainer FlyoutWindowInstance { get; private set; }
         private readonly IKernel _kernel;
@@ -16,7 +17,7 @@ namespace ArtemisFlyout.Services
         private bool _opening;
         private bool _closing;
 
-        public FlyoutService(IKernel kernel)
+        public WindowsFlyoutService(IKernel kernel)
         {
             _kernel = kernel;
         }
@@ -47,7 +48,7 @@ namespace ArtemisFlyout.Services
                 FlyoutWindowInstance.Show();
 
             FlyoutWindowInstance?.Activate();
-
+         
             _opening = false;
         }
 
@@ -75,8 +76,14 @@ namespace ArtemisFlyout.Services
         public async Task PreLoad()
         {
             if (FlyoutWindowInstance != null) return;
+
             FlyoutWindowInstance = CreateInstance();
-            await FlyoutWindowInstance.ShowAnimated(true);
+
+            // This DWM call will make Window invisible for users while preloading
+            int value = 0x01;
+            NativeMethods.DwmSetWindowAttribute(FlyoutWindowInstance.PlatformImpl.Handle.Handle, DwmWindowAttribute.DWMWA_CLOAK, ref value, Marshal.SizeOf(typeof(int)));
+
+            await FlyoutWindowInstance.ShowAnimated();
             await Task.Delay(500);
             await CloseAndRelease(false);
         }
@@ -102,20 +109,15 @@ namespace ArtemisFlyout.Services
         {
             if (_closing)
                 return;
-            Debug.WriteLine(animate);
             _closing = true;
 
             if (animate)
             {
-                Debug.WriteLine("before CloseAnimated");
                 await FlyoutWindowInstance.CloseAnimated();
-                Debug.WriteLine("after CloseAnimated");
             }
             else
             {
-                Debug.WriteLine("before close");
                 FlyoutWindowInstance.Close();
-                Debug.WriteLine("after close");
             }
 
 

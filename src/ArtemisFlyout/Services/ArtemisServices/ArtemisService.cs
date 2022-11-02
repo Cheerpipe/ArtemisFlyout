@@ -185,7 +185,7 @@ namespace ArtemisFlyout.Services
             try
             {
                 var response = _restService.Get("/extended-rest-api/version");
-                var version = response.Content.Substring(2, 7);
+                var version = response.Content.Substring(1, 7);
                 return new PluginCheckResult
                 {
                     Installed = true,
@@ -213,7 +213,7 @@ namespace ArtemisFlyout.Services
             try
             {
                 var response = _restService.Get("/json-datamodel/version");
-                var version = response.Content.Substring(2, 7);
+                var version = response.Content.Substring(1, 7);
                 return new PluginCheckResult
                 {
                     Installed = true,

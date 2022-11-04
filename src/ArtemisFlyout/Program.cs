@@ -53,12 +53,13 @@ namespace ArtemisFlyout
                 return;
             }
 
+            IConfigurationService configurationService = Kernel.Get<IConfigurationService>();
+
             var webServerService = Kernel.Get<IWebServerService>();
             webServerService.AddController<FlyoutRestController>();
             webServerService.Start();
 
             IArtemisService artemisService = Kernel.Get<IArtemisService>();
-            IConfigurationService configurationService = Kernel.Get<IConfigurationService>();
             IFlyoutService flyoutService = Kernel.Get<IFlyoutService>();
             flyoutService.SetPopulateViewModelFunc(() =>
             {

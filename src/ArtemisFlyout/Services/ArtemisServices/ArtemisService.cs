@@ -238,7 +238,7 @@ namespace ArtemisFlyout.Services
 
         public bool IsRunning()
         {
-            return Process.GetProcessesByName("Artemis.UI").Length > 0;
+            return Process.GetProcessesByName("Artemis.UI.Windows").Length > 0;
         }
 
 

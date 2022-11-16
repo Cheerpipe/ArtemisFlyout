@@ -55,6 +55,9 @@ namespace ArtemisFlyout
 
             IConfigurationService configurationService = Kernel.Get<IConfigurationService>();
 
+            //Load configuration and create first Flyout View Model
+            configurationService.Load();
+
             var webServerService = Kernel.Get<IWebServerService>();
             webServerService.AddController<FlyoutRestController>();
             webServerService.Start();
@@ -74,14 +77,13 @@ namespace ArtemisFlyout
                 }
                 else
                 {
-                    configurationService.Load();
                     return Kernel.Get<FlyoutContainerViewModel>();
                 }
             });
 
             var trayIconService = Kernel.Get<ITrayIconService>();
             trayIconService.Show();
-
+            flyoutService.PreLoad();
             // Start the main loop
             app.Run(RunCancellationToken);
 

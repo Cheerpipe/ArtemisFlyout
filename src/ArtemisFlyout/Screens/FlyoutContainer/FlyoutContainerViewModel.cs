@@ -45,7 +45,7 @@ namespace ArtemisFlyout.Screens
             this.WhenActivated(disposables =>
             {
                 /* Handle activation */
-                artemisDeviceTogglesViewModel.Activator.Activate();
+                artemisMainControlViewModel.Activator.Activate();
                 artemisDeviceTogglesViewModel.Activator.Activate();
                 artemisCustomProfileViewModel.Activator.Activate();
                 Disposable
@@ -53,7 +53,7 @@ namespace ArtemisFlyout.Screens
                     {
                         /* Handle deactivation */
 
-                        artemisDeviceTogglesViewModel.Activator.Deactivate();
+                        artemisMainControlViewModel.Activator.Deactivate();
                         artemisDeviceTogglesViewModel.Activator.Deactivate();
                         artemisCustomProfileViewModel.Activator.Deactivate();
 

@@ -53,7 +53,7 @@ namespace ArtemisFlyout.Services
                 FlyoutWindowInstance.Show();
 
             FlyoutWindowInstance?.Activate();
-         
+
             _opening = false;
         }
 
@@ -83,8 +83,8 @@ namespace ArtemisFlyout.Services
             if (FlyoutWindowInstance != null) return;
 
             FlyoutWindowInstance = CreateInstance();
-
-            // This DWM call will make Window invisible for users while preloading
+            FlyoutWindowInstance.DataContext = _kernel.Get<FlyoutContainerViewModel>();
+            // This DWM call will make Window ivisible for users while preloading
             int value = 0x01;
             NativeMethods.DwmSetWindowAttribute(FlyoutWindowInstance.PlatformImpl.Handle.Handle, DwmWindowAttribute.DWMWA_CLOAK, ref value, Marshal.SizeOf(typeof(int)));
 

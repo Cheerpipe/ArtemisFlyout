@@ -7,6 +7,7 @@ using ArtemisFlyout.Screens;
 using ArtemisFlyout.Services;
 using Avalonia.Controls;
 using Avalonia.ReactiveUI;
+using FluentAvalonia.Styling;
 
 namespace ArtemisFlyout
 {
@@ -26,7 +27,7 @@ namespace ArtemisFlyout
                 .With(new Win32PlatformOptions()
                 {
                     UseWindowsUIComposition = true,
-                    CompositionBackdropCornerRadius = 8f,
+                    CompositionBackdropCornerRadius = 15f,
                 });
             return builder;
         }
@@ -81,6 +82,9 @@ namespace ArtemisFlyout
                 }
             });
 
+            var thm = AvaloniaLocator.Current.GetService<FluentAvaloniaTheme>();
+            thm.RequestedTheme = "Dark";
+
             var trayIconService = Kernel.Get<ITrayIconService>();
             trayIconService.Show();
             flyoutService.PreLoad();
@@ -92,6 +96,6 @@ namespace ArtemisFlyout
             trayIconService.Hide();
         }
 
-       
+
     }
 }

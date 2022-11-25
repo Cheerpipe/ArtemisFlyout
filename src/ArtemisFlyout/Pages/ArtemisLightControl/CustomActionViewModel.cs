@@ -23,8 +23,6 @@ namespace ArtemisFlyout.Pages
             get => _artemisService.GetJsonDataModelValue(_globalVariablesDatamodelName, Condition, false);
             set => _artemisService.SetJsonDataModelValue(_globalVariablesDatamodelName, Condition, value);
         }
-
-
     }
     public class QuickActionViewModelBuilder
     {

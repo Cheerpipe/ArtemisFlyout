@@ -72,7 +72,7 @@ namespace ArtemisFlyout.Pages
             }
             set
             {
-                _artemisService.SetActiveProfile(value.Name);
+                _artemisService.SetActiveProfile(value?.Name);
                 this.RaiseAndSetIfChanged(ref _selectedProfile, value);
                 SelectedProfileChanged?.Invoke(this, EventArgs.Empty);
             }
